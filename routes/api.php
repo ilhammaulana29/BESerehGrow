@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
-
+use App\Http\Controllers\ProsedurAnalisisController;
 
 //Cultivate Management
 
@@ -32,8 +32,13 @@ Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
 Route::put('/analisis-lahan/{id}', [AnalisisLahanController::class, 'update']); // Mengupdate data
 Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy']);
+Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
+Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
+Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
+
 
 //Cultivate Management
+
 
 
 //Procesing Management
