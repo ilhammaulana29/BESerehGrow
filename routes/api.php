@@ -44,6 +44,7 @@ Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy'
 
 
 //Konten
-
-Route::get("/gallery", [GalleryController::class, "index"]);
+Route::get('/gallery', [GalleryController::class, 'index']);
 Route::get('/gallery/{category}', [GalleryController::class, 'filterByCategory']);
+Route::get('/categories', [GalleryController::class, 'getCategories']);
+Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
