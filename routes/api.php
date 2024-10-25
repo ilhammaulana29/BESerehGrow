@@ -36,6 +36,8 @@ Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy'
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
+Route::put('proseduranalisis/update/{id}', [ProsedurAnalisisController::class, 'update']);
+
 
 
 //Cultivate Management
