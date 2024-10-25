@@ -37,7 +37,7 @@ class ProsedurAnalisisController extends Controller
             $gambarName = time() . '_' . $file->getClientOriginalName(); // Contoh: 1698246145_image.jpg
 
             // Simpan file di disk public
-            $path = $file->storeAs('', $gambarName, 'public'); // Simpan di storage/app/public/gambar
+            $path = $file->storeAs('image-procedure', $gambarName, 'public'); // Simpan di storage/app/public/gambar
         }
         
 
