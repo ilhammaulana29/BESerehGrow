@@ -76,7 +76,7 @@ return new class extends Migration
             $table->foreignId('id_aboutcp')->constrained('cpc_about', 'id_aboutcp')->onDelete('cascade');
             $table->foreignId('id_cphistory')->constrained('cpc_company_history', 'id_cphistory')->onDelete('cascade');
             $table->string('nama_company');
-            $table->string('logo_company');
+            $table->string('logo_company')->nullable();
             $table->string('slogan');
             $table->timestamps();
         });
