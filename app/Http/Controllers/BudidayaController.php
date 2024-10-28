@@ -30,6 +30,7 @@ class BudidayaController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'additional_info' => 'nullable|string',
         ]);
+        
 
         if ($request->hasFile('image')) {
             $data['image_path'] = $request->file('image')->store('images/budidaya', 'public');
