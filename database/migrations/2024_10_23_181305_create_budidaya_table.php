@@ -26,7 +26,7 @@ return new class extends Migration
         // Tabel CmBloklahan
         Schema::create('cm_bloklahan', function (Blueprint $table) {
             $table->id('id_bloklahan');
-            $table->foreignId('id_rumpun')->constrained('cm_rumpun', 'id_rumpun')->onDelete('cascade');
+            // Removed foreign key for id_rumpun
             $table->string('namablok');
             $table->decimal('luasblok', 8, 2);
             $table->integer('jumlah_rumpun');
@@ -34,6 +34,7 @@ return new class extends Migration
             $table->decimal('jarak_tanam', 8, 2);
             $table->decimal('kemiringan', 5, 2);
             $table->string('unsurhara');
+            $table->enum('jenis_rumpun', ['G2', 'G3', 'Balon']); // Add enum column
             $table->timestamps();
         });
 
