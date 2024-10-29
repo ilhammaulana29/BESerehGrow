@@ -50,6 +50,6 @@ Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
-Route::get('/gallery/{category}', [GalleryController::class, 'filterByCategory']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
+Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
