@@ -44,6 +44,7 @@ Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
 Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update']);
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
+Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 
 
 
