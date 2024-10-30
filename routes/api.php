@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
+use App\Http\Controllers\helpController;
 use App\Http\Controllers\ProsedurAnalisisController;
 
 //Cultivate Management
@@ -29,7 +30,7 @@ Route::get('/user', function (Request $request) {
 
 
 //LandAnalis
-Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']); 
+Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
 Route::put('/analisis-lahan/{id}', [AnalisisLahanController::class, 'update']); // Mengupdate data
 Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy']);
@@ -55,3 +56,13 @@ Route::get('/gallery', [GalleryController::class, 'index']);
 Route::get('/gallery/{category}', [GalleryController::class, 'filterByCategory']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
+
+
+
+
+
+
+Route::get('/help', [helpController::class, 'index']);
+Route::post('/add-help', [helpController::class, 'addHelp']);
+Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
+Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
