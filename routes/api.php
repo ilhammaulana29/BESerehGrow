@@ -38,12 +38,14 @@ Route::get('/user', function (Request $request) {
 //LandAnalis
 Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']); 
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
-Route::put('/analisis-lahan/{id}', [AnalisisLahanController::class, 'update']); // Mengupdate data
-Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy']);
+Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
-Route::put('proseduranalisis/update/{id}', [ProsedurAnalisisController::class, 'update']);
+Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update']);
+Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
+Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
+
 
 
 //Cultivate Management
