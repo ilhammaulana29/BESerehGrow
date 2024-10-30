@@ -69,9 +69,9 @@ class AnalisisLahanController extends Controller
     }
 
     // Method untuk menghapus data analisis lahan
-    public function destroy($id)
+    public function destroy($id_analisislahan)
     {
-        $analisisLahan = AnalisisLahan::findOrFail($id);
+        $analisisLahan = AnalisisLahan::findOrFail($id_analisislahan);
         $analisisLahan->delete(); // Hapus data
         return response()->json(null, 204); // Kembalikan respons kosong
     }

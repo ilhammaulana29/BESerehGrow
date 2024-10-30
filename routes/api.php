@@ -20,6 +20,13 @@ use App\Http\Controllers\ProsedurAnalisisController;
 
 
 //Konten
+use App\Http\Controllers\BudidayaController;
+
+Route::get('/budidaya', [BudidayaController::class, 'index']);
+Route::get('/budidaya/{id}', [BudidayaController::class, 'show']);
+Route::post('/budidaya', [BudidayaController::class, 'store']);
+Route::put('/budidaya/{id}', [BudidayaController::class, 'update']);
+Route::delete('/budidaya/{id}', [BudidayaController::class, 'destroy']);
 
 
 Route::get('/user', function (Request $request) {
@@ -32,18 +39,24 @@ Route::get('/user', function (Request $request) {
 //LandAnalis
 Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
-Route::put('/analisis-lahan/{id}', [AnalisisLahanController::class, 'update']); // Mengupdate data
-Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy']);
+Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
-Route::put('proseduranalisis/update/{id}', [ProsedurAnalisisController::class, 'update']);
+Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update']);
+Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
+Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 
 
 
 //Cultivate Management
+use App\Http\Controllers\LandController;
 
 
+Route::post('/bloklahan', [LandController::class, 'store']);
+Route::get('/bloklahan', [LandController::class, 'index']);
+Route::put('/bloklahan/{id}', [LandController::class, 'update']); // Mengupdate data
+Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 
 //Procesing Management
 
@@ -53,16 +66,8 @@ Route::put('proseduranalisis/update/{id}', [ProsedurAnalisisController::class, '
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
-Route::get('/gallery/{category}', [GalleryController::class, 'filterByCategory']);
+Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showData']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
-
-
-
-
-
-
-Route::get('/help', [helpController::class, 'index']);
-Route::post('/add-help', [helpController::class, 'addHelp']);
-Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
-Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
+Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
+Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);

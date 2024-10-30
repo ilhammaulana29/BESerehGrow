@@ -8,6 +8,7 @@ class ProsedurAnalisis extends Model
 {
     use HasFactory;
     protected $table = 'la_prosedur';
+    protected $primaryKey = 'id_prosedur'; // Menentukan primary key yang tidak standar
 
     protected $fillable = [
         'jenis_konten',
@@ -15,5 +16,4 @@ class ProsedurAnalisis extends Model
         'gambar',
         'deskripsi'
     ];
-    protected $primaryKey = 'id_prosedur';
 }
