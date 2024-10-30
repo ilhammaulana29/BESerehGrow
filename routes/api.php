@@ -38,7 +38,7 @@ Route::get('/user', function (Request $request) {
 //LandAnalis
 Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']); 
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
-Route::delete('/analisis-lahan/{id}', [AnalisisLahanController::class, 'destroy']);
+Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
