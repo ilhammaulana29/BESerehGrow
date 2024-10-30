@@ -63,6 +63,8 @@ Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
+Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showData']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
+Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
