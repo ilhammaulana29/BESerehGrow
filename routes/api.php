@@ -62,6 +62,7 @@ Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
 Route::post('/penyulingan', [PenyulinganController::class, 'store']);
 Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'update']);
+Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 
 //Koperasi
 
