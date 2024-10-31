@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Keluhan;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,7 @@ class KeluhanController extends Controller
             'tindak_lanjut' => 'required|string',
         ]);
 
+        // Menyimpan data keluhan ke dalam database
         $keluhan = Keluhan::create([
             'tgl_pengaduan' => $validatedData['tgl_pengaduan'],
             'keluhan' => $validatedData['keluhan'],
@@ -34,6 +36,9 @@ class KeluhanController extends Controller
             'tindak_lanjut' => $validatedData['tindak_lanjut'],
         ]);
 
-        return response()->json($keluhan, 201);
+        return response()->json([
+            'message' => 'Data keluhan berhasil disimpan',
+            'data' => $keluhan,
+        ], 201);
     }
 }

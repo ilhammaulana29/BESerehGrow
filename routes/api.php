@@ -14,7 +14,8 @@ use App\Http\Controllers\ProsedurAnalisisController;
 //Cultivate Management
 
 //Procesing Management
-
+use App\Http\Controllers\PenyulinganController;
+use App\Http\Controllers\KeluhanController;
 
 //Koperasi
 
@@ -59,8 +60,17 @@ Route::put('/bloklahan/{id}', [LandController::class, 'update']); // Mengupdate 
 Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 
 //Procesing Management
+Route::get('/penyulingan', [PenyulinganController::class, 'index']);
+Route::post('/penyulingan', [PenyulinganController::class, 'store']);
+Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'update']);
 
 
+
+
+
+Route::get('/keluhan', [KeluhanController::class, 'index']);
+Route::post('/keluhan', [KeluhanController::class, 'store']);
+Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'delete']);
 //Koperasi
 
 
