@@ -15,7 +15,7 @@ class Budidaya extends Model
         'judul',
         'subtitle',
         'deskripsi',
-        'image_path',
-        'additional_info',
+        'gambar',
+        'additionalinfo',
     ];
 }
