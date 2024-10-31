@@ -15,6 +15,7 @@ use App\Http\Controllers\ProsedurAnalisisController;
 
 //Procesing Management
 use App\Http\Controllers\PenyulinganController;
+use App\Http\Controllers\KeluhanController;
 
 //Koperasi
 
@@ -64,7 +65,7 @@ Route::get('/bloklahan/jenisRumpun/{nama_blok}', [LandController::class, 'getJen
 use App\Http\Controllers\PenyulamanController;
 
 Route::post('/penyulaman', [PenyulamanController::class, 'store']);
-Route::get('/penyulaman', [PenyulamanController::class, 'index']); 
+Route::get('/penyulaman', [PenyulamanController::class, 'index']);
 Route::put('/penyulaman/{id}', [PenyulamanController::class, 'update']); // Mengupdate data
 Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
 
@@ -104,6 +105,14 @@ Route::post('/penyulingan', [PenyulinganController::class, 'store']);
 Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'update']);
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 
+
+
+
+
+Route::get('/keluhan', [KeluhanController::class, 'index']);
+Route::post('/keluhan', [KeluhanController::class, 'store']);
+Route::put('/keluhan/{id_keluhan}', [KeluhanController::class, 'update']); // Mengupdate keluhan berdasarkan ID
+Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'destroy']);
 //Koperasi
 
 
@@ -114,3 +123,11 @@ Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
 Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
+
+
+
+//Help
+Route::get('/help', [helpController::class, 'index']);
+Route::post('/add-help', [helpController::class, 'addHelp']);
+Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
+Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);

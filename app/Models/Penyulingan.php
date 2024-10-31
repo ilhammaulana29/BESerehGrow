@@ -21,7 +21,8 @@ class Penyulingan extends Model
         'bahan_bakar',
         'suhu_pembakaran',
         'air_rebusan',
-        'penyebaran_asap'
+        'penyebaran_asap',
+        'status',
     ];
     protected $primaryKey = 'id_penyulingan';
 }

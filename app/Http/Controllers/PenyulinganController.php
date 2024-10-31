@@ -25,6 +25,7 @@ class PenyulinganController extends Controller
             'suhu_pembakaran' => 'required|numeric',
             'air_rebusan' => 'required|numeric',
             'penyebaran_asap' => 'required|string',
+            'status'=>'required|string'
         ]);
 
         try {
@@ -39,6 +40,7 @@ class PenyulinganController extends Controller
             $penyulingan->suhu_pembakaran = $request->suhu_pembakaran;
             $penyulingan->air_rebusan = $request->air_rebusan;
             $penyulingan->penyebaran_asap = $request->penyebaran_asap;
+            $penyulingan->status = $request->status;
             $penyulingan->save();
 
             // Kembalikan respons berhasil
@@ -68,6 +70,7 @@ class PenyulinganController extends Controller
             'suhu_pembakaran' => 'required|numeric',
             'air_rebusan' => 'required|numeric',
             'penyebaran_asap' => 'required|string',
+            'status'=>'required|string'
         ]);
 
         try {
@@ -84,6 +87,7 @@ class PenyulinganController extends Controller
             $penyulingan->suhu_pembakaran = $request->suhu_pembakaran;
             $penyulingan->air_rebusan = $request->air_rebusan;
             $penyulingan->penyebaran_asap = $request->penyebaran_asap;
+            $penyulingan->status = $request->status;
             $penyulingan->save();
 
             // Kembalikan respons berhasil
