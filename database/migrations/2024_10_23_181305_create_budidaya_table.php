@@ -14,6 +14,7 @@ return new class extends Migration
         // Tabel CmRumpun
         Schema::create('cm_rumpun', function (Blueprint $table) {
             $table->id('id_rumpun');
+            $table->string('nama_blok');
             $table->string('jenis_rumpun');
             $table->decimal('lebar_rumpun', 8, 2);
             $table->decimal('tinggi_rumpun', 8, 2);
