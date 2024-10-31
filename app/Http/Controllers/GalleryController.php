@@ -35,6 +35,12 @@ class GalleryController extends Controller
         return response()->json($categories);
     }
 
+    public function showData($id_galeri)
+    {
+        $gallery = Gallery::findOrFail($id_galeri);
+        return response()->json($gallery);
+    }
+
 
     public function uploadGallery(Request $request)
     {
@@ -71,15 +77,11 @@ class GalleryController extends Controller
 
     public function updateGallery(Request $request, $id_galeri)
 {
-    $gallery = Gallery::find($id_galeri);
-
-    if (!$gallery) {
-        return response()->json(['message' => 'Gallery not found'], 404);
-    }
+    $gallery = Gallery::findOrFail($id_galeri);
 
     // Validasi hanya jika inputnya tidak kosong
     $validatedData = $request->validate([
-        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'gambar' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         'id_kategori' => 'nullable',
         'deskripsi_gambar' => 'nullable',
     ]);
@@ -88,24 +90,37 @@ class GalleryController extends Controller
     if ($request->hasFile('gambar')) {
         Storage::delete('public/image-gallery/' . $gallery->gambar);
         $file = $request->file('gambar');
-        $filePath = $file->store('public/image-gallery');
-        $gallery->gambar = $file;
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs('image-gallery', $filename, 'public'); // Simpan gambar ke storage public/image-gallery
+        $gallery->gambar = $filename;
     }
 
-    // Cek jika id_kategori tidak kosong, jika kosong gunakan data lama
-    if ($request->filled('id_kategori')) {
-        $gallery->id_kategori = $validatedData['id_kategori'];
-    }
+    $gallery->id_kategori = $validatedData['id_kategori'];
+    $gallery->deskripsi_gambar = $validatedData['deskripsi_gambar'];
 
-    // Cek jika deskripsi_gambar tidak kosong, jika kosong gunakan data lama
-    if ($request->filled('deskripsi_gambar')) {
-        $gallery->deskripsi_gambar = $validatedData['deskripsi_gambar'];
-    }
 
     $gallery->save();
 
     return response()->json($gallery, 200);
 }
+
+
+public function deleteGallery($id_galeri)
+{
+    // Cari data galeri berdasarkan id
+    $gallery = Gallery::findOrFail($id_galeri);
+
+    // Hapus file gambar dari storage jika ada
+    if ($gallery->gambar) {
+        Storage::delete('public/image-gallery/' . $gallery->gambar);
+    }
+
+    // Hapus data galeri dari database
+    $gallery->delete();
+
+    return response()->json(['message' => 'Galeri berhasil dihapus'], 200);
+}
+
 
         
     

@@ -111,7 +111,7 @@ return new class extends Migration
         // Tabel CpcGaleri
         Schema::create('cpc_galeri', function (Blueprint $table) {
             $table->id('id_galeri');
-            $table->string('gambar');
+            $table->string('gambar')->nullable();
             $table->unsignedBigInteger('id_kategori'); // Kolom foreign key
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori')->onDelete('cascade');
             $table->text('deskripsi_gambar')->nullable();

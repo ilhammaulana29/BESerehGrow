@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
+use App\Http\Controllers\helpController;
 use App\Http\Controllers\ProsedurAnalisisController;
 
 //Cultivate Management
@@ -36,7 +37,7 @@ Route::get('/user', function (Request $request) {
 
 
 //LandAnalis
-Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']); 
+Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
 Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
@@ -53,7 +54,7 @@ use App\Http\Controllers\LandController;
 
 
 Route::post('/bloklahan', [LandController::class, 'store']);
-Route::get('/bloklahan', [LandController::class, 'index']); 
+Route::get('/bloklahan', [LandController::class, 'index']);
 Route::put('/bloklahan/{id}', [LandController::class, 'update']); // Mengupdate data
 Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 
@@ -67,6 +68,8 @@ Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'upda
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
+Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showData']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
+Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
