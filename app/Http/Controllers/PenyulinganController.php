@@ -100,6 +100,28 @@ class PenyulinganController extends Controller
             ], 500);
         }
     }
+    public function destroy($id_penyulingan)
+    {
+        try {
+            // Temukan data penyulingan berdasarkan ID
+            $penyulingan = Penyulingan::findOrFail($id_penyulingan);
+            
+            // Hapus data penyulingan
+            $penyulingan->delete();
+            
+            // Kembalikan respons berhasil
+            return response()->json([
+                'message' => 'Data penyulingan berhasil dihapus'
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan respons dengan status 500
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menghapus data penyulingan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 }

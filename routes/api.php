@@ -59,10 +59,44 @@ Route::get('/bloklahan', [LandController::class, 'index']);
 Route::put('/bloklahan/{id}', [LandController::class, 'update']); // Mengupdate data
 Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 
+use App\Http\Controllers\PenyulamanController;
+
+Route::post('/penyulaman', [PenyulamanController::class, 'store']);
+Route::get('/penyulaman', [PenyulamanController::class, 'index']);
+Route::put('/penyulaman/{id}', [PenyulamanController::class, 'update']); // Mengupdate data
+Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
+
+use App\Http\Controllers\AreaRindangController;
+
+Route::get('arearindang', [AreaRindangController::class, 'index']);
+Route::post('arearindang', [AreaRindangController::class, 'store']);
+Route::get('arearindang/{id}', [AreaRindangController::class, 'show']);
+Route::put('arearindang/{id}', [AreaRindangController::class, 'update']);
+Route::delete('arearindang/{id}', [AreaRindangController::class, 'destroy']);
+
+use App\Http\Controllers\PemupukanController;
+use App\Http\Controllers\TumpangsariController;
+
+// Pemupukan Routes
+Route::get('pemupukan', [PemupukanController::class, 'index']);
+Route::post('pemupukan', [PemupukanController::class, 'store']);
+Route::get('pemupukan/{id}', [PemupukanController::class, 'show']);
+Route::put('pemupukan/{id}', [PemupukanController::class, 'update']);
+Route::delete('pemupukan/{id}', [PemupukanController::class, 'destroy']);
+
+// Tumpangsari Routes
+Route::get('tumpangsari', [TumpangsariController::class, 'index']);
+Route::post('tumpangsari', [TumpangsariController::class, 'store']);
+Route::get('tumpangsari/{id}', [TumpangsariController::class, 'show']);
+Route::put('tumpangsari/{id}', [TumpangsariController::class, 'update']);
+Route::delete('tumpangsari/{id}', [TumpangsariController::class, 'destroy']);
+
+
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
 Route::post('/penyulingan', [PenyulinganController::class, 'store']);
 Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'update']);
+Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 
 
 
@@ -70,7 +104,8 @@ Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'upda
 
 Route::get('/keluhan', [KeluhanController::class, 'index']);
 Route::post('/keluhan', [KeluhanController::class, 'store']);
-Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'delete']);
+Route::put('/keluhan/{id_keluhan}', [KeluhanController::class, 'update']); // Mengupdate keluhan berdasarkan ID
+Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'destroy']);
 //Koperasi
 
 
