@@ -14,10 +14,10 @@ return new class extends Migration
         // Tabel PmPenyulingan
         Schema::create('pm_penyulingan', function (Blueprint $table) {
             $table->id('id_penyulingan');
-            $table->string('no_batchpenyulingan')->unique(); // Tambahkan unique jika ini adalah kunci unik
+            $table->string('no_batch_penyulingan')->unique(); // Tambahkan unique jika ini adalah kunci unik
             $table->date('tgl_penyulingan');
             $table->float('berat_daun');
-            $table->time('waktu_penyulingan');
+            $table->float('waktu_penyulingan');
             $table->float('banyak_minyak');
             $table->string('bahan_bakar');
             $table->float('suhu_pembakaran');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->id('id_pengujian');
             // Pastikan no_batchpenyulingan di sini merujuk ke id_penyulingan jika Anda ingin membuat hubungan
             $table->foreignId('id_penyulingan')->constrained('pm_penyulingan', 'id_penyulingan')->onDelete('cascade');
-            $table->string('no_batchpengujian')->unique(); // Tambahkan unique jika ini adalah kunci unik
+            $table->string('no_batch_pengujian')->unique(); // Tambahkan unique jika ini adalah kunci unik
             $table->date('tgl_pengujian');
             $table->float('rendemen_atsiri');
             $table->float('kadar_sitronelal');
@@ -46,7 +46,7 @@ return new class extends Migration
             // Mengubah penamaan untuk konsistensi
             $table->foreignId('id_penyulingan')->constrained('pm_penyulingan', 'id_penyulingan')->onDelete('cascade');
             $table->foreignId('id_pengujian')->constrained('pm_pengujian', 'id_pengujian')->onDelete('cascade');
-            $table->string('no_batchfraksinasi')->unique(); // Tambahkan unique jika ini adalah kunci unik
+            $table->string('no_batch_fraksinasi')->unique(); // Tambahkan unique jika ini adalah kunci unik
             $table->date('tgl_fraksinasi');
             $table->float('vol_minyakawal');
             $table->float('vol_minyakakhir');

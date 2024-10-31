@@ -8,7 +8,7 @@ class Gallery extends Model
 {
     protected $table = "cpc_galeri";
 
-    protected $primaryKey = "id_gambar";
+    protected $primaryKey = "id_galeri";
 
-    protected $fillable = ["gambar", "kategori", "deskripsi_gambar"];
+    protected $fillable = ["gambar", "id_kategori", "deskripsi_gambar"];
 }
