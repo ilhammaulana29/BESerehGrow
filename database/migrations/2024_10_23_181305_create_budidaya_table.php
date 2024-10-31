@@ -11,19 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Tabel CmRumpun
-        Schema::create('cm_rumpun', function (Blueprint $table) {
-            $table->id('id_rumpun');
-            $table->string('nama_blok');
-            $table->string('jenis_rumpun');
-            $table->decimal('lebar_rumpun', 8, 2);
-            $table->decimal('tinggi_rumpun', 8, 2);
-            $table->string('warna_daun');
-            $table->decimal('lebar_daun', 8, 2);
-            $table->string('tekstur_daun');
-            $table->timestamps();
-        });
-
         // Tabel CmBloklahan
         Schema::create('cm_bloklahan', function (Blueprint $table) {
             $table->id('id_bloklahan');
@@ -39,6 +26,19 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Tabel CmRumpun
+        Schema::create('cm_rumpun', function (Blueprint $table) {
+            $table->id('id_rumpun');
+            $table->foreignId('id_blok')->constrained('cm_bloklahan', 'id_bloklahan')->onDelete('cascade');
+            $table->string('nama_blok');
+            $table->string('jenis_rumpun');
+            $table->decimal('lebar_rumpun', 8, 2);
+            $table->decimal('tinggi_rumpun', 8, 2);
+            $table->string('warna_daun');
+            $table->decimal('lebar_daun', 8, 2);
+            $table->string('tekstur_daun');
+            $table->timestamps();
+        });
         // Tabel CmPenyulaman
         Schema::create('cm_penyulaman', function (Blueprint $table) {
             $table->id('id_sulam');
