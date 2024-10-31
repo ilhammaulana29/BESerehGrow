@@ -71,3 +71,11 @@ Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
 Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
+
+
+
+//Help
+Route::get('/help', [helpController::class, 'index']);
+Route::post('/add-help', [helpController::class, 'addHelp']);
+Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
+Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
