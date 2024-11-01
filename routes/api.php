@@ -94,9 +94,12 @@ Route::delete('tumpangsari/{id}', [TumpangsariController::class, 'destroy']);
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
+Route::get('/penyulingan/{status}', [PenyulinganController::class, 'getByStatus']);
 Route::post('/penyulingan', [PenyulinganController::class, 'store']);
 Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'update']);
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
+Route::put('/penyulingan/{id_penyulingan}/status', [PenyulinganController::class, 'updateStatus']);
+
 
 
 
