@@ -56,8 +56,11 @@ use App\Http\Controllers\LandController;
 
 Route::post('/bloklahan', [LandController::class, 'store']);
 Route::get('/bloklahan', [LandController::class, 'index']);
+Route::get('/bloklahan/namablok', [LandController::class, 'getNamaBlok']);
 Route::put('/bloklahan/{id}', [LandController::class, 'update']); // Mengupdate data
 Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
+Route::get('/bloklahan/jenisRumpun/{nama_blok}', [LandController::class, 'getJenisRumpun']);
+
 
 use App\Http\Controllers\PenyulamanController;
 
@@ -90,6 +93,18 @@ Route::post('tumpangsari', [TumpangsariController::class, 'store']);
 Route::get('tumpangsari/{id}', [TumpangsariController::class, 'show']);
 Route::put('tumpangsari/{id}', [TumpangsariController::class, 'update']);
 Route::delete('tumpangsari/{id}', [TumpangsariController::class, 'destroy']);
+
+use App\Http\Controllers\RumpunController;
+
+Route::apiResource('rumpun', RumpunController::class);
+
+use App\Http\Controllers\PanenController;
+
+Route::get('panen', [PanenController::class, 'index']);
+Route::get('panen/{id}', [PanenController::class, 'show']);
+Route::post('panen', [PanenController::class, 'store']);
+Route::put('panen/{id}', [PanenController::class, 'update']);
+Route::delete('panen/{id}', [PanenController::class, 'destroy']);
 
 
 //Procesing Management
