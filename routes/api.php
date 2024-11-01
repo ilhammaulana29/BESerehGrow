@@ -98,6 +98,14 @@ use App\Http\Controllers\RumpunController;
 
 Route::apiResource('rumpun', RumpunController::class);
 
+use App\Http\Controllers\PanenController;
+
+Route::get('panen', [PanenController::class, 'index']);
+Route::get('panen/{id}', [PanenController::class, 'show']);
+Route::post('panen', [PanenController::class, 'store']);
+Route::put('panen/{id}', [PanenController::class, 'update']);
+Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);

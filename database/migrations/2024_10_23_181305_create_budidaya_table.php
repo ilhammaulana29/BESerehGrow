@@ -39,6 +39,18 @@ return new class extends Migration
             $table->string('tekstur_daun');
             $table->timestamps();
         });
+
+        // Tabel CmPanen
+        Schema::create('cm_panen', function (Blueprint $table) {
+            $table->id('id_panen');
+            $table->foreignId('id_blok')->constrained('cm_bloklahan', 'id_bloklahan')->onDelete('cascade');
+            $table->string('nama_blok');
+            $table->date('tgl_panen');
+            $table->decimal('berat_daun', 8);
+            $table->decimal('jumlah_ikat', 8);
+            $table->decimal('total_berat_daun', 8);
+            $table->timestamps();
+        });
         // Tabel CmPenyulaman
         Schema::create('cm_penyulaman', function (Blueprint $table) {
             $table->id('id_sulam');
