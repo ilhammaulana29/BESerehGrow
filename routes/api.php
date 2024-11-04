@@ -16,6 +16,7 @@ use App\Http\Controllers\ProsedurAnalisisController;
 //Procesing Management
 use App\Http\Controllers\PenyulinganController;
 use App\Http\Controllers\KeluhanController;
+use App\Http\Controllers\PengujianController;
 
 //Koperasi
 
@@ -114,6 +115,12 @@ Route::post('/penyulingan', [PenyulinganController::class, 'store']);
 Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'update']);
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 Route::put('/penyulingan/{id_penyulingan}/status', [PenyulinganController::class, 'updateStatus']);
+Route::get('/penyulingan/masuk-gudang/{status}', [PenyulinganController::class, 'getMasukGudang']);
+Route::post('/pengujian/tambahdata', [PengujianController::class, 'store']);
+Route::get('/pengujian/table', [PengujianController::class, 'index']);
+Route::put('/pengujian/{id_pengujian}', [PengujianController::class, 'update']);
+Route::delete('/pengujian/{id_pengujian}', [PengujianController::class, 'destroy']);
+
 
 
 

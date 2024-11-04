@@ -11,6 +11,7 @@ class Penyulingan extends Model
 
     // Nama tabel yang digunakan
     protected $table = 'pm_penyulingan';
+    protected $primaryKey = 'id_penyulingan';
 
     protected $fillable = [
         'no_batch_penyulingan',
@@ -24,5 +25,9 @@ class Penyulingan extends Model
         'penyebaran_asap',
         'status',
     ];
-    protected $primaryKey = 'id_penyulingan';
+   
+    public function pengujians()
+    {
+        return $this->hasMany(Pengujian::class, 'id_penyulingan', 'id_penyulingan');
+    }
 }

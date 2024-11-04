@@ -170,4 +170,12 @@ class PenyulinganController extends Controller
             ], 500);
         }
     }
+    public function getMasukGudang($status)
+    {
+        // Mengambil data penyulingan yang statusnya 'Masuk Gudang'
+        $penyulingan = Penyulingan::where('status', $status)
+        ->get(['id_penyulingan', 'no_batch_penyulingan']); // Kolom yang diperlukan saja
+
+    return response()->json($penyulingan);
+    }
 }
