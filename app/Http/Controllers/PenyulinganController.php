@@ -12,6 +12,26 @@ class PenyulinganController extends Controller
         $data = Penyulingan::all(); // Ambil semua data dari model
         return response()->json($data); // Kembalikan data sebagai JSON
     }
+    public function getByStatus($status)
+    {
+        try {
+            // Ambil data penyulingan berdasarkan kolom status
+            $data = Penyulingan::where('status', $status)->get();
+
+            // Kembalikan respons data yang ditemukan
+            return response()->json([
+                'message' => 'Data penyulingan berdasarkan status berhasil diambil',
+                'data' => $data
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan respons dengan status 500
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data penyulingan berdasarkan status',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
     public function store(Request $request)
     {
         // Validasi data yang masuk
@@ -126,6 +146,28 @@ class PenyulinganController extends Controller
             ], 500);
         }
     }
-
-
+    public function updateStatus($id_penyulingan)
+    {
+        try {
+            // Temukan data penyulingan berdasarkan ID
+            $penyulingan = Penyulingan::findOrFail($id_penyulingan);
+            
+            // Ubah kolom status menjadi 'Masuk Gudang'
+            $penyulingan->status = 'Masuk Gudang';
+            $penyulingan->save();
+            
+            // Kembalikan respons berhasil
+            return response()->json([
+                'message' => 'Status penyulingan berhasil diperbarui menjadi "Masuk Gudang"',
+                'data' => $penyulingan
+            ], 200);
+            
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan respons dengan status 500
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui status penyulingan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
