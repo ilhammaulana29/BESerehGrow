@@ -108,6 +108,14 @@ Route::post('panen', [PanenController::class, 'store']);
 Route::put('panen/{id}', [PanenController::class, 'update']);
 Route::delete('panen/{id}', [PanenController::class, 'destroy']);
 
+use App\Http\Controllers\PlasmaController;
+
+Route::get('plasma', [PlasmaController::class, 'index']);
+Route::get('plasma/{id}', [PlasmaController::class, 'show']);
+Route::post('plasma', [PlasmaController::class, 'store']);
+Route::put('plasma/{id}', [PlasmaController::class, 'update']);
+Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
+
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
