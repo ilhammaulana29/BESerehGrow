@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pengujian;
-use App\Models\Penyulingan;
 use Illuminate\Support\Facades\Validator;
 
 class PengujianController extends Controller
@@ -130,6 +129,47 @@ class PengujianController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat menghapus data pengujian',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function getByPenyulinganId($id_penyulingan)
+    {
+        try {
+            $data = Pengujian::where('id_penyulingan', $id_penyulingan)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    public function getSiapFraksinasi($status)
+    {
+        // Mengambil data Pengujian yang statusnya 'Masuk Gudang'
+        $pengujian = Pengujian::where('status', $status)
+        ->get(['id_pengujian', 'no_batch_pengujian']); // Kolom yang diperlukan saja
+
+    return response()->json($pengujian);
+    }
+    public function updateStatus($id_pengujian)
+    {
+        try {
+            // Temukan data pengujian berdasarkan ID
+            $pengujian = Pengujian::findOrFail($id_pengujian);
+            
+            // Ubah kolom status menjadi 'Masuk Gudang'
+            $pengujian->status = 'Siap Fraksinasi';
+            $pengujian->save();
+            
+            // Kembalikan respons berhasil
+            return response()->json([
+                'message' => 'Status pengujian berhasil diperbarui menjadi "Masuk Gudang"',
+                'data' => $pengujian
+            ], 200);
+            
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan respons dengan status 500
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui status pengujian',
                 'error' => $e->getMessage()
             ], 500);
         }

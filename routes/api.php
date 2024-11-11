@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FraksinasiController;
 use App\Http\Controllers\GalleryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -116,11 +117,18 @@ Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'upda
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 Route::put('/penyulingan/{id_penyulingan}/status', [PenyulinganController::class, 'updateStatus']);
 Route::get('/penyulingan/masuk-gudang/{status}', [PenyulinganController::class, 'getMasukGudang']);
+Route::get('/pengujian/fraksinasi/{status}', [PengujianController::class, 'getSiapFraksinasi']);
 Route::post('/pengujian/tambahdata', [PengujianController::class, 'store']);
 Route::get('/pengujian/table', [PengujianController::class, 'index']);
 Route::put('/pengujian/{id_pengujian}', [PengujianController::class, 'update']);
 Route::delete('/pengujian/{id_pengujian}', [PengujianController::class, 'destroy']);
-
+Route::get('/penyulingan/table/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganId']);
+Route::get('/pengujian/table/{id_penyulingan}', [PengujianController::class,'getByPenyulinganId']);
+Route::put('/pengujian/{id_pengujian}/status', [PengujianController::class, 'updateStatus']);
+Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
+Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
+Route::put('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'update']);
+Route::delete('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'destroy']);
 
 
 

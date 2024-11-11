@@ -178,4 +178,26 @@ class PenyulinganController extends Controller
 
     return response()->json($penyulingan);
     }
+    public function getByPenyulinganId($id_penyulingan)
+    {
+        try {
+            // Query ke tabel `pm` berdasarkan `id_penyulingan`
+            $data = Penyulingan::where('id_penyulingan', $id_penyulingan)->get();
+    
+            // Jika ada data tambahan terkait, tambahkan di sini
+            $additionalData = [
+                // Masukkan data tambahan yang dibutuhkan, misalnya metadata penyulingan
+            ];
+    
+            return response()->json([
+                'data' => $data,
+                'additionalData' => $additionalData,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan dalam mengambil data.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
