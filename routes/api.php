@@ -100,20 +100,23 @@ Route::apiResource('rumpun', RumpunController::class);
 
 use App\Http\Controllers\PanenController;
 
-Route::get('panen', [PanenController::class, 'index']);
-Route::get('panen/{id}', [PanenController::class, 'show']);
-Route::post('panen', [PanenController::class, 'store']);
-Route::put('panen/{id}', [PanenController::class, 'update']);
-Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+// Route::get('panen', [PanenController::class, 'index']);
+// Route::get('panen/{id}', [PanenController::class, 'show']);
+// Route::post('panen', [PanenController::class, 'store']);
+// Route::put('panen/{id}', [PanenController::class, 'update']);
+// Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+Route::apiResource('panen', PanenController::class);
+
 
 use App\Http\Controllers\PlasmaController;
 
-Route::get('plasma', [PlasmaController::class, 'index']);
-Route::get('plasma/{id}', [PlasmaController::class, 'show']);
-Route::post('plasma', [PlasmaController::class, 'store']);
-Route::put('plasma/{id}', [PlasmaController::class, 'update']);
-Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
-
+// Route::get('plasma', [PlasmaController::class, 'index']);
+// Route::get('plasma/{id}', [PlasmaController::class, 'show']);
+// Route::post('plasma', [PlasmaController::class, 'store']);
+// Route::put('plasma/{id}', [PlasmaController::class, 'update']);
+// Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
+Route::apiResource('plasma', PlasmaController::class);
+// Route::put('/plasma/{id}', [PlasmaController::class, 'update']);
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);

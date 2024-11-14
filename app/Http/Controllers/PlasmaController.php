@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Plasma;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PlasmaController extends Controller
 {
@@ -34,19 +35,26 @@ class PlasmaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $plasma = Plasma::findOrFail($id);
-
-        $validated = $request->validate([
-            'nama_petani' => 'required|string',
-            'berat_daun' => 'required|numeric',
-            'jenis_rumpun' => 'required|string',
-            'total_harga' => 'required|numeric',
-            'tgl_setor' => 'required|date',
-        ]);
-
-        $plasma->update($validated);
-        return response()->json($plasma);
+        Log::info("Update request for Plasma ID: $id", $request->all());
+        try {
+            $plasma = Plasma::findOrFail($id);
+            $validatedData = $request->validate([
+                'nama_petani' => 'required|string|max:255',
+                'berat_daun' => 'required|numeric',
+                'jenis_rumpun' => 'required|string|max:255',
+                'total_harga' => 'required|numeric',
+                'tanggal_setor' => 'required|date',
+            ]);
+    
+            Log::info("Validated data:", $validatedData);
+            $plasma->update($validatedData);
+            return response()->json(['message' => 'Plasma updated successfully'], 200);
+        } catch (\Exception $e) {
+            Log::error("Error updating Plasma: " . $e->getMessage());
+            return response()->json(['error' => 'Failed to update Plasma data'], 500);
+        }
     }
+    
 
     public function destroy($id)
     {

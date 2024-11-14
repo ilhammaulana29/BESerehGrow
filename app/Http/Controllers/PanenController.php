@@ -35,19 +35,28 @@ class PanenController extends Controller
 
     public function update(Request $request, $id)
     {
-        $panen = Panen::findOrFail($id);
+        try {
+            // Find the record by ID
+            $panen = Panen::findOrFail($id);
 
-        $validated = $request->validate([
-            'id_blok' => 'required|exists:cm_bloklahan,id_bloklahan',
-            'nama_blok' => 'required|string',
-            'tgl_panen' => 'required|date',
-            'berat_daun' => 'required|numeric',
-            'jumlah_ikat' => 'required|numeric',
-            'total_berat_daun' => 'required|numeric',
-        ]);
+            // Validate and update with data from the request
+            $validatedData = $request->validate([
+                'id_blok' => 'required|exists:cm_bloklahan,id_bloklahan',
+                'tanggal_panen' => 'required|date',
+                'berat_daun_per_ikat' => 'required|numeric',
+                'jumlah_ikat' => 'required|numeric',
+                'total_berat_daun' => 'required|numeric',
+            ]);
 
-        $panen->update($validated);
-        return response()->json($panen);
+            // Update the harvest record with validated data
+            $panen->update($validatedData);
+
+            // Return success response
+            return response()->json(['message' => 'Harvest data updated successfully'], 200);
+        } catch (\Exception $e) {
+            // Handle and return error response
+            return response()->json(['message' => 'Error updating harvest data', 'error' => $e->getMessage()], 500);
+        }
     }
 
     public function destroy($id)
@@ -55,6 +64,8 @@ class PanenController extends Controller
         $panen = Panen::findOrFail($id);
         $panen->delete();
 
-        return response()->json(['message' => 'Panen record deleted successfully']);
+        // return response()->json(['message' => 'Panen record deleted successfully']);
+        return response()->json(null, 204);
+        
     }
 }
