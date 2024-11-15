@@ -13,8 +13,8 @@ class CreateCpcBudidayaTable extends Migration
             $table->string('judul');               // Judul utama
             $table->string('subtitle')->nullable(); // Sub judul
             $table->text('deskripsi');              // Deskripsi utama
-            $table->string('image_path')->nullable(); // Path gambar
-            $table->text('additional_info')->nullable(); // Info tambahan
+            $table->string('gambar')->nullable(); // Path gambar
+            $table->text('additionalinfo')->nullable(); // Info tambahan
             $table->timestamps();
         });
     }
