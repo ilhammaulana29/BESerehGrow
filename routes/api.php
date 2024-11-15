@@ -20,6 +20,7 @@ use App\Http\Controllers\ProsedurAnalisisController;
 
 //Konten
 use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\ContentController;
 
 Route::get('/budidaya', [BudidayaController::class, 'index']);
 Route::get('/budidaya/{id}', [BudidayaController::class, 'show']);
@@ -65,8 +66,19 @@ Route::delete('/bloklahan/{id}', [LandController::class, 'destroy']);
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
-Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showData']);
+Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
 Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
+
+
+
+
+Route::get('/article-content', [ContentController::class, 'index']);
+Route::get('/show-article-content/{id_konten}', [ContentController::class, 'showDataContent']);
+Route::put('/edit-article-content/{id_konten}', [ContentController::class, 'updateContent']);
+Route::get('/article-content/{slug}', [ContentController::class, 'detailContent']);
+Route::get('/type-content', [ContentController::class, 'getContentType']);
+route::post('/upload-content', [ContentController::class, 'uploadContent']);
+Route::delete('/article-content/{id_konten}', [ContentController::class, 'deleteContent']);

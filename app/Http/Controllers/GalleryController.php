@@ -35,7 +35,7 @@ class GalleryController extends Controller
         return response()->json($categories);
     }
 
-    public function showData($id_galeri)
+    public function showDataGallery($id_galeri)
     {
         $gallery = Gallery::findOrFail($id_galeri);
         return response()->json($gallery);
@@ -49,7 +49,17 @@ class GalleryController extends Controller
             'gambar' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'kategori' => 'required|string',
             'deskripsi_gambar' => 'required|max:50'
-        ]);
+        ],
+        [
+            'gambar.required' => 'Gambar wajib dunggah',
+            'gambar.image' => 'File harus berupa gambar ',
+            'gambar.mimes' => 'Gambar harus berformat jpeg, jpg, atau png',
+            'gambar.max' => 'Gambar maksimal 2MB',
+            'kategori.required' => 'Kategori harus dipilih',
+            'deskripsi_gambar.required' => 'Deskripsi Gambar harus diisi',
+            'deskripsi_gambar.max' => 'Maksimal 50 huruf'
+        ]
+    );
 
 
         // Menyimpan file gambar
@@ -76,50 +86,50 @@ class GalleryController extends Controller
     }
 
     public function updateGallery(Request $request, $id_galeri)
-{
-    $gallery = Gallery::findOrFail($id_galeri);
+    {
+        $gallery = Gallery::findOrFail($id_galeri);
 
-    // Validasi hanya jika inputnya tidak kosong
-    $validatedData = $request->validate([
-        'gambar' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
-        'id_kategori' => 'nullable',
-        'deskripsi_gambar' => 'nullable',
-    ]);
+        // Validasi hanya jika inputnya tidak kosong
+        $validatedData = $request->validate([
+            'gambar' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'id_kategori' => 'nullable',
+            'deskripsi_gambar' => 'nullable',
+        ]);
 
-    // Cek jika gambar diupload
-    if ($request->hasFile('gambar')) {
-        Storage::delete('public/image-gallery/' . $gallery->gambar);
-        $file = $request->file('gambar');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $path = $file->storeAs('image-gallery', $filename, 'public'); // Simpan gambar ke storage public/image-gallery
-        $gallery->gambar = $filename;
+        // Cek jika gambar diupload
+        if ($request->hasFile('gambar')) {
+            Storage::delete('public/image-gallery/' . $gallery->gambar);
+            $file = $request->file('gambar');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('image-gallery', $filename, 'public'); // Simpan gambar ke storage public/image-gallery
+            $gallery->gambar = $filename;
+        }
+
+        $gallery->id_kategori = $validatedData['id_kategori'];
+        $gallery->deskripsi_gambar = $validatedData['deskripsi_gambar'];
+
+
+        $gallery->save();
+
+        return response()->json($gallery, 200);
     }
 
-    $gallery->id_kategori = $validatedData['id_kategori'];
-    $gallery->deskripsi_gambar = $validatedData['deskripsi_gambar'];
 
+    public function deleteGallery($id_galeri)
+    {
+        // Cari data galeri berdasarkan id
+        $gallery = Gallery::findOrFail($id_galeri);
 
-    $gallery->save();
+        // Hapus file gambar dari storage jika ada
+        if ($gallery->gambar) {
+            Storage::delete('public/image-gallery/' . $gallery->gambar);
+        }
 
-    return response()->json($gallery, 200);
-}
+        // Hapus data galeri dari database
+        $gallery->delete();
 
-
-public function deleteGallery($id_galeri)
-{
-    // Cari data galeri berdasarkan id
-    $gallery = Gallery::findOrFail($id_galeri);
-
-    // Hapus file gambar dari storage jika ada
-    if ($gallery->gambar) {
-        Storage::delete('public/image-gallery/' . $gallery->gambar);
+        return response()->json(['message' => 'Galeri berhasil dihapus'], 200);
     }
-
-    // Hapus data galeri dari database
-    $gallery->delete();
-
-    return response()->json(['message' => 'Galeri berhasil dihapus'], 200);
-}
 
 
         

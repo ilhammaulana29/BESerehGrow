@@ -49,22 +49,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Tabel CpcPenulis (Make sure this table exists)
-        Schema::create('cpc_penulis', function (Blueprint $table) {
-            $table->id('id'); // Assuming this is the primary key in the cpc_penulis table
-            $table->string('nama'); // Add other columns as needed
-            $table->timestamps();
-        });
 
         // Tabel CpcKonten
         Schema::create('cpc_konten', function (Blueprint $table) {
             $table->id('id_konten');
-            $table->foreignId('id_penulis')->constrained('cpc_penulis')->onDelete('cascade');
-            $table->string('jenis_konten');
-            $table->string('judul_konten');
+            $table->string('nama_penulis');
+            $table->unsignedBigInteger('id_jenis_konten'); // Kolom foreign key
+            $table->foreign('id_jenis_konten')->references('id_jenis_konten')->on('jenis_konten')->onDelete('cascade');            $table->string('judul_konten');
             $table->text('deskripsi_konten');
-            $table->string('url_gambar')->nullable();
-            $table->string('url_video')->nullable();
+            $table->string('gambar')->nullable();
+            $table->string('video')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
 
