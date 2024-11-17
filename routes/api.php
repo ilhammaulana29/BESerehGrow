@@ -26,6 +26,7 @@ use App\Http\Controllers\PendaftaranController;
 
 //Konten
 use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\ContentController;
 
 Route::get('/budidaya', [BudidayaController::class, 'index']);
 Route::get('/budidaya/{id}', [BudidayaController::class, 'show']);
@@ -107,21 +108,24 @@ use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PendaftaranAlamatAnggotaKoperasiController;
 use App\Http\Controllers\PendaftaranAnggotaKoperasiController;
 
-Route::get('panen', [PanenController::class, 'index']);
-Route::get('panen/{id}', [PanenController::class, 'show']);
-Route::post('panen', [PanenController::class, 'store']);
-Route::put('panen/{id}', [PanenController::class, 'update']);
-Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+// Route::get('panen', [PanenController::class, 'index']);
+// Route::get('panen/{id}', [PanenController::class, 'show']);
+// Route::post('panen', [PanenController::class, 'store']);
+// Route::put('panen/{id}', [PanenController::class, 'update']);
+// Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+Route::apiResource('panen', PanenController::class);
+
 
 use App\Http\Controllers\PlasmaController;
 use App\Http\Controllers\SimpananAnggotaKoperasiController;
 
-Route::get('plasma', [PlasmaController::class, 'index']);
-Route::get('plasma/{id}', [PlasmaController::class, 'show']);
-Route::post('plasma', [PlasmaController::class, 'store']);
-Route::put('plasma/{id}', [PlasmaController::class, 'update']);
-Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
-
+// Route::get('plasma', [PlasmaController::class, 'index']);
+// Route::get('plasma/{id}', [PlasmaController::class, 'show']);
+// Route::post('plasma', [PlasmaController::class, 'store']);
+// Route::put('plasma/{id}', [PlasmaController::class, 'update']);
+// Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
+Route::apiResource('plasma', PlasmaController::class);
+// Route::put('/plasma/{id}', [PlasmaController::class, 'update']);
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
@@ -162,7 +166,7 @@ Route::post('/koperasi/pendaftaran/anggota', [PendaftaranController::class, 'sto
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
-Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showData']);
+Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
@@ -175,3 +179,14 @@ Route::get('/help', [helpController::class, 'index']);
 Route::post('/add-help', [helpController::class, 'addHelp']);
 Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
 Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
+
+
+
+
+Route::get('/article-content', [ContentController::class, 'index']);
+Route::get('/show-article-content/{id_konten}', [ContentController::class, 'showDataContent']);
+Route::put('/edit-article-content/{id_konten}', [ContentController::class, 'updateContent']);
+Route::get('/article-content/{slug}', [ContentController::class, 'detailContent']);
+Route::get('/type-content', [ContentController::class, 'getContentType']);
+route::post('/upload-content', [ContentController::class, 'uploadContent']);
+Route::delete('/article-content/{id_konten}', [ContentController::class, 'deleteContent']);

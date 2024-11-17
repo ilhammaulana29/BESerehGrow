@@ -10,6 +10,7 @@ class Panen extends Model
     use HasFactory;
 
     protected $table = 'cm_panen';
+    protected $primaryKey = 'id_panen';
 
     protected $fillable = [
         'id_blok',

@@ -10,6 +10,7 @@ class Plasma extends Model
     use HasFactory;
 
     protected $table = 'cm_plasma';
+    protected $primaryKey = 'id_plasma';
 
     protected $fillable = [
         'nama_petani',
