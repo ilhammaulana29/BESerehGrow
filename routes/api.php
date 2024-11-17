@@ -20,7 +20,9 @@ use App\Http\Controllers\KeluhanController;
 use App\Http\Controllers\PengujianController;
 
 //Koperasi
-
+use App\Http\Controllers\JenisSimpananController;
+use App\Http\Controllers\StatuskeanggotaanController;
+use App\Http\Controllers\PendaftaranController;
 
 //Konten
 use App\Http\Controllers\BudidayaController;
@@ -73,6 +75,7 @@ Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
 
 use App\Http\Controllers\AreaRindangController;
 
+
 Route::get('arearindang', [AreaRindangController::class, 'index']);
 Route::post('arearindang', [AreaRindangController::class, 'store']);
 Route::get('arearindang/{id}', [AreaRindangController::class, 'show']);
@@ -101,6 +104,8 @@ use App\Http\Controllers\RumpunController;
 Route::apiResource('rumpun', RumpunController::class);
 
 use App\Http\Controllers\PanenController;
+use App\Http\Controllers\PendaftaranAlamatAnggotaKoperasiController;
+use App\Http\Controllers\PendaftaranAnggotaKoperasiController;
 
 Route::get('panen', [PanenController::class, 'index']);
 Route::get('panen/{id}', [PanenController::class, 'show']);
@@ -109,6 +114,7 @@ Route::put('panen/{id}', [PanenController::class, 'update']);
 Route::delete('panen/{id}', [PanenController::class, 'destroy']);
 
 use App\Http\Controllers\PlasmaController;
+use App\Http\Controllers\SimpananAnggotaKoperasiController;
 
 Route::get('plasma', [PlasmaController::class, 'index']);
 Route::get('plasma/{id}', [PlasmaController::class, 'show']);
@@ -137,17 +143,21 @@ Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
 Route::put('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'update']);
 Route::delete('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'destroy']);
-
-
-
-
-
-
 Route::get('/keluhan', [KeluhanController::class, 'index']);
 Route::post('/keluhan', [KeluhanController::class, 'store']);
 Route::put('/keluhan/{id_keluhan}', [KeluhanController::class, 'update']); // Mengupdate keluhan berdasarkan ID
 Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'destroy']);
+
 //Koperasi
+Route::post('koperasi/statuskeanggotaan', [StatuskeanggotaanController::class,'store']);
+Route::get('koperasi/statuskeanggotaan/table', [StatuskeanggotaanController::class,'index']);
+Route::put('koperasi/statuskeanggotaan/{id_statusanggota}', [StatuskeanggotaanController::class,'update']);
+Route::delete('koperasi/statuskeanggotaan/{id_statusanggota}', [StatuskeanggotaanController::class,'destroy']);
+Route::get('/koperasi/pendaftaran-anggota/statusanggota', [StatuskeanggotaanController::class, 'getStatusAnggota']);
+Route::get('/koperasi/pendaftaran-anggota/jenissimpanan', [JenisSimpananController::class, 'getJenisSimpanan']);
+// Route untuk anggota koperasi
+Route::post('/koperasi/pendaftaran/anggota', [PendaftaranController::class, 'store']);
+
 
 
 //Konten

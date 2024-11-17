@@ -10,7 +10,7 @@ class PengujianController extends Controller
 {
     public function index()
     {
-        $data = Pengujian::all(); // Ambil semua data dari model
+        $data = Pengujian::orderBy('created_at', 'desc')->get(); // Ambil semua data dari model
         return response()->json($data); // Kembalikan data sebagai JSON
     }
     public function store(Request $request)
