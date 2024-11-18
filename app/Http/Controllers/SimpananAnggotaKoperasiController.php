@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Simpanan;
+use App\Models\JenisSimpanan;
 use Illuminate\Support\Facades\DB;
 
 class SimpananAnggotaKoperasiController extends Controller
@@ -30,7 +31,28 @@ class SimpananAnggotaKoperasiController extends Controller
             'updated_at' => now(),
         ]);
 
-    return response()->json(['message' => 'Simpanan berhasil disimpan'], 201);
-}
+        return response()->json(['message' => 'Simpanan berhasil disimpan'], 201);
+    }
+    public function getMemberSavingData(Request $request, $id_anggota)
+    {
+        // Ambil nilai filter nama_simpanan dari query string jika ada
+        $filterNamaSimpanan = $request->input('nama_simpanan');
+    
+        // Query join antara pc_simpanan dan pc_jenis_simpanan berdasarkan id_anggota
+        $query = Simpanan::join('pc_jenis_simpanan', 'pc_simpanan.id_jenissimpanan', '=', 'pc_jenis_simpanan.id_jenissimpanan')
+                        ->where('pc_simpanan.id_anggota', $id_anggota)
+                        ->select('pc_jenis_simpanan.nama_simpanan', 'pc_simpanan.tgl_simpan', 'pc_simpanan.jml_simpanan', 'pc_simpanan.keterangan');
+    
+        // Jika ada filter nama_simpanan, tambahkan kondisi where untuk menyaring data
+        if ($filterNamaSimpanan) {
+            $query->where('pc_jenis_simpanan.nama_simpanan', $filterNamaSimpanan);
+        }
+    
+        // Ambil data berdasarkan query yang sudah difilter
+        $data = $query->get();
+    
+        return response()->json($data);
+    }
+    
 
 }

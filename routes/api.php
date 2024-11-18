@@ -159,8 +159,20 @@ Route::put('koperasi/statuskeanggotaan/{id_statusanggota}', [StatuskeanggotaanCo
 Route::delete('koperasi/statuskeanggotaan/{id_statusanggota}', [StatuskeanggotaanController::class,'destroy']);
 Route::get('/koperasi/pendaftaran-anggota/statusanggota', [StatuskeanggotaanController::class, 'getStatusAnggota']);
 Route::get('/koperasi/pendaftaran-anggota/jenissimpanan', [JenisSimpananController::class, 'getJenisSimpanan']);
+Route::get('koperasi/memberdata',[PendaftaranAnggotaKoperasiController::class, 'index']);
 // Route untuk anggota koperasi
 Route::post('/koperasi/pendaftaran/anggota', [PendaftaranController::class, 'store']);
+Route::put('/koperasi/memberdata/edit/{id_anggota}',[PendaftaranAnggotaKoperasiController::class, 'update']);
+Route::put('/koperasi/memberdata/delete/{id_anggota}',[PendaftaranAnggotaKoperasiController::class, 'destroy']);
+Route::get('/koperasi/detail-memberdata/{id_anggota}', [PendaftaranAnggotaKoperasiController::class,'getByMemberId']);
+
+Route::get('/koperasi/detail-memberdata/statusanggota/{id_statusanggota}', [StatuskeanggotaanController::class,'getByStatusMemberId']);
+Route::get('/koperasi/detail-memberdata/alamat/{id_anggota}', [PendaftaranAlamatAnggotaKoperasiController::class, 'getAlamatByMemberId']);
+Route::get('koperasi/saving-memberdata/{id_anggota}', [SimpananAnggotaKoperasiController::class, 'getMemberSavingData']);
+Route::put('/koperasi/detail-memberdata/alamat/edit/{id_anggota}', [PendaftaranAlamatAnggotaKoperasiController::class, 'update']);
+
+
+
 
 
 
