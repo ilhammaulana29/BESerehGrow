@@ -189,7 +189,10 @@ Route::get('/koperasi/member-saving/namaAnggota', [PendaftaranAnggotaKoperasiCon
 Route::post('/koperasi/member-saving', [SimpananAnggotaKoperasiController::class, 'store']);
 Route::put('/koperasi/member-saving/edit/{id_simpanan}', [SimpananAnggotaKoperasiController::class, 'update']);
 Route::delete('/koperasi/member-saving/delete/{id_simpanan}', [SimpananAnggotaKoperasiController::class, 'destroy']);
-
+Route::get('/koperasi/saving-type/table', [JenisSimpananController::class, 'index']);
+Route::post('/koperasi/saving-type/tambahdata', [JenisSimpananController::class, 'store']);
+Route::put('/koperasi/saving-type/edit/{id_jenissimpanan}', [JenisSimpananController::class, 'update']);
+Route::delete('/koperasi/saving-type/delete/{id_jenissimpanan}', [JenisSimpananController::class, 'destroy']);
 
 
 //Konten
