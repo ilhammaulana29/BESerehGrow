@@ -170,8 +170,10 @@ Route::get('/koperasi/detail-memberdata/statusanggota/{id_statusanggota}', [Stat
 Route::get('/koperasi/detail-memberdata/alamat/{id_anggota}', [PendaftaranAlamatAnggotaKoperasiController::class, 'getAlamatByMemberId']);
 Route::get('koperasi/saving-memberdata/{id_anggota}', [SimpananAnggotaKoperasiController::class, 'getMemberSavingData']);
 Route::put('/koperasi/detail-memberdata/alamat/edit/{id_anggota}', [PendaftaranAlamatAnggotaKoperasiController::class, 'update']);
-
-
+Route::get('/koperasi/simpanan-anggota', [SimpananAnggotaKoperasiController::class, 'getAllSavingsData']);
+Route::get('/koperasi/simpanan-anggota/filter', [SimpananAnggotaKoperasiController::class, 'etFilteredSavingsData']);
+Route::get('/koperasi/member-saving/namaAnggota', [PendaftaranAnggotaKoperasiController::class, 'getNamaAnggota']);
+Route::post('/koperasi/member-saving', [SimpananAnggotaKoperasiController::class, 'store']);
 
 
 

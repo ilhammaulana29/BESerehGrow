@@ -102,4 +102,13 @@ class PendaftaranAnggotaKoperasiController extends Controller
             ], 500);
         }
     }
+    public function getNamaAnggota()
+    {
+        try {
+            $anggotaKoperasi = Anggotakoperasi::select('id_anggota', 'nama_anggota')->get();
+            return response()->json($anggotaKoperasi, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch data', 'error' => $e->getMessage()], 500);
+        }
+    }
 }
