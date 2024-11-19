@@ -12,7 +12,10 @@ class Cpc_about extends Model
     protected $table = "cpc_about";
 
     protected $fillable = [
-        'deskripsi'
+        'visi',
+        'misi',
+        'kebijakan',
+        'ketentuan'
     ];
 
     protected $primaryKey = "id_aboutcp";

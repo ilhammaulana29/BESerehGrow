@@ -10,8 +10,8 @@ class Cpc_company_historyController extends Controller
      // GET All Companies
     public function index()
     {
-        $companies = Cpc_company_history::all();
-        return response()->json($companies);
+        $history = Cpc_company_history::all();
+        return response()->json($history);
     }
 
      // CREATE New Company

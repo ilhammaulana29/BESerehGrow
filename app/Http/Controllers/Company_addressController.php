@@ -10,8 +10,8 @@ class Company_addressController extends Controller
     // GET All Companies
     public function index()
     {
-        $companies = Company_address::all();
-        return response()->json($companies);
+        $address = Company_address::all();
+        return response()->json($address);
     }
 
     // CREATE New Company
@@ -24,10 +24,9 @@ class Company_addressController extends Controller
     // GET a Single Company
     public function show($id)
     {
-        $company = Company_address::find($id);
-        return response()->json($company);
+    $company = Company_address::find($id);
+    return response()->json($company);
     }
-
     // UPDATE a Company
     public function update(Request $request, $id)
     {

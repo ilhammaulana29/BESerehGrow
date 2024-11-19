@@ -36,7 +36,10 @@ return new class extends Migration
         // Tabel CpcAbout
         Schema::create('cpc_about', function (Blueprint $table) {
             $table->id('id_aboutcp');
-            $table->text('deskripsi')->nullable();
+            $table->string('visi')->nullable();
+            $table->string('misi')->nullable();
+            $table->text('kebijakan')->nullable();
+            $table->text('ketentuan')->nullable();
             $table->timestamps();
         });
 
@@ -71,10 +74,6 @@ return new class extends Migration
         // Tabel CpcCompany
         Schema::create('cpc_company', function (Blueprint $table) {
             $table->id('id_company');
-            $table->foreignId('id_cpaddress')->constrained('company_address', 'id_cpaddress')->onDelete('cascade');
-            $table->foreignId('id_cpcontact')->constrained('cpc_company_contact', 'id_cpcontact')->onDelete('cascade');
-            $table->foreignId('id_aboutcp')->constrained('cpc_about', 'id_aboutcp')->onDelete('cascade');
-            $table->foreignId('id_cphistory')->constrained('cpc_company_history', 'id_cphistory')->onDelete('cascade');
             $table->string('nama_company');
             $table->string('logo_company')->nullable();
             $table->string('slogan');

@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Cpc_company_contactController;
+
 use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\Mitracontroller;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 //Admin Acces Management
@@ -10,16 +10,23 @@ use Illuminate\Support\Facades\Route;
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
-use App\Http\Controllers\Company_addressController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\Cpc_aboutController;
-use App\Http\Controllers\Cpc_company_historyController;
+
+
+
+
 use App\Http\Controllers\ProsedurAnalisisController;
 
 //Cultivate Management
 
 //Procesing Management
 
+//Company & Mitra
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Company_addressController;
+use App\Http\Controllers\Cpc_aboutController;
+use App\Http\Controllers\Cpc_company_historyController;
+use App\Http\Controllers\Cpc_company_contactController;
+use App\Http\Controllers\Mitracontroller;
 
 //Koperasi
 
@@ -83,7 +90,7 @@ Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 //Company_address
 Route::get('/company-address', [Company_addressController::class,'index']);
 Route::post('/company-address', [Company_addressController::class, 'store']);
-Route::get('/company-address/{id}', [Company_addressController::class. 'show']);
+Route::get('/company-address/{id}', [Company_addressController::class,   'show']);
 Route::put('/company-address/{id}', [Company_addressController::class,'update']);
 Route::delete('/company-address/{id}', [Company_addressController::class, 'destroy']);
 
