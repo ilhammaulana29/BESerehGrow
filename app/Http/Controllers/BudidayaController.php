@@ -27,12 +27,13 @@ class BudidayaController extends Controller
             'judul' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'deskripsi' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'additional_info' => 'nullable|string',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'additionalinfo' => 'nullable|string',
         ]);
+        
 
-        if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('images/budidaya', 'public');
+        if ($request->hasFile('gambar')) {
+            $data['image_path'] = $request->file('gambar')->store('images/budidaya', 'public');
         }
 
         $budidaya = Budidaya::create($data);
@@ -48,19 +49,19 @@ class BudidayaController extends Controller
         'judul' => 'required|string',
         'subtitle' => 'string|nullable',
         'deskripsi' => 'string|nullable',
-        'additional_info' => 'string|nullable',
-        'image' => 'file|image|max:2048' // Adjust as needed
+        'additionalinfo' => 'string|nullable',
+        'gambar' => 'file|image|max:2048' // Adjust as needed
     ]);
 
     // Update fields
     $budidaya->judul = $validatedData['judul'];
     $budidaya->subtitle = $validatedData['subtitle'];
     $budidaya->deskripsi = $validatedData['deskripsi'];
-    $budidaya->additional_info = $validatedData['additional_info'];
+    $budidaya->additionalinfo = $validatedData['additionalinfo'];
 
     // Handle image upload if present
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('budidaya_images', 'public');
+    if ($request->hasFile('gambar')) {
+        $path = $request->file('gambar')->store('budidaya_images', 'public');
         $budidaya->image_path = $path;
     }
 

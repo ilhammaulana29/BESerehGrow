@@ -36,6 +36,24 @@ class LandController extends Controller
         return Land::findOrFail($id);
     }
 
+    public function getNamaBlok()
+    {
+        // Fetch data from the BlokLahan model
+        $blokLahanData = Land::all(); // Adjust the query based on your needs
+
+        // Transform the data into the desired format
+        $namaBlokResponse = $blokLahanData->map(function ($item) {
+            return [
+                'namablok' => $item->namablok,
+                'id_bloklahan' => $item->id_bloklahan,
+                'jenis_rumpun' => $item->jenis_rumpun // Adjust based on your model attributes
+            ];
+        });
+
+        // Return response as JSON
+        return response()->json($namaBlokResponse);
+    }
+    
     // Update an entry
     public function update(Request $request, $id)
     {
