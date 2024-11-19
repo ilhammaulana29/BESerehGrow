@@ -187,7 +187,8 @@ Route::get('/koperasi/simpanan-anggota', [SimpananAnggotaKoperasiController::cla
 Route::get('/koperasi/simpanan-anggota/filter', [SimpananAnggotaKoperasiController::class, 'etFilteredSavingsData']);
 Route::get('/koperasi/member-saving/namaAnggota', [PendaftaranAnggotaKoperasiController::class, 'getNamaAnggota']);
 Route::post('/koperasi/member-saving', [SimpananAnggotaKoperasiController::class, 'store']);
-
+Route::put('/koperasi/member-saving/edit/{id_simpanan}', [SimpananAnggotaKoperasiController::class, 'update']);
+Route::delete('/koperasi/member-saving/delete/{id_simpanan}', [SimpananAnggotaKoperasiController::class, 'destroy']);
 
 
 
