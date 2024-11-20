@@ -120,6 +120,7 @@ Route::apiResource('rumpun', RumpunController::class);
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PendaftaranAlamatAnggotaKoperasiController;
 use App\Http\Controllers\PendaftaranAnggotaKoperasiController;
+use App\Http\Controllers\PinjamanAnggotaController;
 
 // Route::get('panen', [PanenController::class, 'index']);
 // Route::get('panen/{id}', [PanenController::class, 'show']);
@@ -193,7 +194,10 @@ Route::get('/koperasi/saving-type/table', [JenisSimpananController::class, 'inde
 Route::post('/koperasi/saving-type/tambahdata', [JenisSimpananController::class, 'store']);
 Route::put('/koperasi/saving-type/edit/{id_jenissimpanan}', [JenisSimpananController::class, 'update']);
 Route::delete('/koperasi/saving-type/delete/{id_jenissimpanan}', [JenisSimpananController::class, 'destroy']);
-
+Route::get('/koperasi/member-loan/cariAnggota', [PendaftaranAnggotaKoperasiController::class, 'cariAnggota']);
+Route::get('/koperasi/member-loan/table/{id_anggota}', [PinjamanAnggotaController::class, 'show']);
+Route::post('/koperasi/member-loan/loanapplication', [PinjamanAnggotaController::class, 'store']);
+Route::get('/koperasi/memberdata-loan/table/{id_anggota}', [PinjamanAnggotaController::class, 'getPinjamanByAnggota']);
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
