@@ -241,7 +241,7 @@ Route::get('/company-contact', [Cpc_company_contactController::class, 'index']);
 Route::post('/company-contact', [Cpc_company_contactController::class, 'store']);
 Route::get('/company-contact/{id}', [Cpc_company_contactController::class,'show']);
 Route::put('/company-contact/{id}', [Cpc_company_contactController::class, 'update']);
-Route::delete('/company-contact/{id}', [Cpc_company_contactController::class,  'destroy']);
+Route::delete('/company-contact/{id}', [Cpc_company_contactController::class,  'deleteContact']);
 
 //Company_History
 Route::get('/company-history', [Cpc_company_historyController::class, 'index']);
@@ -255,7 +255,7 @@ Route::get('/mitra', [Mitracontroller::class, 'index']);        // GET semua mit
 Route::post('/mitra', [Mitracontroller::class, 'store']);       // POST buat mitra baru
 Route::get('/mitra/{id}', [Mitracontroller::class, 'show']);     // GET satu mitra
 Route::put('/mitra/{id}', [Mitracontroller::class, 'update']);   // PUT update mitra
-Route::delete('/mitra/{id}', [Mitracontroller::class, 'destroy']); // DELETE hapus mitra
+Route::delete('/mitra/{id_mitra}', [Mitracontroller::class, 'deleteMitra']); // DELETE hapus mitra
 
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
 Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);

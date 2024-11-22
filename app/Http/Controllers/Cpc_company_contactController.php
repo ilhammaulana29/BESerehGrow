@@ -7,39 +7,58 @@ use Illuminate\Http\Request;
 
 class Cpc_company_contactController extends Controller
 {
-    // GET All Companies
+    // GET All Contacts
     public function index()
     {
-        $companies = Cpc_company_contact::all();
-        return response()->json($companies);
+        $contacts = Cpc_company_contact::all();
+        return response()->json($contacts);
     }
 
-    // CREATE New Company
+    // CREATE New Contact
     public function store(Request $request)
     {
-        $company = Cpc_company_contact::create($request->all());
-        return response()->json($company);
+        $validated = $request->validate([
+            'jenis_kontak' => 'required|string',
+            'url_kontak' => 'required|string',
+        ]);
+
+        $contact = Cpc_company_contact::create($validated);
+        return response()->json($contact);
     }
 
-    // GET a Single Company
+    // GET a Single Contact
     public function show($id)
     {
-        $company = Cpc_company_contact::find($id);
-        return response()->json($company);
+        $contact = Cpc_company_contact::find($id);
+        if (!$contact) {
+            return response()->json(['error' => 'Kontak tidak ditemukan'], 404);
+        }
+        return response()->json($contact);
     }
 
-    // UPDATE a Company
+    // UPDATE a Contact
     public function update(Request $request, $id)
     {
-        $company = Cpc_company_contact::find($id);
-        $company->update($request->all());
-        return response()->json($company);
+        $validated = $request->validate([
+            'jenis_kontak' => 'required|string',
+            'url_kontak' => 'required|string',
+        ]);
+
+        $contact = Cpc_company_contact::find($id);
+        if (!$contact) {
+            return response()->json(['error' => 'Kontak tidak ditemukan'], 404);
+        }
+
+        $contact->update($validated);
+        return response()->json(['message' => 'Kontak berhasil diperbarui', 'data' => $contact]);
     }
 
-    // DELETE a Company
-    public function destroy($id)
+    // DELETE a Contact
+    public function deleteContact($id)
     {
-        Cpc_company_contact::destroy($id);
-        return response()->json('Company deleted');
+        $contact = Cpc_company_contact::findOrFail($id);
+        $contact->delete();
+
+        return response()->json(['message' => 'Kontak berhasil dihapus'], 200);
     }
 }

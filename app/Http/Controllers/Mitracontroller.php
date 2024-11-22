@@ -112,32 +112,21 @@ class Mitracontroller extends Controller
     }
 
     // DELETE a Mitra
-    public function destroy($id)
-    {
-        try {
-            $mitra = Mitra::find($id);
+    public function deleteMitra($id_mitra)
+{
+    // Cari data mitra berdasarkan ID
+    $mitra = Mitra::findOrFail($id_mitra);
 
-            if (!$mitra) {
-                return response()->json(['message' => 'Mitra not found'], 404);
-            }
-
-            // Delete image file if exists
-            if ($mitra->gambar) {
-                Storage::disk('public')->delete($mitra->gambar);
-            }
-
-            $mitra->delete();
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Mitra berhasil dihapus'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menghapus mitra',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+    // Hapus file gambar dari storage jika ada
+    if ($mitra->gambar) {
+        Storage::delete('public/mitra/' . $mitra->gambar);
     }
+
+    // Hapus data dari database
+    $mitra->delete();
+
+    // Kembalikan respon berhasil
+    return response()->json(['message' => 'Mitra berhasil dihapus'], 200);
+}
+
 }
