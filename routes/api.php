@@ -120,6 +120,8 @@ Route::apiResource('rumpun', RumpunController::class);
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PendaftaranAlamatAnggotaKoperasiController;
 use App\Http\Controllers\PendaftaranAnggotaKoperasiController;
+use App\Http\Controllers\PinjamanAnggotaController;
+use App\Http\Controllers\AngsuranAnggotaController;
 
 // Route::get('panen', [PanenController::class, 'index']);
 // Route::get('panen/{id}', [PanenController::class, 'show']);
@@ -178,17 +180,31 @@ Route::post('/koperasi/pendaftaran/anggota', [PendaftaranController::class, 'sto
 Route::put('/koperasi/memberdata/edit/{id_anggota}',[PendaftaranAnggotaKoperasiController::class, 'update']);
 Route::put('/koperasi/memberdata/delete/{id_anggota}',[PendaftaranAnggotaKoperasiController::class, 'destroy']);
 Route::get('/koperasi/detail-memberdata/{id_anggota}', [PendaftaranAnggotaKoperasiController::class,'getByMemberId']);
-
 Route::get('/koperasi/detail-memberdata/statusanggota/{id_statusanggota}', [StatuskeanggotaanController::class,'getByStatusMemberId']);
 Route::get('/koperasi/detail-memberdata/alamat/{id_anggota}', [PendaftaranAlamatAnggotaKoperasiController::class, 'getAlamatByMemberId']);
+
 Route::get('koperasi/saving-memberdata/{id_anggota}', [SimpananAnggotaKoperasiController::class, 'getMemberSavingData']);
 Route::put('/koperasi/detail-memberdata/alamat/edit/{id_anggota}', [PendaftaranAlamatAnggotaKoperasiController::class, 'update']);
+Route::get('/koperasi/simpanan-anggota', [SimpananAnggotaKoperasiController::class, 'getAllSavingsData']);
+Route::get('/koperasi/simpanan-anggota/filter', [SimpananAnggotaKoperasiController::class, 'etFilteredSavingsData']);
+Route::get('/koperasi/member-saving/namaAnggota', [PendaftaranAnggotaKoperasiController::class, 'getNamaAnggota']);
+Route::post('/koperasi/member-saving', [SimpananAnggotaKoperasiController::class, 'store']);
+Route::put('/koperasi/member-saving/edit/{id_simpanan}', [SimpananAnggotaKoperasiController::class, 'update']);
+Route::delete('/koperasi/member-saving/delete/{id_simpanan}', [SimpananAnggotaKoperasiController::class, 'destroy']);
+Route::get('/koperasi/saving-type/table', [JenisSimpananController::class, 'index']);
+Route::post('/koperasi/saving-type/tambahdata', [JenisSimpananController::class, 'store']);
+Route::put('/koperasi/saving-type/edit/{id_jenissimpanan}', [JenisSimpananController::class, 'update']);
+Route::delete('/koperasi/saving-type/delete/{id_jenissimpanan}', [JenisSimpananController::class, 'destroy']);
 
+Route::get('/koperasi/member-loan/cariAnggota', [PendaftaranAnggotaKoperasiController::class, 'cariAnggota']);
+Route::get('/koperasi/member-loan/table/{id_anggota}', [PinjamanAnggotaController::class, 'show']);
+Route::post('/koperasi/member-loan/loanapplication', [PinjamanAnggotaController::class, 'store']);
+Route::get('/koperasi/memberdata-loan/table/{id_anggota}', [PinjamanAnggotaController::class, 'getPinjamanByAnggota']);
+Route::get('/koperasi/memberdata-loan/table', [PinjamanAnggotaController::class, 'getAllPinjaman']);
+Route::put('/koperasi/memberdata-loan/edit/{id_pinjaman}', [PinjamanAnggotaController::class, 'update']);
+Route::delete('/koperasi/memberdata-loan/delete/{id_pinjaman}', [PinjamanAnggotaController::class, 'destroy']);
 
-
-
-
-
+Route::get('/koperasi/memberdata-loan/data-angsuran/{id_pinjaman}', [AngsuranAnggotaController::class, 'getAngsuranByIdPinjaman']);
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
 Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);

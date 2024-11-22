@@ -12,7 +12,7 @@ class Cpc_company_contact extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'jenis_contact',
-        'url_contact',
+        'jenis_kontak',
+        'url_kontak',
     ];
 }

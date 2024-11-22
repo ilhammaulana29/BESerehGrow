@@ -68,21 +68,42 @@ class CompanyController extends Controller
     $request->validate([
         'nama_company' => 'required|string|max:255',
         'slogan' => 'nullable|string|max:255',
-        'logo_company' => 'nullable|image|max:10240', // Maks 10 MB
+        'logo_company' => 'nullable|file|mimes:jpg,jpeg,png|max:10240',
     ]);
 
-    $company = Company::findOrFail($id);
-    $company->nama_company = $request->input('nama_company');
-    $company->slogan = $request->input('slogan');
+    try {
+        $company = Company::findOrFail($id);
+        
+        // Update basic info
+        $company->nama_company = $request->nama_company;
+        $company->slogan = $request->slogan;
 
-    if ($request->hasFile('logo_company')) {
-        $logoPath = $request->file('logo_company')->store('logos', 'public');
-        $company->logo_company = $logoPath;
+        // Handle logo upload if present
+        if ($request->hasFile('logo_company')) {
+            // Delete old logo if exists
+            if ($company->logo_company) {
+                Storage::disk('public')->delete('logo/' . $company->logo_company);
+            }
+
+            $file = $request->file('logo_company');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('logo', $filename, 'public');
+            $company->logo_company = $filename;
+        }
+
+        $company->save();
+
+        return response()->json([
+            'message' => 'Company updated successfully',
+            'data' => $company
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Error updating company',
+            'error' => $e->getMessage()
+        ], 500);
     }
-
-    $company->save();
-
-    return response()->json(['message' => 'Company updated successfully']);
 }
 
 

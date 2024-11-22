@@ -16,9 +16,7 @@ return new class extends Migration
             $table->renameColumn('jenis_contact', 'jenis_kontak');
             $table->renameColumn('url_contact', 'url_kontak');
 
-            // Hapus sifat unik
-            $table->dropUnique(['jenis_contact']);
-            $table->dropUnique(['url_contact']);
+        
         });
     }
 
@@ -32,9 +30,7 @@ return new class extends Migration
             $table->renameColumn('jenis_kontak', 'jenis_contact');
             $table->renameColumn('url_kontak', 'url_contact');
 
-            // Tambahkan kembali sifat unik
-            $table->unique('jenis_contact');
-            $table->unique('url_contact');
+            
         });
     }
 };

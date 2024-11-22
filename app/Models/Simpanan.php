@@ -16,7 +16,7 @@ class Simpanan extends Model
         'id_anggota',      
         'id_jenissimpanan',
         'tgl_simpan',
-        'jml_simpan',
+        'jml_simpanan',
         'keterangan'
     ];
 

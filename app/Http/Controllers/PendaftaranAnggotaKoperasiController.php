@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggotakoperasi;
+use Illuminate\Support\Facades\DB;
 class PendaftaranAnggotaKoperasiController extends Controller
 {
     public function index()
@@ -101,5 +102,48 @@ class PendaftaranAnggotaKoperasiController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+    public function getNamaAnggota()
+    {
+        try {
+            $anggotaKoperasi = Anggotakoperasi::select('id_anggota', 'nama_anggota')->get();
+            return response()->json($anggotaKoperasi, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch data', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function cariAnggota(Request $request)
+    {
+        // Ambil parameter pencarian dari request
+        $namaAnggota = $request->input('nama_anggota');
+        $nik = $request->input('nik');
+
+        // Query join tabel
+        $hasil = DB::table('pc_anggota_koperasi as anggota')
+            ->join('pc_status_keanggotaan as status', 'anggota.id_statusanggota', '=', 'status.id_statusanggota')
+            ->select(
+                
+                'anggota.nama_anggota',
+                'anggota.id_anggota',
+                'anggota.tgl_bergabung',
+                'anggota.nik',
+                'anggota.no_kk',
+                'anggota.no_hp',
+                'anggota.tgl_lahir',
+                'status.status'
+            )
+            // Tambahkan filter jika nama_anggota diinputkan
+            ->when($namaAnggota, function ($query, $namaAnggota) {
+                return $query->where('anggota.nama_anggota', 'like', '%' . $namaAnggota . '%');
+            })
+            // Tambahkan filter jika nik diinputkan
+            ->when($nik, function ($query, $nik) {
+                return $query->where('anggota.nik', $nik);
+            })
+            ->get();
+
+        // Return hasil pencarian dalam bentuk JSON
+        return response()->json($hasil);
     }
 }

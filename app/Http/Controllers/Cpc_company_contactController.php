@@ -18,8 +18,8 @@ class Cpc_company_contactController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'jenis_contact' => 'required|string',
-            'url_contact' => 'required|url',
+            'jenis_kontak' => 'required|string',
+            'url_kontak' => 'required|string',
         ]);
 
         $contact = Cpc_company_contact::create($validated);
@@ -41,7 +41,7 @@ class Cpc_company_contactController extends Controller
     {
         $validated = $request->validate([
             'jenis_kontak' => 'required|string',
-            'link_kontak' => 'required|url',
+            'url_kontak' => 'required|string',
         ]);
 
         $contact = Cpc_company_contact::find($id);
