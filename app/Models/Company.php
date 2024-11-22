@@ -14,9 +14,16 @@ class Company extends Model
     protected $fillable = [
         'nama_company',
         'logo_company',
-        'slogan'
+        'slogan',
     ];
 
     protected $primaryKey = 'id_company';
 
+    // Accessor for logo URL
+    public function getLogoUrlAttribute()
+    {
+        return $this->logo_company 
+            ? asset('storage/logo/' . $this->logo_company) 
+            : null;
+    }
 }
