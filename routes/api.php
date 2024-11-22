@@ -205,6 +205,10 @@ Route::put('/koperasi/memberdata-loan/edit/{id_pinjaman}', [PinjamanAnggotaContr
 Route::delete('/koperasi/memberdata-loan/delete/{id_pinjaman}', [PinjamanAnggotaController::class, 'destroy']);
 
 Route::get('/koperasi/memberdata-loan/data-angsuran/{id_pinjaman}', [AngsuranAnggotaController::class, 'getAngsuranByIdPinjaman']);
+Route::put('/koperasi/memberdata-loan/bayar-angsuran/{id_angsuran}', [AngsuranAnggotaController::class, 'bayarAngsuran']);
+Route::get('/koperasi/memberdata-loan/angsuran-total/{id_pinjaman}', [AngsuranAnggotaController::class, 'getTotalAngsuranByIdPinjaman']);
+
+
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
 Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);
