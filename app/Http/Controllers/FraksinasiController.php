@@ -10,7 +10,7 @@ class FraksinasiController extends Controller
 {
     public function index()
     {
-        $data = Fraksinasi::all(); // Ambil semua data dari model
+        $data = Fraksinasi::orderBy('created_at', 'desc')->get(); // Ambil data terbaru berdasarkan created_at
         return response()->json($data); // Kembalikan data sebagai JSON
     }
     public function store(Request $request)
