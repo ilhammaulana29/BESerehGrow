@@ -5,8 +5,29 @@ use App\Http\Controllers\GalleryController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-//Admin Acces Management
 
+//Admin Acces Management
+use App\Http\Controllers\AdminController;
+
+Route::post('/admins', [AdminController::class, 'store']);
+use App\Http\Controllers\AuthController;
+
+// Route::post('password/email', [AuthController::class, 'sendResetLinkEmail']);
+// Route::post('password/reset', [AuthController::class, 'resetPassword']);
+
+Route::post('login', [AuthController::class, 'login']);
+Route::middleware('auth:api')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('me', [AuthController::class, 'me']);
+});
+Route::get('/admins', [AdminController::class, 'index']);
+Route::get('/admins/{id}', [AdminController::class, 'show']);
+Route::put('/admins/{id}', [AdminController::class, 'update']);
+Route::delete('/admins/{id}', [AdminController::class, 'destroy']);
+
+use App\Http\Controllers\AdminPermitController;
+
+Route::get('/admin-permits', [AdminPermitController::class, 'index']);
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
@@ -88,6 +109,7 @@ Route::put('/penyulaman/{id}', [PenyulamanController::class, 'update']); // Meng
 Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
 
 use App\Http\Controllers\AreaRindangController;
+use App\Http\Controllers\LandingPageController;
 
 
 Route::get('arearindang', [AreaRindangController::class, 'index']);
@@ -278,3 +300,9 @@ Route::get('/article-content/{slug}', [ContentController::class, 'detailContent'
 Route::get('/type-content', [ContentController::class, 'getContentType']);
 route::post('/upload-content', [ContentController::class, 'uploadContent']);
 Route::delete('/article-content/{id_konten}', [ContentController::class, 'deleteContent']);
+
+
+
+Route::get('/info-sereh-wangi', [LandingPageController::class, 'getDataInfoSerehWangi']);
+Route::get('/info-sereh-wangi/{id}', [LandingPageController::class, 'showDataInfoSerehWangi']);
+Route::put('/update-info-sereh-wangi/{id}', [LandingPageController::class, 'updateDataInfoSerehWangi']);
