@@ -2,30 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hasilpemeriksaan;
 use Illuminate\Http\Request;
-use App\Models\Pengujian;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use App\Models\Pengujian;
 
-class PengujianController extends Controller
+class PengujianSerehwangiController extends Controller
 {
     public function index()
     {
-        $data = Pengujian::orderBy('created_at', 'desc')->get(); // Ambil semua data dari model
+        $data = Pengujian::all(); // Ambil semua data tanpa pengurutan
         return response()->json($data); // Kembalikan data sebagai JSON
     }
+
     public function store(Request $request)
     {
         // Validasi input
         
         $validator = Validator::make($request->all(), [
             'id_penyulingan' => 'required|numeric',
-            'no_batch_pengujian' => 'required|string|max:255',
-            'tgl_pengujian' => 'required|date',
-            'rendemen_atsiri' => 'required|numeric',
-            'kadar_sitronelal' => 'required|numeric',
-            'kadar_geraniol' => 'required|numeric',
-            'status'=>'required|string',
+            'tgl_diterima' => 'required|date',
+            'kemasan' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'kode_bahan' => 'required|string',
+            'sertifikasi' => 'required|string',
+            'tgl_pemeriksaan' => 'required|date',
+
+            'warna' => 'required|string',
+            'bau' => 'required|string',
+            'kelarutan_ethanol' => 'required|string',
+            'lemak' => 'required|string',
+            'indeks_bias'=> 'required|numeric',
+            'berat_jenis' => 'required|string',
+            'putaran_optik'=> 'required|numeric',
+            'kadar_sitronelal'=> 'required|numeric',
         ]);
+
+        DB::beginTransaction();
 
         // Kembalikan respons error jika validasi gagal
         if ($validator->fails()) {
@@ -39,20 +53,37 @@ class PengujianController extends Controller
             // Buat instance baru dari model Pengujian
             $pengujian = new Pengujian();
             $pengujian->id_penyulingan = $request->id_penyulingan;
-            $pengujian->no_batch_pengujian = $request->no_batch_pengujian;
-            $pengujian->tgl_pengujian = $request->tgl_pengujian;
-            $pengujian->rendemen_atsiri = $request->rendemen_atsiri;
-            $pengujian->kadar_sitronelal = $request->kadar_sitronelal;
-            $pengujian->kadar_geraniol = $request->kadar_geraniol;
-            $pengujian->status= $request->status;
+            $pengujian->tgl_diterima = $request->tgl_diterima;
+            $pengujian->kemasan = $request->kemasan;
+            $pengujian->jumlah = $request->jumlah;
+            $pengujian->kode_bahan = $request->kode_bahan;
+            $pengujian->sertifikasi = $request->sertifikasi;
+            $pengujian->tgl_pemeriksaan = $request->tgl_pemeriksaan;
             $pengujian->save();
+
+            $id_pengujian = $pengujian->id_pengujian;
+
+            $hasilpemeriksaan = new Hasilpemeriksaan();
+            $hasilpemeriksaan->id_pengujian = $id_pengujian;
+            $hasilpemeriksaan->warna = $request->warna;
+            $hasilpemeriksaan->bau = $request->bau;
+            $hasilpemeriksaan->kelarutan_ethanol = $request->kelarutan_ethanol;
+            $hasilpemeriksaan->lemak = $request->lemak;
+            $hasilpemeriksaan->indeks_bias = $request->indeks_bias;
+            $hasilpemeriksaan->berat_jenis = $request->berat_jenis;
+            $hasilpemeriksaan->putaran_optik = $request->putaran_optik;
+            $hasilpemeriksaan->kadar_sitronelal = $request->kadar_sitronelal;
+            $hasilpemeriksaan->save();
+
+            DB::commit();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data pengujian berhasil disimpan',
-                'data' => $pengujian
+                'id_pengujian' => $id_pengujian,
             ], 201);
         } catch (\Exception $e) {
+            DB::rollBack();
             // Menangani error jika terjadi kesalahan pada proses penyimpanan
             return response()->json([
                 'success' => false,
@@ -66,12 +97,12 @@ class PengujianController extends Controller
         // Validasi input
         $validator = Validator::make($request->all(), [
             'id_penyulingan' => 'required|numeric',
-            'no_batch_pengujian' => 'required|string|max:255',
-            'tgl_pengujian' => 'required|date',
-            'rendemen_atsiri' => 'required|numeric',
-            'kadar_sitronelal' => 'required|numeric',
-            'kadar_geraniol' => 'required|numeric',
-            'status' => 'required|string',
+            'tgl_diterima' => 'required|date',
+            'kemasan' => 'required|numeric',
+            'jumlah' => 'required|numeric',
+            'kode_bahan' => 'required|string',
+            'sertifikasi' => 'required|string',
+            'tgl_pemeriksaan' => 'required|date',
         ]);
 
         // Kembalikan respons error jika validasi gagal
@@ -88,12 +119,12 @@ class PengujianController extends Controller
             
             // Update data
             $pengujian->id_penyulingan = $request->id_penyulingan;
-            $pengujian->no_batch_pengujian = $request->no_batch_pengujian;
-            $pengujian->tgl_pengujian = $request->tgl_pengujian;
-            $pengujian->rendemen_atsiri = $request->rendemen_atsiri;
-            $pengujian->kadar_sitronelal = $request->kadar_sitronelal;
-            $pengujian->kadar_geraniol = $request->kadar_geraniol;
-            $pengujian->status = $request->status;
+            $pengujian->tgl_diterima = $request->tgl_diterima;
+            $pengujian->kemasan = $request->kemasan;
+            $pengujian->jumlah = $request->jumlah;
+            $pengujian->kode_bahan = $request->kode_bahan;
+            $pengujian->sertifikasi = $request->sertifikasi;
+            $pengujian->tgl_pemeriksaan = $request->tgl_pemeriksaan;
             $pengujian->save();
 
             return response()->json([
@@ -110,7 +141,6 @@ class PengujianController extends Controller
             ], 500);
         }
     }
-
     public function destroy($id_pengujian)
     {
         try {
@@ -133,43 +163,24 @@ class PengujianController extends Controller
             ], 500);
         }
     }
-    public function getByPenyulinganId($id_penyulingan)
+    public function getByPengujianId($id_pengujian)
     {
         try {
-            $data = Pengujian::where('id_penyulingan', $id_penyulingan)->get();
-            return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-    public function getSiapFraksinasi($status)
-    {
-        // Mengambil data Pengujian yang statusnya 'Masuk Gudang'
-        $pengujian = Pengujian::where('status', $status)
-        ->get(['id_pengujian', 'no_batch_pengujian']); // Kolom yang diperlukan saja
-
-    return response()->json($pengujian);
-    }
-    public function updateStatus($id_pengujian)
-    {
-        try {
-            // Temukan data pengujian berdasarkan ID
-            $pengujian = Pengujian::findOrFail($id_pengujian);
-            
-            // Ubah kolom status menjadi 'Masuk Gudang'
-            $pengujian->status = 'Siap Fraksinasi';
-            $pengujian->save();
-            
-            // Kembalikan respons berhasil
+            // Query ke tabel `pm` berdasarkan `$id_pengujian`
+            $data = Pengujian::where('id_pengujian', $id_pengujian)->get();
+    
+            // Jika ada data tambahan terkait, tambahkan di sini
+            $additionalData = [
+                // Masukkan data tambahan yang dibutuhkan, misalnya metadata Member
+            ];
+    
             return response()->json([
-                'message' => 'Status pengujian berhasil diperbarui menjadi "Masuk Gudang"',
-                'data' => $pengujian
-            ], 200);
-            
+                'data' => $data,
+                'additionalData' => $additionalData,
+            ]);
         } catch (\Exception $e) {
-            // Jika ada kesalahan, kembalikan respons dengan status 500
             return response()->json([
-                'message' => 'Terjadi kesalahan saat memperbarui status pengujian',
+                'message' => 'Terjadi kesalahan dalam mengambil data.',
                 'error' => $e->getMessage()
             ], 500);
         }

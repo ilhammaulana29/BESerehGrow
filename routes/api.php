@@ -59,7 +59,8 @@ use App\Http\Controllers\Cpc_company_contactController;
 use App\Http\Controllers\Mitracontroller;
 use App\Http\Controllers\PenyulinganController;
 use App\Http\Controllers\KeluhanController;
-use App\Http\Controllers\PengujianController;
+use App\Http\Controllers\PengujianSerehwangiController;
+use App\Http\Controllers\HasilPemeriksaanController;
 
 //Koperasi
 use App\Http\Controllers\JenisSimpananController;
@@ -180,14 +181,21 @@ Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'upda
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 Route::put('/penyulingan/{id_penyulingan}/status', [PenyulinganController::class, 'updateStatus']);
 Route::get('/penyulingan/masuk-gudang/{status}', [PenyulinganController::class, 'getMasukGudang']);
-Route::get('/pengujian/fraksinasi/{status}', [PengujianController::class, 'getSiapFraksinasi']);
-Route::post('/pengujian/tambahdata', [PengujianController::class, 'store']);
-Route::get('/pengujian/table', [PengujianController::class, 'index']);
-Route::put('/pengujian/{id_pengujian}', [PengujianController::class, 'update']);
-Route::delete('/pengujian/{id_pengujian}', [PengujianController::class, 'destroy']);
+
+Route::post('/pengujian/tambahdata', [PengujianSerehwangiController::class, 'store']);
+Route::get('/pengujian/table', [PengujianSerehwangiController::class, 'index']);
+Route::put('/pengujian/{id_pengujian}', [PengujianSerehwangiController::class, 'update']);
+Route::delete('/pengujian/{id_pengujian}', [PengujianSerehwangiController::class, 'destroy']);
 Route::get('/penyulingan/table/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganId']);
-Route::get('/pengujian/table/{id_penyulingan}', [PengujianController::class,'getByPenyulinganId']);
-Route::put('/pengujian/{id_pengujian}/status', [PengujianController::class, 'updateStatus']);
+Route::get('/penyulingan/batch-penyulingan/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganBatchId']);
+
+Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
+Route::get('/hasil-pemeriksaan/data/{id_pengujian}', [HasilPemeriksaanController::class, 'getHasilPemeriksaanByIdPengujian']);
+Route::post('/hasil-pemeriksaan/tambah-data', [HasilPemeriksaanController::class, 'store']);
+Route::put('/hasil-pemeriksaan/ubah-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'update']);
+Route::delete('/hasil-pemeriksaan/delete-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'destroy']);
+
+
 Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
 Route::put('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'update']);

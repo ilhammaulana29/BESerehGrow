@@ -17,7 +17,9 @@ class Hasilpemeriksaan extends Model
         'warna',
         'bau',
         'kelarutan_ethanol',
+        'lemak',
         'indeks_bias',
+        'berat_jenis',
         'putaran_optik',
         'kadar_sitronelal',
 

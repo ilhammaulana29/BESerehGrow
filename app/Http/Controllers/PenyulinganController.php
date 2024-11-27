@@ -200,4 +200,30 @@ class PenyulinganController extends Controller
             ], 500);
         }
     }
+    public function getByPenyulinganBatchId($id_penyulingan)
+    {
+        try {
+            // Ambil data penyulingan berdasarkan id_penyulingan
+            $data = Penyulingan::where('id_penyulingan', $id_penyulingan)->first();
+
+            // Periksa apakah data ditemukan
+            if (!$data) {
+                return response()->json([
+                    'message' => 'Penyulingan tidak ditemukan.',
+                    'data' => null
+                ], 404);
+            }
+
+            // Kembalikan respons dengan data
+            return response()->json([
+                'message' => 'Data penyulingan berhasil diambil.',
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan dalam mengambil data.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
