@@ -29,6 +29,14 @@ use App\Http\Controllers\AdminPermitController;
 
 Route::get('/admin-permits', [AdminPermitController::class, 'index']);
 
+use App\Http\Controllers\KaryawanController;
+
+Route::get('/karyawan', [KaryawanController::class, 'index']);
+Route::post('/karyawan', [KaryawanController::class, 'store']);
+Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
+Route::put('/karyawan/{id}', [KaryawanController::class, 'update']);
+Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
+
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
 
