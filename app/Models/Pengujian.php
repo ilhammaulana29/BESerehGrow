@@ -13,13 +13,15 @@ class Pengujian extends Model
     protected $primaryKey = 'id_pengujian';
 
     protected $fillable = [
-        'no_batch_pengujian',
         'id_penyulingan',           // foreign key ke tabel `pm_penyulingan`
-        'tgl_pengujian',
-        'rendemen_atsiri',
-        'kadar_sitronelal',
-        'kadar_geraniol',
-        'status'
+        'tgl_diterima',
+        'jumlah',
+        'kemasan',
+        'kode_bahan',
+        'sertifikasi',
+        'tgl_pemeriksaan',
+
+        
     ];
 
     // Relasi many-to-one ke Penyulingan

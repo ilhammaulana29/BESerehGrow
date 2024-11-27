@@ -14,6 +14,7 @@ class AnalisisLahan extends Model
 
     // Kolom yang boleh diisi (fillable)
     protected $fillable = [
+        'kode_laporan',
         'luas_lahan',
         'jumlah_blok',
         'luas_blok',
@@ -23,6 +24,7 @@ class AnalisisLahan extends Model
         'kapasitas_penyulingan',
         'sesi_penyulingan',
         'hasil_minyak',
+        'tgl_buat'
     ];
 
     // Jika primary key bukan 'id'

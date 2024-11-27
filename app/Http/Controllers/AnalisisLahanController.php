@@ -32,6 +32,13 @@ class AnalisisLahanController extends Controller
         $sesiPenyulingan = ceil($sesiPenyulingan);
         $hasilPenyulingan = round($hasilPenyulingan, 1);
 
+        // Mendapatkan tanggal saat ini
+        $tanggalSekarang = now();
+
+        // Membuat kode laporan
+        $tahun = $tanggalSekarang->format('Y');
+        $nomorLaporan = AnalisisLahan::whereYear('tgl_buat', $tahun)->count() + 1; // Menghitung laporan di tahun yang sama
+        $kodeLaporan = sprintf('SRG-%s-LP-%03d', $tahun, $nomorLaporan);
         // Simpan data ke database
         $analisis = AnalisisLahan::create([
             'luas_lahan' => $validatedData['luas_lahan'],
@@ -43,29 +50,11 @@ class AnalisisLahanController extends Controller
             'kapasitas_penyulingan' => $validatedData['kapasitas_penyulingan'],
             'sesi_penyulingan' => $sesiPenyulingan,
             'hasil_minyak' => $hasilPenyulingan,
+            'tgl_buat' => $tanggalSekarang, // Otomatis diisi dengan tanggal saat ini
+            'kode_laporan' => $kodeLaporan, // Format kode laporan
         ]);
 
         return response()->json(['message' => 'Data berhasil disimpan', 'data' => $analisis], 201);
-    }
-    public function update(Request $request, $id)
-    {
-        $analisisLahan = AnalisisLahan::findOrFail($id); // Cari data berdasarkan ID
-
-        $validatedData = $request->validate([
-            'luas_lahan' => 'required|numeric',
-            'jumlah_blok' => 'required|numeric',
-            'luas_blok' => 'required|numeric',
-            'jumlah_rumpun' => 'required|string',
-            'produksi_daun' => 'required|string',
-            'sesi_panen' => 'required|string',
-            'kapasitas_penyulingan' => 'required|numeric',
-            'sesi_penyulingan' => 'required|numeric',
-            'hasil_minyak' => 'required|numeric',
-        ]);
-
-        $analisisLahan->update($validatedData); // Update data
-
-        return response()->json($analisisLahan); // Kembalikan data yang diupdate
     }
 
     // Method untuk menghapus data analisis lahan

@@ -47,6 +47,7 @@ class PendaftaranAnggotaKoperasiController extends Controller
                 'no_kk' => $request->no_kk,
                 'no_hp' => $request->no_hp,
                 'tgl_lahir' => $request->tgl_lahir,
+                'id_statusanggota' => $request->id_statusanggota,
             ]);
 
             return response()->json([
@@ -146,4 +147,33 @@ class PendaftaranAnggotaKoperasiController extends Controller
         // Return hasil pencarian dalam bentuk JSON
         return response()->json($hasil);
     }
+    public function updateStatusAnggota()
+    {
+        try {
+            // Ambil semua data anggota
+            $anggotaList = DB::table('pc_anggota_koperasi')->get();
+
+            foreach ($anggotaList as $anggota) {
+                $bulanKeanggotaan = now()->diffInMonths(new \DateTime($anggota->tgl_bergabung));
+
+                // Cari status keanggotaan berdasarkan minimal_keanggotaan
+                $status = DB::table('pc_status_keanggotaan')
+                    ->where('minimal_keanggotaan', '<=', $bulanKeanggotaan)
+                    ->orderBy('minimal_keanggotaan', 'desc')
+                    ->first();
+
+                if ($status && $anggota->id_statusanggota != $status->id_statusanggota) {
+                    // Update id_statusanggota jika berbeda
+                    DB::table('pc_anggota_koperasi')
+                        ->where('id_anggota', $anggota->id_anggota)
+                        ->update(['id_statusanggota' => $status->id_statusanggota]);
+                }
+            }
+
+            return response()->json(['success' => true, 'message' => 'Status anggota berhasil diperbarui']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Gagal memperbarui status anggota', 'error' => $e->getMessage()]);
+        }
+    }
+
 }

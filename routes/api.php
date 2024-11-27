@@ -229,6 +229,7 @@ Route::delete('/koperasi/memberdata-loan/delete/{id_pinjaman}', [PinjamanAnggota
 Route::get('/koperasi/memberdata-loan/data-angsuran/{id_pinjaman}', [AngsuranAnggotaController::class, 'getAngsuranByIdPinjaman']);
 Route::put('/koperasi/memberdata-loan/bayar-angsuran/{id_angsuran}', [AngsuranAnggotaController::class, 'bayarAngsuran']);
 Route::get('/koperasi/memberdata-loan/angsuran-total/{id_pinjaman}', [AngsuranAnggotaController::class, 'getTotalAngsuranByIdPinjaman']);
+Route::get('/update-status-anggota', [PendaftaranAnggotaKoperasiController::class, 'updateStatusAnggota']);
 
 
 //Konten

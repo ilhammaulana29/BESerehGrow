@@ -12,7 +12,9 @@ class AngsuranAnggotaController extends Controller
     public function getAngsuranByIdPinjaman($id_pinjaman)
     {
         // Mengambil data berdasarkan id_pinjaman
-        $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
+        $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)
+        ->orderBy('bulan_angsur', 'asc') // Urutkan berdasarkan kolom bulan_angsur secara ascending
+        ->get();
 
         // Periksa apakah data ditemukan
         if ($angsuran->isEmpty()) {
