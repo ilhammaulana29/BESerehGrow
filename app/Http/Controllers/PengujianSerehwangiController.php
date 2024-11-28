@@ -185,5 +185,28 @@ class PengujianSerehwangiController extends Controller
             ], 500);
         }
     }
+    public function getAllKodeBahan()
+    {
+        try {
+            // Mengambil semua data dari tabel `Pengujian`
+            $data = Pengujian::all(['id_pengujian', 'kode_bahan']);
+            
+            // Tambahkan data tambahan jika diperlukan
+            $additionalData = [
+                // Masukkan data tambahan jika ada
+            ];
+
+            return response()->json([
+                'data' => $data,
+                'additionalData' => $additionalData,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan dalam mengambil data.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 }
