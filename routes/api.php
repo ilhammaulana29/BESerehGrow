@@ -200,11 +200,13 @@ Route::post('/hasil-pemeriksaan/tambah-data', [HasilPemeriksaanController::class
 Route::put('/hasil-pemeriksaan/ubah-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'update']);
 Route::delete('/hasil-pemeriksaan/delete-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'destroy']);
 
-Route::get('/pengemasan/table', [PengemasanController::class, 'index']);
+Route::get('/pengemasan/table', [PengemasanController::class, 'tableFilter']);
 Route::post('/pengemasan/tambah-data', [PengemasanController::class, 'store']);
 Route::put('/pengemasan/ubah-data/{id_pengemasan}', [PengemasanController::class, 'update']);
 Route::delete('/pengemasan/delete-data/{id_pengemasan}', [PengemasanController::class, 'destroy']);
 Route::get('/pengemasan/options', [PengemasanController::class, 'getAllKodeKemasan']);
+Route::put('/pengemasan/penyetoran/{id_pengemasan}', [PengemasanController::class, 'getSetorkan']);
+Route::put('/pengemasan/penjualan/{id_pengemasan}', [PengemasanController::class, 'getJualkan']);
 
 Route::get('/data-stok/table', [StokController::class, 'index']);
 Route::post('/data-stok/tambah-data', [StokController::class, 'store']);

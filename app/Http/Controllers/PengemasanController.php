@@ -130,6 +130,72 @@ class PengemasanController extends Controller
             ], 500);
         }
     }
+    public function tableFilter(Request $request)
+    {
+        // Ambil filter status_pengemasan dari query string
+        $status = $request->query('status_pengemasan');
+
+        // Buat query
+        $query = Pengemasan::query();
+
+        // Jika filter status ada, tambahkan kondisi
+        if ($status) {
+            $query->where('status_pengemasan', $status);
+        }
+
+        // Ambil data
+        $data = $query->get();
+
+        // Return response
+        return response()->json($data);
+    }
+    public function getSetorkan($id_pengemasan)
+    {
+        try {
+            // Temukan data pengemasan berdasarkan ID
+            $pengemasan = Pengemasan::findOrFail($id_pengemasan);
+            
+            $pengemasan->status_pengemasan = 'Tersedia';
+            $pengemasan->save();
+            
+            // Kembalikan respons berhasil
+            return response()->json([
+                'message' => 'Status pengemasan berhasil diperbarui menjadi "Tersedia"',
+                'data' => $pengemasan
+            ], 200);
+            
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan respons dengan status 500
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui status pengemasan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function getJualkan($id_pengemasan)
+    {
+        try {
+            // Temukan data pengemasan berdasarkan ID
+            $pengemasan = Pengemasan::findOrFail($id_pengemasan);
+            
+            $pengemasan->status_pengemasan = 'Terjual';
+            $pengemasan->save();
+            
+            // Kembalikan respons berhasil
+            return response()->json([
+                'message' => 'Status pengemasan berhasil diperbarui menjadi "Tersedia"',
+                'data' => $pengemasan
+            ], 200);
+            
+        } catch (\Exception $e) {
+            // Jika ada kesalahan, kembalikan respons dengan status 500
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui status pengemasan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 }
