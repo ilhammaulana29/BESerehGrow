@@ -208,15 +208,21 @@ Route::get('/pengemasan/options', [PengemasanController::class, 'getAllKodeKemas
 Route::put('/pengemasan/penyetoran/{id_pengemasan}', [PengemasanController::class, 'getSetorkan']);
 Route::put('/pengemasan/penjualan/{id_pengemasan}', [PengemasanController::class, 'getJualkan']);
 
-Route::get('/data-stok/table', [StokController::class, 'index']);
+Route::get('/data-stok/table', [StokController::class, 'tableStokFilter']);
 Route::post('/data-stok/tambah-data', [StokController::class, 'store']);
 Route::put('/data-stok/ubah-data/{id_stok}', [StokController::class, 'update']);
 Route::delete('/data-stok/delete-data/{id_stok}', [StokController::class, 'destroy']);
+Route::get('/data-stok/pengemasan/table', [StokController::class, 'getStokWithPengemasan']);
+Route::put('/data-stok/keluarkan/{id_stok}', [StokController::class, 'getKeluarkan']);
+
 
 Route::get('/pendistribusian/table', [DistribusiController::class, 'index']);
 Route::post('/pendistribusian/tambah-data', [DistribusiController::class, 'store']);
 Route::put('/pendistribusian/ubah-data/{id_distribusi}', [DistribusiController::class, 'update']);
 Route::delete('/pendistribusian/delete-data/{id_distribusi}', [DistribusiController::class, 'destroy']);
+Route::get('/pendistribusian/data-pengemasan', [DistribusiController::class, 'getDistributWithPengemasan']);
+Route::put('/pendistribusian/pengiriman/{id_distribusi}', [DistribusiController::class, 'getDelivery']);
+Route::put('/pendistribusian/pengiriman-selesai/{id_distribusi}', [DistribusiController::class, 'getFinish']);
 
 Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
