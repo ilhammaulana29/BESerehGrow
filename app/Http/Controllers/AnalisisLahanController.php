@@ -64,4 +64,23 @@ class AnalisisLahanController extends Controller
         $analisisLahan->delete(); // Hapus data
         return response()->json(null, 204); // Kembalikan respons kosong
     }
+    public function countAnalisislahan()
+    {
+        try {
+            // Hitung jumlah data Analisislahan yang ada
+            $count = Analisislahan::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $count,
+                'message' => 'Jumlah data Analisislahan berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data Analisislahan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

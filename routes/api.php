@@ -90,6 +90,7 @@ Route::get('/user', function (Request $request) {
 
 //LandAnalis
 Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
+Route::get('/kalkulasi/count-kalkulasi', [AnalisisLahanController::class, 'countAnalisislahan']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
 Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
@@ -99,8 +100,12 @@ Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update'
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
 Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 
-
-
+Route::get('/prosedur-lahan/count-persiapanlahan', [ProsedurAnalisisController::class, 'countByJenisProsedurLahan']);
+Route::get('/prosedur-penanaman/count-prosedurpenanaman', [ProsedurAnalisisController::class, 'countByJenisProsedurPenanaman']);
+Route::get('/prosedur-perawatan/count-prosedurperawatan', [ProsedurAnalisisController::class, 'countByJenisProsedurPerawatan']);
+Route::get('/prosedur-panen/count-prosedurpanen', [ProsedurAnalisisController::class, 'countByJenisProsedurPanen']);
+Route::get('/prosedur-penyulingan/count-penyulingan', [ProsedurAnalisisController::class, 'countByJenisProsedurPenyulingan']);
+Route::get('/alat-penyulingan/count-alatpenyulingan', [ProsedurAnalisisController::class, 'countByJenisProsedurAlatPenyulingan']);
 //Cultivate Management
 use App\Http\Controllers\LandController;
 
