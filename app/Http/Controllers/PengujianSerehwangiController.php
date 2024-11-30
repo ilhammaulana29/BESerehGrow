@@ -207,6 +207,25 @@ class PengujianSerehwangiController extends Controller
             ], 500);
         }
     }
+    public function countPengujian()
+    {
+        try {
+            // Hitung jumlah data pengujian yang ada
+            $count = Pengujian::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $count,
+                'message' => 'Jumlah data pengujian berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data pengujian',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 }

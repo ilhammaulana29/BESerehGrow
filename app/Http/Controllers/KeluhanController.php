@@ -92,6 +92,25 @@ class KeluhanController extends Controller
 
         return response()->json(['message' => 'Data keluhan berhasil dihapus'], 200);
     }
+    public function countKeluhan()
+    {
+        try {
+            // Hitung jumlah data Keluhan yang ada
+            $count = Keluhan::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $count,
+                'message' => 'Jumlah data Keluhan berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data Keluhan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 }

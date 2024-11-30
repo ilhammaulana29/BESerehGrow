@@ -189,8 +189,13 @@ Route::post('/pengujian/tambahdata', [PengujianSerehwangiController::class, 'sto
 Route::get('/pengujian/table', [PengujianSerehwangiController::class, 'index']);
 Route::put('/pengujian/{id_pengujian}', [PengujianSerehwangiController::class, 'update']);
 Route::delete('/pengujian/{id_pengujian}', [PengujianSerehwangiController::class, 'destroy']);
+Route::get('/pengujian/count-pengujian', [PengujianSerehwangiController::class, 'countPengujian']);
+
 Route::get('/penyulingan/table/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganId']);
 Route::get('/penyulingan/batch-penyulingan/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganBatchId']);
+Route::get('/penyulingan/count-status/SiapSetor', [PenyulinganController::class, 'countByStatusSiapSetor']);
+Route::get('/penyulingan/count-status/MasukGudang', [PenyulinganController::class, 'countByStatusMasukGudang']);
+Route::get('/penyulingan/menghitung-penyulingan', [PenyulinganController::class, 'getCountPenyulingan']);
 
 Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
 Route::get('/pengujian/options', [PengujianSerehwangiController::class,'getAllKodeBahan']);
@@ -207,6 +212,10 @@ Route::delete('/pengemasan/delete-data/{id_pengemasan}', [PengemasanController::
 Route::get('/pengemasan/options', [PengemasanController::class, 'getAllKodeKemasan']);
 Route::put('/pengemasan/penyetoran/{id_pengemasan}', [PengemasanController::class, 'getSetorkan']);
 Route::put('/pengemasan/penjualan/{id_pengemasan}', [PengemasanController::class, 'getJualkan']);
+Route::get('/pengemasan/count-pengemasan', [PengemasanController::class, 'countPengemasan']);
+Route::get('/pengemasan/count-pengemasan/dalam-proses', [PengemasanController::class, 'countByStatusDalamProses']);
+Route::get('/pengemasan/count-pengemasan/tersedia', [PengemasanController::class, 'countByStatusTersedia']);
+Route::get('/pengemasan/count-pengemasan/terjual', [PengemasanController::class, 'countByStatusTerjual']);
 
 Route::get('/data-stok/table', [StokController::class, 'tableStokFilter']);
 Route::post('/data-stok/tambah-data', [StokController::class, 'store']);
@@ -214,7 +223,8 @@ Route::put('/data-stok/ubah-data/{id_stok}', [StokController::class, 'update']);
 Route::delete('/data-stok/delete-data/{id_stok}', [StokController::class, 'destroy']);
 Route::get('/data-stok/pengemasan/table', [StokController::class, 'getStokWithPengemasan']);
 Route::put('/data-stok/keluarkan/{id_stok}', [StokController::class, 'getKeluarkan']);
-
+Route::get('/data-stok/count-stok/tersedia', [StokController::class, 'countByStatusStokTersedia']);
+Route::get('/data-stok/count-stok/keluar', [StokController::class, 'countByStatusStokKeluar']);
 
 Route::get('/pendistribusian/table', [DistribusiController::class, 'index']);
 Route::post('/pendistribusian/tambah-data', [DistribusiController::class, 'store']);
@@ -223,12 +233,17 @@ Route::delete('/pendistribusian/delete-data/{id_distribusi}', [DistribusiControl
 Route::get('/pendistribusian/data-pengemasan', [DistribusiController::class, 'getDistributWithPengemasan']);
 Route::put('/pendistribusian/pengiriman/{id_distribusi}', [DistribusiController::class, 'getDelivery']);
 Route::put('/pendistribusian/pengiriman-selesai/{id_distribusi}', [DistribusiController::class, 'getFinish']);
+Route::get('/pengemasan/count-distribusi/pending', [DistribusiController::class, 'countByStatusDistribusiPending']);
+Route::get('/pengemasan/count-distribusi/dikirim', [DistribusiController::class, 'countByStatusDistribusiDikirim']);
+Route::get('/pengemasan/count-distribusi/selesai', [DistribusiController::class, 'countByStatusDistribusiSelesai']);
 
 Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
+Route::get('/fraksinasi/count-fraksinasi', [FraksinasiController::class, 'countFraksinasi']);
 Route::put('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'update']);
 Route::delete('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'destroy']);
 Route::get('/keluhan', [KeluhanController::class, 'index']);
+Route::get('/keluhan/count-keluhan', [KeluhanController::class, 'countKeluhan']);
 Route::post('/keluhan', [KeluhanController::class, 'store']);
 Route::put('/keluhan/{id_keluhan}', [KeluhanController::class, 'update']); // Mengupdate keluhan berdasarkan ID
 Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'destroy']);

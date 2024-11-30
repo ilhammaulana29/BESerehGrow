@@ -174,4 +174,67 @@ class StokController extends Controller
             ], 500);
         }
     }
+    public function countStok()
+    {
+        try {
+            // Hitung jumlah data Stok yang ada
+            $countStok = Stok::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $countStok,
+                'message' => 'Jumlah data Stok berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data Stok',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusStokTersedia()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Stok::where('status_stok', 'Tersedia')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data stok dengan status Tersedia berhasil diambil',
+                'data' => [
+                    'Tersedia' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data stok dengan status Tersedia',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusStokKeluar()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Stok::where('status_stok', 'Keluar')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data stok dengan status Keluar berhasil diambil',
+                'data' => [
+                    'Keluar' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data stok dengan status Keluar',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

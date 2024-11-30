@@ -181,4 +181,70 @@ class DistribusiController extends Controller
             ], 500);
         }
     }
+    public function countByStatusDistribusiPending()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Pending"
+            $jumlah = Distribusi::where('status_pengiriman', 'Pending')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data stok dengan status Pending berhasil diambil',
+                'data' => [
+                    'Pending' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data stok dengan status Pending',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusDistribusiDikirim()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Dikirim"
+            $jumlah = Distribusi::where('status_pengiriman', 'Dikirim')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data stok dengan status Dikirim berhasil diambil',
+                'data' => [
+                    'Dikirim' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data stok dengan status Dikirim',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusDistribusiSelesai()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Selesai"
+            $jumlah = Distribusi::where('status_pengiriman', 'Selesai')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data stok dengan status Selesai berhasil diambil',
+                'data' => [
+                    'Selesai' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data stok dengan status Selesai',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

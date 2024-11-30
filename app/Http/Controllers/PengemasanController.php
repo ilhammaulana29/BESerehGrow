@@ -195,6 +195,91 @@ class PengemasanController extends Controller
             ], 500);
         }
     }
+    public function countPengemasan()
+    {
+        try {
+            // Hitung jumlah data Pengemasan yang ada
+            $countPengemasan = Pengemasan::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $countPengemasan,
+                'message' => 'Jumlah data Pengemasan berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data Pengemasan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusDalamProses()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Pengemasan::where('status_pengemasan', 'Dalam Proses')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Dalam Proses berhasil diambil',
+                'data' => [
+                    'Dalam Proses' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Dalam Proses',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusTersedia()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Pengemasan::where('status_pengemasan', 'Tersedia')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Tersedia berhasil diambil',
+                'data' => [
+                    'Tersedia' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Tersedia',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusTerjual()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Pengemasan::where('status_pengemasan', 'Terjual')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Terjual berhasil diambil',
+                'data' => [
+                    'Terjual' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Terjual',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 
