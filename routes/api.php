@@ -58,12 +58,14 @@ use App\Http\Controllers\Cpc_company_historyController;
 use App\Http\Controllers\Cpc_company_contactController;
 use App\Http\Controllers\Mitracontroller;
 use App\Http\Controllers\PenyulinganController;
+use App\Http\Controllers\GrafikPenyulinganController;
 use App\Http\Controllers\KeluhanController;
 use App\Http\Controllers\PengujianSerehwangiController;
 use App\Http\Controllers\HasilPemeriksaanController;
 use App\Http\Controllers\PengemasanController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\DistribusiController;
+use App\Http\Controllers\GrafikDistribusiBarangController;
 
 //Koperasi
 use App\Http\Controllers\JenisSimpananController;
@@ -189,6 +191,7 @@ Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'upda
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 Route::put('/penyulingan/{id_penyulingan}/status', [PenyulinganController::class, 'updateStatus']);
 Route::get('/penyulingan/masuk-gudang/{status}', [PenyulinganController::class, 'getMasukGudang']);
+Route::get('/grafik-penyulingan', [GrafikPenyulinganController::class, 'latestPenyulinganData']);
 
 Route::post('/pengujian/tambahdata', [PengujianSerehwangiController::class, 'store']);
 Route::get('/pengujian/table', [PengujianSerehwangiController::class, 'index']);
@@ -241,6 +244,7 @@ Route::put('/pendistribusian/pengiriman-selesai/{id_distribusi}', [DistribusiCon
 Route::get('/pengemasan/count-distribusi/pending', [DistribusiController::class, 'countByStatusDistribusiPending']);
 Route::get('/pengemasan/count-distribusi/dikirim', [DistribusiController::class, 'countByStatusDistribusiDikirim']);
 Route::get('/pengemasan/count-distribusi/selesai', [DistribusiController::class, 'countByStatusDistribusiSelesai']);
+Route::get('/grafik-distribusi-barang', [GrafikDistribusiBarangController::class, 'grafikDistribusi']);
 
 Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
