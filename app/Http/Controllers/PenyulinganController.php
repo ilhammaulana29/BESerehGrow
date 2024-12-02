@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penyulingan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PenyulinganController extends Controller
 {
@@ -200,4 +201,95 @@ class PenyulinganController extends Controller
             ], 500);
         }
     }
+    public function getByPenyulinganBatchId($id_penyulingan)
+    {
+        try {
+            // Ambil data penyulingan berdasarkan id_penyulingan
+            $data = Penyulingan::where('id_penyulingan', $id_penyulingan)->first();
+
+            // Periksa apakah data ditemukan
+            if (!$data) {
+                return response()->json([
+                    'message' => 'Penyulingan tidak ditemukan.',
+                    'data' => null
+                ], 404);
+            }
+
+            // Kembalikan respons dengan data
+            return response()->json([
+                'message' => 'Data penyulingan berhasil diambil.',
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan dalam mengambil data.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function getCountPenyulingan()
+    {
+        try {
+            // Hitung jumlah data Pengemasan yang ada
+            $countPenyulingan = Penyulingan::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $countPenyulingan,
+                'message' => 'Jumlah data Pengemasan berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data Pengemasan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusSiapSetor()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Penyulingan::where('status', 'Siap Setor')  // Memfilter berdasarkan status "Siap Setor"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data penyulingan dengan status Siap Setor berhasil diambil',
+                'data' => [
+                    'Siap Setor' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data penyulingan dengan status Siap Setor',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByStatusMasukGudang()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = Penyulingan::where('status', 'Masuk Gudang')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data penyulingan dengan status Masuk Gudang berhasil diambil',
+                'data' => [
+                    'Masuk Gudang' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data penyulingan dengan status Masuk Gudang',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
+
 }

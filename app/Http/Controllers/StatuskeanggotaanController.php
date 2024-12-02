@@ -95,30 +95,30 @@ class StatuskeanggotaanController extends Controller
         }
     }
     public function getByStatusMemberId($id_statusanggota)
-{
-    try {
-        // Ambil data status anggota berdasarkan id_statusanggota
-        $data = Statuskeanggotaan::where('id_statusanggota', $id_statusanggota)->first();
+    {
+        try {
+            // Ambil data status anggota berdasarkan id_statusanggota
+            $data = Statuskeanggotaan::where('id_statusanggota', $id_statusanggota)->first();
 
-        // Periksa apakah data ditemukan
-        if (!$data) {
+            // Periksa apakah data ditemukan
+            if (!$data) {
+                return response()->json([
+                    'message' => 'Status anggota tidak ditemukan.',
+                    'data' => null
+                ], 404);
+            }
+
+            // Kembalikan respons dengan data
             return response()->json([
-                'message' => 'Status anggota tidak ditemukan.',
-                'data' => null
-            ], 404);
+                'message' => 'Data status anggota berhasil diambil.',
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan dalam mengambil data.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Kembalikan respons dengan data
-        return response()->json([
-            'message' => 'Data status anggota berhasil diambil.',
-            'data' => $data
-        ], 200);
-    } catch (\Exception $e) {
-        return response()->json([
-            'message' => 'Terjadi kesalahan dalam mengambil data.',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
 }
