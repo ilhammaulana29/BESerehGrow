@@ -43,6 +43,10 @@ use App\Http\Controllers\AgendaPanenController;
 Route::get('/agenda-panen', [AgendaPanenController::class, 'index']);
 Route::post('/agenda-panen', [AgendaPanenController::class, 'store']);
 
+use App\Http\Controllers\StatistikController;
+
+Route::get('/stats', [StatistikController::class, 'getStats']);
+
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
