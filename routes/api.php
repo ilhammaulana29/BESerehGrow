@@ -113,7 +113,8 @@ Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::cl
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
-Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update']);
+Route::put('/ubah-deskripsi/{id}', [ProsedurAnalisisController::class, 'updateData']);
+Route::put('/ubah-gambar/{id}', [ProsedurAnalisisController::class, 'updateGambar']);
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
 Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 

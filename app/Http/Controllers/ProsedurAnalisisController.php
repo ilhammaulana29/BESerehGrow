@@ -85,7 +85,8 @@ class ProsedurAnalisisController extends Controller
             ], 500);
         }
     }
-    public function update(Request $request, $id)
+
+    public function updateData(Request $request, $id)
     {
         $prosedur = ProsedurAnalisis::findOrFail($id);
         Log::info('Data ditemukan:', $prosedur->toArray());
@@ -94,7 +95,6 @@ class ProsedurAnalisisController extends Controller
             'jenis_konten' => 'nullable|string',
             'judul' => 'required|string',
             'deskripsi' => 'string|nullable',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         Log::info('Data yang divalidasi:', $validatedData);
@@ -102,7 +102,27 @@ class ProsedurAnalisisController extends Controller
         $prosedur->jenis_konten = $validatedData['jenis_konten'] ?? $prosedur->jenis_konten;
         $prosedur->judul = $validatedData['judul'];
         $prosedur->deskripsi = $validatedData['deskripsi'] ?? $prosedur->deskripsi;
-        
+
+        $saved = $prosedur->save();
+        Log::info('Status penyimpanan data teks:', ['saved' => $saved]);
+
+        if (!$saved) {
+            return response()->json(['message' => 'Failed to update text data.'], 500);
+        }
+
+        return response()->json(['message' => 'Text data updated successfully.']);
+    }
+    public function updateGambar(Request $request, $id)
+    {
+        $prosedur = ProsedurAnalisis::findOrFail($id);
+        Log::info('Data ditemukan untuk update gambar:', $prosedur->toArray());
+
+        $validatedData = $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        Log::info('Data gambar yang divalidasi:', $validatedData);
+
         if ($request->hasFile('gambar')) {
             if ($prosedur->gambar) {
                 Storage::disk('public')->delete($prosedur->gambar);
@@ -113,14 +133,16 @@ class ProsedurAnalisisController extends Controller
         }
 
         $saved = $prosedur->save();
-        Log::info('Status penyimpanan data:', ['saved' => $saved]);
+        Log::info('Status penyimpanan gambar:', ['saved' => $saved]);
 
         if (!$saved) {
-            return response()->json(['message' => 'Failed to save data.'], 500);
+            return response()->json(['message' => 'Failed to update image.'], 500);
         }
 
-        return response()->json(['message' => 'Data updated successfully.']);
+        return response()->json(['message' => 'Image updated successfully.']);
     }
+
+
     public function destroy($id)
     {
         try {
