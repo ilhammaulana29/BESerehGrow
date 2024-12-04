@@ -94,8 +94,9 @@ return new class extends Migration
 
         // Tabel CpcTestimoni
         Schema::create('cpc_testimoni', function (Blueprint $table) {
-            $table->id('id_testimoni');
+            $table->id();
             $table->string('nama');
+            $table->string('gambar');
             $table->string('profesi');
             $table->text('pesan_testimoni');
             $table->timestamps();

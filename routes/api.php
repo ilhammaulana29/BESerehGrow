@@ -43,6 +43,10 @@ use App\Http\Controllers\AgendaPanenController;
 Route::get('/agenda-panen', [AgendaPanenController::class, 'index']);
 Route::post('/agenda-panen', [AgendaPanenController::class, 'store']);
 
+use App\Http\Controllers\StatistikController;
+
+Route::get('/stats', [StatistikController::class, 'getStats']);
+
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
@@ -143,6 +147,7 @@ Route::put('/penyulaman/{id}', [PenyulamanController::class, 'update']); // Meng
 Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
 
 use App\Http\Controllers\AreaRindangController;
+use App\Http\Controllers\KontenBudidayaController;
 use App\Http\Controllers\LandingPageController;
 
 
@@ -384,9 +389,20 @@ Route::get('/article-content/{slug}', [ContentController::class, 'detailContent'
 Route::get('/type-content', [ContentController::class, 'getContentType']);
 route::post('/upload-content', [ContentController::class, 'uploadContent']);
 Route::delete('/article-content/{id_konten}', [ContentController::class, 'deleteContent']);
+Route::get('/search-content', [ContentController::class, 'searchContent']);
 
 
 
 Route::get('/info-sereh-wangi', [LandingPageController::class, 'getDataInfoSerehWangi']);
 Route::get('/info-sereh-wangi/{id}', [LandingPageController::class, 'showDataInfoSerehWangi']);
 Route::put('/update-info-sereh-wangi/{id}', [LandingPageController::class, 'updateDataInfoSerehWangi']);
+Route::get('/info-sereh-grow', [LandingPageController::class, 'getDataInfoSerehGrow']);
+Route::get('/info-sereh-grow/{id}', [LandingPageController::class, 'showDataInfoSerehGrow']);
+Route::put('/update-info-sereh-grow/{id}', [LandingPageController::class, 'updateDataInfoSerehGrow']);
+
+
+Route::get('/testimoni', [LandingPageController::class, 'index']);
+Route::get('/testimoni/{id}', [LandingPageController::class, 'showDataTestimoni']);
+Route::post('/testimoni', [LandingPageController::class, 'addDataTestimoni']);
+Route::put('/testimoni/{id}', [LandingPageController::class, 'updateDataTestimoni']);
+Route::delete('/testimoni/{id}', [LandingPageController::class, 'deleteDataTestimoni']);
