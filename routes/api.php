@@ -300,9 +300,20 @@ Route::get('/article-content/{slug}', [ContentController::class, 'detailContent'
 Route::get('/type-content', [ContentController::class, 'getContentType']);
 route::post('/upload-content', [ContentController::class, 'uploadContent']);
 Route::delete('/article-content/{id_konten}', [ContentController::class, 'deleteContent']);
+Route::get('/search-content', [ContentController::class, 'searchContent']);
 
 
 
 Route::get('/info-sereh-wangi', [LandingPageController::class, 'getDataInfoSerehWangi']);
 Route::get('/info-sereh-wangi/{id}', [LandingPageController::class, 'showDataInfoSerehWangi']);
 Route::put('/update-info-sereh-wangi/{id}', [LandingPageController::class, 'updateDataInfoSerehWangi']);
+Route::get('/info-sereh-grow', [LandingPageController::class, 'getDataInfoSerehGrow']);
+Route::get('/info-sereh-grow/{id}', [LandingPageController::class, 'showDataInfoSerehGrow']);
+Route::put('/update-info-sereh-grow/{id}', [LandingPageController::class, 'updateDataInfoSerehGrow']);
+
+
+Route::get('/testimoni', [LandingPageController::class, 'index']);
+Route::get('/testimoni/{id}', [LandingPageController::class, 'showDataTestimoni']);
+Route::post('/testimoni', [LandingPageController::class, 'addDataTestimoni']);
+Route::put('/testimoni/{id}', [LandingPageController::class, 'updateDataTestimoni']);
+Route::delete('/testimoni/{id}', [LandingPageController::class, 'deleteDataTestimoni']);
