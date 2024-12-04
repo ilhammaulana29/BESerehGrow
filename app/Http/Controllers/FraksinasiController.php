@@ -144,4 +144,23 @@ class FraksinasiController extends Controller
             ], 500);
         }
     }
+    public function countFraksinasi()
+    {
+        try {
+            // Hitung jumlah data Fraksinasi yang ada
+            $count = Fraksinasi::count();
+
+            return response()->json([
+                'success' => true,
+                'count' => $count,
+                'message' => 'Jumlah data Fraksinasi berhasil dihitung'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan dalam menghitung jumlah data Fraksinasi',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

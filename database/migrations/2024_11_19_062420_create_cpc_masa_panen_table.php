@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin_permits', function (Blueprint $table) {
+        Schema::create('cpc_masa_panen', function (Blueprint $table) {
             $table->id();
+            $table->string('judul');
+            $table->text('isi_konten');
+            $table->string('gambar');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin_permits');
+        Schema::dropIfExists('cpc_masa_panen');
     }
 };

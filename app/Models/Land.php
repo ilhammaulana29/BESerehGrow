@@ -23,4 +23,14 @@ class Land extends Model
         'unsurhara',
         'jenis_rumpun'
     ];
+
+    public function panen()
+{
+    return $this->hasMany(Panen::class, 'id_blok', 'id_bloklahan');
+}
+
+public function penyulaman()
+{
+    return $this->hasMany(Penyulaman::class, 'id_blok', 'id_bloklahan');
+}
 }

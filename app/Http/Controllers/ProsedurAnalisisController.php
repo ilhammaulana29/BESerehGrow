@@ -147,7 +147,136 @@ class ProsedurAnalisisController extends Controller
             ], 500);
         }
     }
+    public function countByJenisProsedurLahan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Lahan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
 
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Lahan berhasil diambil',
+                'data' => [
+                    'Prosedur Lahan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Lahan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPenanaman()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Penanaman')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
 
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Penanaman berhasil diambil',
+                'data' => [
+                    'Prosedur Penanaman' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Penanaman',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPerawatan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Perawatan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
 
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Perawatan berhasil diambil',
+                'data' => [
+                    'Prosedur Perawatan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Perawatan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPanen()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Panen')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Panen berhasil diambil',
+                'data' => [
+                    'Prosedur Panen' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Panen',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPenyulingan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Penyulingan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Penyulingan berhasil diambil',
+                'data' => [
+                    'Prosedur Penyulingan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Penyulingan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurAlatPenyulingan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Alat Penyulingan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Alat Penyulingan berhasil diambil',
+                'data' => [
+                    'Alat Penyulingan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Alat Penyulingan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

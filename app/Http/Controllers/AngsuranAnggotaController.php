@@ -12,7 +12,9 @@ class AngsuranAnggotaController extends Controller
     public function getAngsuranByIdPinjaman($id_pinjaman)
     {
         // Mengambil data berdasarkan id_pinjaman
-        $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)->get();
+        $angsuran = Angsuran::where('id_pinjaman', $id_pinjaman)
+        ->orderBy('bulan_angsur', 'asc') // Urutkan berdasarkan kolom bulan_angsur secara ascending
+        ->get();
 
         // Periksa apakah data ditemukan
         if ($angsuran->isEmpty()) {
@@ -67,12 +69,9 @@ class AngsuranAnggotaController extends Controller
     }
     public function getTotalAngsuranByIdPinjaman($id_pinjaman)
     {
-        // Ambil semua data angsuran berdasarkan id_pinjaman
         $totalAngsuran = DB::table('pc_angsuran')
             ->where('id_pinjaman', $id_pinjaman)
-            ->sum('besar_angsuran'); // Fungsi sum untuk menghitung total
-
-        // Return hasil dalam bentuk JSON
+            ->sum('besar_angsuran');
         return response()->json([
             'success' => true,
             'message' => 'Total angsuran berhasil dihitung',
