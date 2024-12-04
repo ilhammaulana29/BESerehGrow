@@ -14,16 +14,27 @@ class KeluhanController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'tgl_pengaduan' => 'required|date',
-            'keluhan' => 'required|string',
-            'jumlah_kasus' => 'required|numeric',
-            'nama_pengadu' => 'required|string',
-            'alamat_pengadu' => 'required|string',
-            'bukti_aduan' => 'required|string',
-            'tindak_lanjut' => 'required|string',
-        ]);
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'tgl_pengaduan' => 'required|date',
+        'keluhan' => 'required|string',
+        'jumlah_kasus' => 'required|numeric',
+        'nama_pengadu' => 'required|string',
+        'alamat_pengadu' => 'required|string',
+        'bukti_aduan' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable', // Validasi file gambar
+        'tindak_lanjut' => 'required|string',
+    ]);
+
+    try {
+        $buktiName = null;
+
+        // Proses upload file jika ada
+        if ($request->hasFile('bukti_aduan')) {
+            $file = $request->file('bukti_aduan');
+            $buktiName = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('image_keluhan', $buktiName, 'public');
+        }   
 
         // Menyimpan data keluhan ke dalam database
         $keluhan = Keluhan::create([
@@ -32,7 +43,7 @@ class KeluhanController extends Controller
             'jumlah_kasus' => $validatedData['jumlah_kasus'],
             'nama_pengadu' => $validatedData['nama_pengadu'],
             'alamat_pengadu' => $validatedData['alamat_pengadu'],
-            'bukti_aduan' => $validatedData['bukti_aduan'],
+            'bukti_aduan' => $buktiName, // Menyimpan nama file atau null jika tidak ada file
             'tindak_lanjut' => $validatedData['tindak_lanjut'],
         ]);
 
@@ -40,7 +51,13 @@ class KeluhanController extends Controller
             'message' => 'Data keluhan berhasil disimpan',
             'data' => $keluhan,
         ], 201);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Terjadi kesalahan saat menyimpan data keluhan',
+            'error' => $e->getMessage(),
+        ], 500);
     }
+}
 
     public function update(Request $request, $id_keluhan)
     {

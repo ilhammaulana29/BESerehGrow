@@ -50,6 +50,7 @@ Route::get('/stats', [StatistikController::class, 'getStats']);
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
+use App\Http\Controllers\AturParameterKalkulasiController;
 
 
 
@@ -105,6 +106,9 @@ Route::get('/user', function (Request $request) {
 Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
 Route::get('/kalkulasi/count-kalkulasi', [AnalisisLahanController::class, 'countAnalisislahan']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
+Route::get('/join-hasil-kalkulasi-data', [AnalisisLahanController::class, 'getJoinedData']);
+Route::get('/produksi-daun-grafik', [AnalisisLahanController::class, 'latestProduksiDaunData']);
+
 Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
@@ -112,6 +116,11 @@ Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class
 Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update']);
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
 Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
+
+Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::class, 'index']);
+Route::post('/parameter-kalkulasi-lahan/tambah',[AturParameterKalkulasiController::class, 'store']);
+Route::put('/parameter-kalkulasi-lahan/ubah/{id_parameter}',[AturParameterKalkulasiController::class, 'update']);
+Route::delete('/parameter-kalkulasi-lahan/hapus/{id_parameter}',[AturParameterKalkulasiController::class, 'destroy']);
 
 Route::get('/prosedur-lahan/count-persiapanlahan', [ProsedurAnalisisController::class, 'countByJenisProsedurLahan']);
 Route::get('/prosedur-penanaman/count-prosedurpenanaman', [ProsedurAnalisisController::class, 'countByJenisProsedurPenanaman']);
@@ -121,7 +130,6 @@ Route::get('/prosedur-penyulingan/count-penyulingan', [ProsedurAnalisisControlle
 Route::get('/alat-penyulingan/count-alatpenyulingan', [ProsedurAnalisisController::class, 'countByJenisProsedurAlatPenyulingan']);
 //Cultivate Management
 use App\Http\Controllers\LandController;
-
 
 Route::post('/bloklahan', [LandController::class, 'store']);
 Route::get('/bloklahan', [LandController::class, 'index']);
@@ -139,6 +147,7 @@ Route::put('/penyulaman/{id}', [PenyulamanController::class, 'update']); // Meng
 Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
 
 use App\Http\Controllers\AreaRindangController;
+use App\Http\Controllers\KontenBudidayaController;
 use App\Http\Controllers\LandingPageController;
 
 
