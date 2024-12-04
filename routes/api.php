@@ -11,9 +11,10 @@ use App\Http\Controllers\AdminController;
 
 Route::post('/admins', [AdminController::class, 'store']);
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordResetController;
 
-// Route::post('password/email', [AuthController::class, 'sendResetLinkEmail']);
-// Route::post('password/reset', [AuthController::class, 'resetPassword']);
+Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']);
 
 Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
@@ -36,6 +37,12 @@ Route::post('/karyawan', [KaryawanController::class, 'store']);
 Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
 Route::put('/karyawan/{id}', [KaryawanController::class, 'update']);
 Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
+
+use App\Http\Controllers\AgendaPanenController;
+
+Route::get('/agenda-panen', [AgendaPanenController::class, 'index']);
+Route::post('/agenda-panen', [AgendaPanenController::class, 'store']);
+
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
