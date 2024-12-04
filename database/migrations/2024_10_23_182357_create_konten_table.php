@@ -36,7 +36,10 @@ return new class extends Migration
         // Tabel CpcAbout
         Schema::create('cpc_about', function (Blueprint $table) {
             $table->id('id_aboutcp');
-            $table->text('deskripsi')->nullable();
+            $table->string('visi')->nullable();
+            $table->string('misi')->nullable();
+            $table->text('kebijakan')->nullable();
+            $table->text('ketentuan')->nullable();
             $table->timestamps();
         });
 
@@ -49,34 +52,25 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Tabel CpcPenulis (Make sure this table exists)
-        Schema::create('cpc_penulis', function (Blueprint $table) {
-            $table->id('id'); // Assuming this is the primary key in the cpc_penulis table
-            $table->string('nama'); // Add other columns as needed
-            $table->timestamps();
-        });
 
         // Tabel CpcKonten
         Schema::create('cpc_konten', function (Blueprint $table) {
             $table->id('id_konten');
-            $table->foreignId('id_penulis')->constrained('cpc_penulis')->onDelete('cascade');
-            $table->string('jenis_konten');
-            $table->string('judul_konten');
+            $table->string('nama_penulis');
+            $table->unsignedBigInteger('id_jenis_konten'); // Kolom foreign key
+            $table->foreign('id_jenis_konten')->references('id_jenis_konten')->on('jenis_konten')->onDelete('cascade');            $table->string('judul_konten');
             $table->text('deskripsi_konten');
-            $table->string('url_gambar')->nullable();
-            $table->string('url_video')->nullable();
+            $table->string('gambar')->nullable();
+            $table->string('video')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
 
         // Tabel CpcCompany
         Schema::create('cpc_company', function (Blueprint $table) {
             $table->id('id_company');
-            $table->foreignId('id_cpaddress')->constrained('company_address', 'id_cpaddress')->onDelete('cascade');
-            $table->foreignId('id_cpcontact')->constrained('cpc_company_contact', 'id_cpcontact')->onDelete('cascade');
-            $table->foreignId('id_aboutcp')->constrained('cpc_about', 'id_aboutcp')->onDelete('cascade');
-            $table->foreignId('id_cphistory')->constrained('cpc_company_history', 'id_cphistory')->onDelete('cascade');
             $table->string('nama_company');
-            $table->string('logo_company');
+            $table->string('logo_company')->nullable();
             $table->string('slogan');
             $table->timestamps();
         });
