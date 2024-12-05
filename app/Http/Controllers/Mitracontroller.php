@@ -15,6 +15,17 @@ class Mitracontroller extends Controller
         return response()->json($mitras);
     }
 
+    public function countMitraData()
+    {
+        $mitraCount = Mitra ::count();
+
+        return response()->json([
+            'data' => [
+                'count' => $mitraCount
+            ]
+        ]);
+    }
+
     // CREATE New Mitra
     public function store(Request $request)
     {
