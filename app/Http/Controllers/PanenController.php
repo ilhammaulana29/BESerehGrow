@@ -9,7 +9,16 @@ class PanenController extends Controller
 {
     public function index()
     {
-        return response()->json(Panen::all());
+        // return response()->json(Panen::all());
+        $panens = Panen::all();
+        return $panens->map(function ($panen) {
+            foreach ($panen->toArray() as $key => $value) {
+                if (is_numeric($value)) {
+                    $panen[$key] = floatval($value); // Ubah ke float
+                }
+            }
+            return $panen;
+        });
     }
 
     public function show($id)
@@ -42,6 +51,7 @@ class PanenController extends Controller
             // Validate and update with data from the request
             $validatedData = $request->validate([
                 'id_blok' => 'required|exists:cm_bloklahan,id_bloklahan',
+                'nama_blok' => 'required|string',
                 'tanggal_panen' => 'required|date',
                 'berat_daun_per_ikat' => 'required|numeric',
                 'jumlah_ikat' => 'required|numeric',

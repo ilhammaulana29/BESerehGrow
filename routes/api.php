@@ -195,6 +195,7 @@ Route::apiResource('panen', PanenController::class);
 
 use App\Http\Controllers\PlasmaController;
 use App\Http\Controllers\SimpananAnggotaKoperasiController;
+use Illuminate\Routing\RouteUri;
 
 // Route::get('plasma', [PlasmaController::class, 'index']);
 // Route::get('plasma/{id}', [PlasmaController::class, 'show']);
@@ -368,6 +369,7 @@ Route::post('/mitra', [Mitracontroller::class, 'store']);       // POST buat mit
 Route::get('/mitra/{id}', [Mitracontroller::class, 'show']);     // GET satu mitra
 Route::put('/mitra/{id}', [Mitracontroller::class, 'update']);   // PUT update mitra
 Route::delete('/mitra/{id_mitra}', [Mitracontroller::class, 'deleteMitra']); // DELETE hapus mitra
+Route::get('/mitra-content-count', [Mitracontroller::class, 'countMitraData']);
 
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
 Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
