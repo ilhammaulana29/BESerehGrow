@@ -85,7 +85,8 @@ class ProsedurAnalisisController extends Controller
             ], 500);
         }
     }
-    public function update(Request $request, $id)
+
+    public function updateData(Request $request, $id)
     {
         $prosedur = ProsedurAnalisis::findOrFail($id);
         Log::info('Data ditemukan:', $prosedur->toArray());
@@ -94,7 +95,6 @@ class ProsedurAnalisisController extends Controller
             'jenis_konten' => 'nullable|string',
             'judul' => 'required|string',
             'deskripsi' => 'string|nullable',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         Log::info('Data yang divalidasi:', $validatedData);
@@ -102,7 +102,27 @@ class ProsedurAnalisisController extends Controller
         $prosedur->jenis_konten = $validatedData['jenis_konten'] ?? $prosedur->jenis_konten;
         $prosedur->judul = $validatedData['judul'];
         $prosedur->deskripsi = $validatedData['deskripsi'] ?? $prosedur->deskripsi;
-        
+
+        $saved = $prosedur->save();
+        Log::info('Status penyimpanan data teks:', ['saved' => $saved]);
+
+        if (!$saved) {
+            return response()->json(['message' => 'Failed to update text data.'], 500);
+        }
+
+        return response()->json(['message' => 'Text data updated successfully.']);
+    }
+    public function updateGambar(Request $request, $id)
+    {
+        $prosedur = ProsedurAnalisis::findOrFail($id);
+        Log::info('Data ditemukan untuk update gambar:', $prosedur->toArray());
+
+        $validatedData = $request->validate([
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        Log::info('Data gambar yang divalidasi:', $validatedData);
+
         if ($request->hasFile('gambar')) {
             if ($prosedur->gambar) {
                 Storage::disk('public')->delete($prosedur->gambar);
@@ -113,14 +133,16 @@ class ProsedurAnalisisController extends Controller
         }
 
         $saved = $prosedur->save();
-        Log::info('Status penyimpanan data:', ['saved' => $saved]);
+        Log::info('Status penyimpanan gambar:', ['saved' => $saved]);
 
         if (!$saved) {
-            return response()->json(['message' => 'Failed to save data.'], 500);
+            return response()->json(['message' => 'Failed to update image.'], 500);
         }
 
-        return response()->json(['message' => 'Data updated successfully.']);
+        return response()->json(['message' => 'Image updated successfully.']);
     }
+
+
     public function destroy($id)
     {
         try {
@@ -147,7 +169,136 @@ class ProsedurAnalisisController extends Controller
             ], 500);
         }
     }
+    public function countByJenisProsedurLahan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Lahan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
 
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Lahan berhasil diambil',
+                'data' => [
+                    'Prosedur Lahan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Lahan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPenanaman()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Penanaman')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
 
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Penanaman berhasil diambil',
+                'data' => [
+                    'Prosedur Penanaman' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Penanaman',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPerawatan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Perawatan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
 
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Perawatan berhasil diambil',
+                'data' => [
+                    'Prosedur Perawatan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Perawatan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPanen()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Panen')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Panen berhasil diambil',
+                'data' => [
+                    'Prosedur Panen' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Panen',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurPenyulingan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Prosedur Penyulingan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Prosedur Penyulingan berhasil diambil',
+                'data' => [
+                    'Prosedur Penyulingan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Prosedur Penyulingan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function countByJenisProsedurAlatPenyulingan()
+    {
+        try {
+            // Menghitung jumlah data dengan status "Siap Setor"
+            $jumlah = ProsedurAnalisis::where('jenis_konten', 'Alat Penyulingan')  // Memfilter berdasarkan status "Masuk Gudang"
+                ->count();  // Menghitung jumlah data yang sesuai
+
+            // Mengembalikan respons dalam format JSON
+            return response()->json([
+                'message' => 'Jumlah data pengemasan dengan status Alat Penyulingan berhasil diambil',
+                'data' => [
+                    'Alat Penyulingan' => $jumlah  // Mengirim jumlah data dalam format key-value
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json([
+                'message' => 'Gagal mengambil data pengemasan dengan status Alat Penyulingan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

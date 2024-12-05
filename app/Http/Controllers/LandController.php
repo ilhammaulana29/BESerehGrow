@@ -10,7 +10,17 @@ class LandController extends Controller
     // Get all entries
     public function index()
     {
-        return Land::all();
+        // return Land::all();
+        $lands = Land::all();
+        return $lands->map(function ($land) {
+            foreach ($land->toArray() as $key => $value) {
+                if (is_numeric($value)) {
+                    $land[$key] = floatval($value); // Ubah ke float
+                }
+            }
+            return $land;
+        });
+        
     }
 
     // Create a new entry

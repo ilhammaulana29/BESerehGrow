@@ -5,11 +5,52 @@ use App\Http\Controllers\GalleryController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 //Admin Acces Management
+use App\Http\Controllers\AdminController;
+
+Route::post('/admins', [AdminController::class, 'store']);
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordResetController;
+
+Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']);
+
+Route::post('login', [AuthController::class, 'login']);
+Route::middleware('auth:api')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('me', [AuthController::class, 'me']);
+});
+Route::get('/admins', [AdminController::class, 'index']);
+Route::get('/admins/{id}', [AdminController::class, 'show']);
+Route::put('/admins/{id}', [AdminController::class, 'update']);
+Route::delete('/admins/{id}', [AdminController::class, 'destroy']);
+
+use App\Http\Controllers\AdminPermitController;
+
+Route::get('/admin-permits', [AdminPermitController::class, 'index']);
+
+use App\Http\Controllers\KaryawanController;
+
+Route::get('/karyawan', [KaryawanController::class, 'index']);
+Route::post('/karyawan', [KaryawanController::class, 'store']);
+Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
+Route::put('/karyawan/{id}', [KaryawanController::class, 'update']);
+Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
+
+use App\Http\Controllers\AgendaPanenController;
+
+Route::get('/agenda-panen', [AgendaPanenController::class, 'index']);
+Route::post('/agenda-panen', [AgendaPanenController::class, 'store']);
+
+use App\Http\Controllers\StatistikController;
+
+Route::get('/stats', [StatistikController::class, 'getStats']);
 
 
 //LandAnalis
 use App\Http\Controllers\AnalisisLahanController;
+use App\Http\Controllers\AturParameterKalkulasiController;
 
 
 
@@ -29,8 +70,14 @@ use App\Http\Controllers\Cpc_company_historyController;
 use App\Http\Controllers\Cpc_company_contactController;
 use App\Http\Controllers\Mitracontroller;
 use App\Http\Controllers\PenyulinganController;
+use App\Http\Controllers\GrafikPenyulinganController;
 use App\Http\Controllers\KeluhanController;
-use App\Http\Controllers\PengujianController;
+use App\Http\Controllers\PengujianSerehwangiController;
+use App\Http\Controllers\HasilPemeriksaanController;
+use App\Http\Controllers\PengemasanController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\DistribusiController;
+use App\Http\Controllers\GrafikDistribusiBarangController;
 
 //Koperasi
 use App\Http\Controllers\JenisSimpananController;
@@ -57,20 +104,33 @@ Route::get('/user', function (Request $request) {
 
 //LandAnalis
 Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
+Route::get('/kalkulasi/count-kalkulasi', [AnalisisLahanController::class, 'countAnalisislahan']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
+Route::get('/join-hasil-kalkulasi-data', [AnalisisLahanController::class, 'getJoinedData']);
+Route::get('/produksi-daun-grafik', [AnalisisLahanController::class, 'latestProduksiDaunData']);
+
 Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
 Route::post('/proseduranalisis', [ProsedurAnalisisController::class, 'store']);
 Route::get('proseduranalisis/{jenis_konten}', [ProsedurAnalisisController::class, 'getByJenisKonten']);
-Route::put('proseduranalisis/{id}', [ProsedurAnalisisController::class, 'update']);
+Route::put('/ubah-deskripsi/{id}', [ProsedurAnalisisController::class, 'updateData']);
+Route::put('/ubah-gambar/{id}', [ProsedurAnalisisController::class, 'updateGambar']);
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
 Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 
+Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::class, 'index']);
+Route::post('/parameter-kalkulasi-lahan/tambah',[AturParameterKalkulasiController::class, 'store']);
+Route::put('/parameter-kalkulasi-lahan/ubah/{id_parameter}',[AturParameterKalkulasiController::class, 'update']);
+Route::delete('/parameter-kalkulasi-lahan/hapus/{id_parameter}',[AturParameterKalkulasiController::class, 'destroy']);
 
-
+Route::get('/prosedur-lahan/count-persiapanlahan', [ProsedurAnalisisController::class, 'countByJenisProsedurLahan']);
+Route::get('/prosedur-penanaman/count-prosedurpenanaman', [ProsedurAnalisisController::class, 'countByJenisProsedurPenanaman']);
+Route::get('/prosedur-perawatan/count-prosedurperawatan', [ProsedurAnalisisController::class, 'countByJenisProsedurPerawatan']);
+Route::get('/prosedur-panen/count-prosedurpanen', [ProsedurAnalisisController::class, 'countByJenisProsedurPanen']);
+Route::get('/prosedur-penyulingan/count-penyulingan', [ProsedurAnalisisController::class, 'countByJenisProsedurPenyulingan']);
+Route::get('/alat-penyulingan/count-alatpenyulingan', [ProsedurAnalisisController::class, 'countByJenisProsedurAlatPenyulingan']);
 //Cultivate Management
 use App\Http\Controllers\LandController;
-
 
 Route::post('/bloklahan', [LandController::class, 'store']);
 Route::get('/bloklahan', [LandController::class, 'index']);
@@ -88,6 +148,8 @@ Route::put('/penyulaman/{id}', [PenyulamanController::class, 'update']); // Meng
 Route::delete('/penyulaman/{id}', [PenyulamanController::class, 'destroy']);
 
 use App\Http\Controllers\AreaRindangController;
+use App\Http\Controllers\KontenBudidayaController;
+use App\Http\Controllers\LandingPageController;
 
 
 Route::get('arearindang', [AreaRindangController::class, 'index']);
@@ -151,19 +213,68 @@ Route::put('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'upda
 Route::delete('/penyulingan/{id_penyulingan}', [PenyulinganController::class, 'destroy']);
 Route::put('/penyulingan/{id_penyulingan}/status', [PenyulinganController::class, 'updateStatus']);
 Route::get('/penyulingan/masuk-gudang/{status}', [PenyulinganController::class, 'getMasukGudang']);
-Route::get('/pengujian/fraksinasi/{status}', [PengujianController::class, 'getSiapFraksinasi']);
-Route::post('/pengujian/tambahdata', [PengujianController::class, 'store']);
-Route::get('/pengujian/table', [PengujianController::class, 'index']);
-Route::put('/pengujian/{id_pengujian}', [PengujianController::class, 'update']);
-Route::delete('/pengujian/{id_pengujian}', [PengujianController::class, 'destroy']);
+Route::get('/grafik-penyulingan', [GrafikPenyulinganController::class, 'latestPenyulinganData']);
+
+Route::post('/pengujian/tambahdata', [PengujianSerehwangiController::class, 'store']);
+Route::get('/pengujian/table', [PengujianSerehwangiController::class, 'index']);
+Route::put('/pengujian/{id_pengujian}', [PengujianSerehwangiController::class, 'update']);
+Route::delete('/pengujian/{id_pengujian}', [PengujianSerehwangiController::class, 'destroy']);
+Route::get('/pengujian/count-pengujian', [PengujianSerehwangiController::class, 'countPengujian']);
+
 Route::get('/penyulingan/table/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganId']);
-Route::get('/pengujian/table/{id_penyulingan}', [PengujianController::class,'getByPenyulinganId']);
-Route::put('/pengujian/{id_pengujian}/status', [PengujianController::class, 'updateStatus']);
+Route::get('/penyulingan/batch-penyulingan/{id_penyulingan}', [PenyulinganController::class,'getByPenyulinganBatchId']);
+Route::get('/penyulingan/count-status/SiapSetor', [PenyulinganController::class, 'countByStatusSiapSetor']);
+Route::get('/penyulingan/count-status/MasukGudang', [PenyulinganController::class, 'countByStatusMasukGudang']);
+Route::get('/penyulingan/menghitung-penyulingan', [PenyulinganController::class, 'getCountPenyulingan']);
+
+Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
+Route::get('/pengujian/options', [PengujianSerehwangiController::class,'getAllKodeBahan']);
+Route::get('/penyulingan/pengujian-data/{id_penyulingan}', [PengujianSerehwangiController::class,'getByPenyulinganId']);
+Route::get('/hasil-pemeriksaan/data/{id_pengujian}', [HasilPemeriksaanController::class, 'getHasilPemeriksaanByIdPengujian']);
+Route::post('/hasil-pemeriksaan/tambah-data', [HasilPemeriksaanController::class, 'store']);
+Route::put('/hasil-pemeriksaan/ubah-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'update']);
+Route::delete('/hasil-pemeriksaan/delete-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'destroy']);
+
+Route::get('/pengemasan/table', [PengemasanController::class, 'tableFilter']);
+Route::post('/pengemasan/tambah-data', [PengemasanController::class, 'store']);
+Route::put('/pengemasan/ubah-data/{id_pengemasan}', [PengemasanController::class, 'update']);
+Route::delete('/pengemasan/delete-data/{id_pengemasan}', [PengemasanController::class, 'destroy']);
+Route::get('/pengemasan/options', [PengemasanController::class, 'getAllKodeKemasan']);
+Route::put('/pengemasan/penyetoran/{id_pengemasan}', [PengemasanController::class, 'getSetorkan']);
+Route::put('/pengemasan/penjualan/{id_pengemasan}', [PengemasanController::class, 'getJualkan']);
+Route::get('/pengemasan/count-pengemasan', [PengemasanController::class, 'countPengemasan']);
+Route::get('/pengemasan/count-pengemasan/dalam-proses', [PengemasanController::class, 'countByStatusDalamProses']);
+Route::get('/pengemasan/count-pengemasan/tersedia', [PengemasanController::class, 'countByStatusTersedia']);
+Route::get('/pengemasan/count-pengemasan/terjual', [PengemasanController::class, 'countByStatusTerjual']);
+
+Route::get('/data-stok/table', [StokController::class, 'tableStokFilter']);
+Route::post('/data-stok/tambah-data', [StokController::class, 'store']);
+Route::put('/data-stok/ubah-data/{id_stok}', [StokController::class, 'update']);
+Route::delete('/data-stok/delete-data/{id_stok}', [StokController::class, 'destroy']);
+Route::get('/data-stok/pengemasan/table', [StokController::class, 'getStokWithPengemasan']);
+Route::put('/data-stok/keluarkan/{id_stok}', [StokController::class, 'getKeluarkan']);
+Route::get('/data-stok/count-stok/tersedia', [StokController::class, 'countByStatusStokTersedia']);
+Route::get('/data-stok/count-stok/keluar', [StokController::class, 'countByStatusStokKeluar']);
+
+Route::get('/pendistribusian/table', [DistribusiController::class, 'index']);
+Route::post('/pendistribusian/tambah-data', [DistribusiController::class, 'store']);
+Route::put('/pendistribusian/ubah-data/{id_distribusi}', [DistribusiController::class, 'update']);
+Route::delete('/pendistribusian/delete-data/{id_distribusi}', [DistribusiController::class, 'destroy']);
+Route::get('/pendistribusian/data-pengemasan', [DistribusiController::class, 'getDistributWithPengemasan']);
+Route::put('/pendistribusian/pengiriman/{id_distribusi}', [DistribusiController::class, 'getDelivery']);
+Route::put('/pendistribusian/pengiriman-selesai/{id_distribusi}', [DistribusiController::class, 'getFinish']);
+Route::get('/pengemasan/count-distribusi/pending', [DistribusiController::class, 'countByStatusDistribusiPending']);
+Route::get('/pengemasan/count-distribusi/dikirim', [DistribusiController::class, 'countByStatusDistribusiDikirim']);
+Route::get('/pengemasan/count-distribusi/selesai', [DistribusiController::class, 'countByStatusDistribusiSelesai']);
+Route::get('/grafik-distribusi-barang', [GrafikDistribusiBarangController::class, 'grafikDistribusi']);
+
 Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
+Route::get('/fraksinasi/count-fraksinasi', [FraksinasiController::class, 'countFraksinasi']);
 Route::put('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'update']);
 Route::delete('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'destroy']);
 Route::get('/keluhan', [KeluhanController::class, 'index']);
+Route::get('/keluhan/count-keluhan', [KeluhanController::class, 'countKeluhan']);
 Route::post('/keluhan', [KeluhanController::class, 'store']);
 Route::put('/keluhan/{id_keluhan}', [KeluhanController::class, 'update']); // Mengupdate keluhan berdasarkan ID
 Route::delete('/keluhan/{id_keluhan}', [KeluhanController::class, 'destroy']);
@@ -206,6 +317,11 @@ Route::put('/koperasi/memberdata-loan/edit/{id_pinjaman}', [PinjamanAnggotaContr
 Route::delete('/koperasi/memberdata-loan/delete/{id_pinjaman}', [PinjamanAnggotaController::class, 'destroy']);
 
 Route::get('/koperasi/memberdata-loan/data-angsuran/{id_pinjaman}', [AngsuranAnggotaController::class, 'getAngsuranByIdPinjaman']);
+Route::put('/koperasi/memberdata-loan/bayar-angsuran/{id_angsuran}', [AngsuranAnggotaController::class, 'bayarAngsuran']);
+Route::get('/koperasi/memberdata-loan/angsuran-total/{id_pinjaman}', [AngsuranAnggotaController::class, 'getTotalAngsuranByIdPinjaman']);
+Route::get('/update-status-anggota', [PendaftaranAnggotaKoperasiController::class, 'updateStatusAnggota']);
+
+
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
 Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);
@@ -276,3 +392,20 @@ Route::get('/article-content/{slug}', [ContentController::class, 'detailContent'
 Route::get('/type-content', [ContentController::class, 'getContentType']);
 route::post('/upload-content', [ContentController::class, 'uploadContent']);
 Route::delete('/article-content/{id_konten}', [ContentController::class, 'deleteContent']);
+Route::get('/search-content', [ContentController::class, 'searchContent']);
+
+
+
+Route::get('/info-sereh-wangi', [LandingPageController::class, 'getDataInfoSerehWangi']);
+Route::get('/info-sereh-wangi/{id}', [LandingPageController::class, 'showDataInfoSerehWangi']);
+Route::put('/update-info-sereh-wangi/{id}', [LandingPageController::class, 'updateDataInfoSerehWangi']);
+Route::get('/info-sereh-grow', [LandingPageController::class, 'getDataInfoSerehGrow']);
+Route::get('/info-sereh-grow/{id}', [LandingPageController::class, 'showDataInfoSerehGrow']);
+Route::put('/update-info-sereh-grow/{id}', [LandingPageController::class, 'updateDataInfoSerehGrow']);
+
+
+Route::get('/testimoni', [LandingPageController::class, 'index']);
+Route::get('/testimoni/{id}', [LandingPageController::class, 'showDataTestimoni']);
+Route::post('/testimoni', [LandingPageController::class, 'addDataTestimoni']);
+Route::put('/testimoni/{id}', [LandingPageController::class, 'updateDataTestimoni']);
+Route::delete('/testimoni/{id}', [LandingPageController::class, 'deleteDataTestimoni']);

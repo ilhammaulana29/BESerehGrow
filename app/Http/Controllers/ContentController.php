@@ -152,5 +152,21 @@ class ContentController extends Controller
         return response()->json(['message' => 'Galeri berhasil dihapus'], 200);
     }
 
+
+    public function searchContent(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Sesuaikan pencarian dengan kebutuhan Anda
+        $results = Content::where('nama_penulis', 'LIKE', "%$query%")
+                            ->orWhere('judul_konten', 'LIKE', "%$query%")
+                            ->get();
+
+        return response()->json($results, 200);
+    }
     
 }

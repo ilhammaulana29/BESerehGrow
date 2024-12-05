@@ -21,6 +21,7 @@ class Penyulaman extends Model
     // Jika ada relasi dengan blok lahan
     public function blokLahan()
     {
-        return $this->belongsTo(Land::class, 'id_bloklahan');
+        return $this->belongsTo(Land::class, 'id_blok', 'id_bloklahan');
     }
+    
 }

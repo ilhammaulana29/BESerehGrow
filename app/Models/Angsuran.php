@@ -17,6 +17,7 @@ class Angsuran extends Model
         'bulan_angsur',
         'tgl_angsur',
         'besar_angsuran',
+        'keterangan',
         'status_angsuran',
     ];
 
