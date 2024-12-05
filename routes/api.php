@@ -228,7 +228,7 @@ Route::get('/penyulingan/menghitung-penyulingan', [PenyulinganController::class,
 
 Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
 Route::get('/pengujian/options', [PengujianSerehwangiController::class,'getAllKodeBahan']);
-Route::get('/penyulingan/pengujian-data/{id_penyulingan}', [PengujianSerehwangiController::class,'getByPenyulinganId']);
+Route::get('/penyulingan/pengujian-data/{id_penyulingan}', [PengujianSerehwangiController::class,'getPengujianByPenyulinganId']);
 Route::get('/hasil-pemeriksaan/data/{id_pengujian}', [HasilPemeriksaanController::class, 'getHasilPemeriksaanByIdPengujian']);
 Route::post('/hasil-pemeriksaan/tambah-data', [HasilPemeriksaanController::class, 'store']);
 Route::put('/hasil-pemeriksaan/ubah-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'update']);
