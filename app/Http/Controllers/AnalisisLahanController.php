@@ -57,8 +57,21 @@ class AnalisisLahanController extends Controller
         // Simpan ke database
         $kalkulasi = new KalkulasiLahan();
         $kalkulasi->id_parameter = $parameter->id_parameter;
-        $kalkulasi->kode_laporan_analisis = 'SRG-LA' . time(); // Generate kode laporan unik
+         // Generate kode laporan unik
         $kalkulasi->tgl_buat = now();
+        $year = now()->year;
+        $month = now()->format('m'); // Format bulan menjadi 2 digit (01, 02, ..., 12)
+
+        // Hitung jumlah laporan yang sudah ada untuk bulan dan tahun yang sama
+        $count = KalkulasiLahan::whereYear('tgl_buat', $year)
+            ->whereMonth('tgl_buat', $month)
+            ->count() + 1;
+
+        // Format angka unik menjadi 3 digit (contoh: 001, 002, dst.)
+        $uniqueNumber = str_pad($count, 3, '0', STR_PAD_LEFT);
+
+        // Format kode laporan analisis: SRG-<Bulan>-LA<Tahun>KPL<angka unik>
+        $kalkulasi->kode_laporan_analisis = 'SRG-' . $month . '-LA' . $year . 'KPL' . $uniqueNumber;
         $kalkulasi->luas_lahan = $luas_lahan;
         $kalkulasi->kapasitas_penyulingan = $kapasitas_penyulingan;
         $kalkulasi->luas_per_blok = $luas_per_blok;
@@ -94,8 +107,6 @@ class AnalisisLahanController extends Controller
         ]);
         
     }
-
-
     // Method untuk menghapus data analisis lahan
     public function destroy($id_analisislahan)
     {
