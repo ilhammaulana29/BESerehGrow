@@ -18,5 +18,6 @@ class Parameterkalkulasi extends Model
         'sesi_panen_per_minggu',
         'harga_minyak_bawah_30',
         'harga_minyak_atas_30',
+        'updated_at'
     ];
 }
