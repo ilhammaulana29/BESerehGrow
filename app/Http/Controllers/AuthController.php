@@ -35,7 +35,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => JWTAuth::factory()->getTTL() * 60,
-            'id_adminpmnt' => $admin->id_adminpmnt, // Tambahkan id_adminpmnt di sini
+           'id_adminpmnt' => $admin->id_adminpmnt, // Tambahkan id_adminpmnt di sini
         ]);
     }
     
