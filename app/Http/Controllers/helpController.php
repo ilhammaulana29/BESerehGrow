@@ -35,6 +35,19 @@ class helpController extends Controller
         ], 201);
     }
 
+
+    public function countHelpData()
+    {
+        $help = Help::count();
+
+        return response()->json([
+            'data' => [
+                'count' => $help
+            ]
+            ]);
+
+    }
+
     // Mengupdate data bantuan
     public function updateHelp(Request $request, $id)
     {
@@ -74,5 +87,6 @@ class helpController extends Controller
         $help->delete();
 
         return response()->json(['message' => 'Bantuan berhasil dihapus']);
-    }
+
+   }
 }

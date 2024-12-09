@@ -378,9 +378,30 @@ Route::get('/help', [helpController::class, 'index']);
 Route::post('/add-help', [helpController::class, 'addHelp']);
 Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
 Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
+Route::get('/help-count', [helpController::class, 'countHelpData']);
 
 
 
+//Konten Budidaya
+Route::get('/konten-bibit', [KontenBudidayaController::class, 'getDataKontenBibit']);
+Route::get('/konten-bibit/{id}', [KontenBudidayaController::class, 'showDataKontenBibit']);
+Route::put('/konten-bibit/{id}', [KontenBudidayaController::class, 'updateDataKontenBibit']);
+
+Route::get('/konten-penyulingan', [KontenBudidayaController::class, 'getDataKontenPenyulingan']);
+Route::get('/konten-penyulingan/{id}', [KontenBudidayaController::class, 'showDataKontenPenyulingan']);
+Route::put('/konten-penyulingan/{id}', [KontenBudidayaController::class, 'updateDataKontenPenyulingan']);
+
+Route::get('/konten-lahan', [KontenBudidayaController::class, 'getDataKontenLahan']);
+Route::get('/konten-lahan/{id}', [KontenBudidayaController::class, 'showDataKontenLahan']);
+Route::put('/konten-lahan/{id}', [KontenBudidayaController::class, 'updateDataKontenLahan']);
+
+Route::get('/konten-panen', [KontenBudidayaController::class, 'getDataKontenPanen']);
+Route::get('/konten-panen/{id}', [KontenBudidayaController::class, 'showDataKontenPanen']);
+Route::put('/konten-panen/{id}', [KontenBudidayaController::class, 'updateDataKontenPanen']);
+
+Route::get('/konten-perawatan', [KontenBudidayaController::class, 'getDataKontenPerawatan']);
+Route::get('/konten-perawatan/{id}', [KontenBudidayaController::class, 'showDataKontenPerawatan']);
+Route::put('/konten-perawatan/{id}', [KontenBudidayaController::class, 'updateDataKontenPerawatan']);
 
 Route::get('/article-content', [ContentController::class, 'index']);
 Route::get('/show-article-content/{id_konten}', [ContentController::class, 'showDataContent']);
