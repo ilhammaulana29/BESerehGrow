@@ -9,9 +9,17 @@ class RumpunController extends Controller
 {
     public function index()
     {
-        return Rumpun::all();
+        $rumpuns = Rumpun::all();
+        return $rumpuns->map(function ($rumpun) {
+            foreach ($rumpun->toArray() as $key => $value) {
+                if (is_numeric($value)) {
+                    $rumpun[$key] = floatval($value); // Ubah ke float
+                }
+            }
+            return $rumpun;
+        });
     }
-
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
