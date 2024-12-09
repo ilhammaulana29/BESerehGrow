@@ -26,6 +26,17 @@ class GalleryController extends Controller
     
         return response()->json($galleries);
     }
+
+    public function countGalleryData()
+    {
+        $galleriesCount = Gallery::count();
+    
+        return response()->json([
+            'data' => [
+                'count' => $galleriesCount
+            ]
+        ]);
+    }  
     
 
     public function getCategories()

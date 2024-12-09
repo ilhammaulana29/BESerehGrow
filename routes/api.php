@@ -322,6 +322,7 @@ Route::get('/update-status-anggota', [PendaftaranAnggotaKoperasiController::clas
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
+Route::get('/gallery-count', [GalleryController::class, 'countGalleryData']);
 Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
@@ -383,6 +384,7 @@ Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
 
 
 Route::get('/article-content', [ContentController::class, 'index']);
+Route::get('/article-content-count', [ContentController::class, 'countContentData']);
 Route::get('/show-article-content/{id_konten}', [ContentController::class, 'showDataContent']);
 Route::put('/edit-article-content/{id_konten}', [ContentController::class, 'updateContent']);
 Route::get('/article-content/{slug}', [ContentController::class, 'detailContent']);
@@ -402,6 +404,7 @@ Route::put('/update-info-sereh-grow/{id}', [LandingPageController::class, 'updat
 
 
 Route::get('/testimoni', [LandingPageController::class, 'index']);
+Route::get('/testimoni-count', [LandingPageController::class, 'countTestimonyData']);
 Route::get('/testimoni/{id}', [LandingPageController::class, 'showDataTestimoni']);
 Route::post('/testimoni', [LandingPageController::class, 'addDataTestimoni']);
 Route::put('/testimoni/{id}', [LandingPageController::class, 'updateDataTestimoni']);
