@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Parameterkalkulasi;
+use Illuminate\Support\Facades\Log;
+
 
 class AturParameterKalkulasiController extends Controller
 {
     public function index()
     {
-        $data = Parameterkalkulasi::orderBy('created_at', 'desc')->first(); // Mengambil 1 data terbaru
+        $data = Parameterkalkulasi::all(); // Ambil semua data dari model
+        return response()->json($data); // Kembalikan data sebagai JSON
+    }
+    public function show(){
+        
+        $data = Parameterkalkulasi::orderBy('updated_at', 'desc')->first(); // Mengambil 1 data terbaru
 
         if (!$data) {
             return response()->json([
@@ -23,6 +30,24 @@ class AturParameterKalkulasiController extends Controller
             'data' => $data,
         ]);
     }
+    
+    public function updateTimestampById($id_parameter)
+    {
+        // Validasi ID
+        // Temukan parameter berdasarkan ID
+        $parameter = Parameterkalkulasi::find($id_parameter);
+        if (!$parameter) {
+            return response()->json(['message' => 'Parameter tidak ditemukan'], 404);
+        }
+    
+        // Perbarui hanya kolom updated_at
+        $parameter->updated_at = now();
+        $parameter->save();
+    
+        return response()->json(['message' => 'Kolom updated_at berhasil diperbarui'], 200);
+    }
+
+    
     public function store(Request $request)
     {
         $validated = $request->validate([

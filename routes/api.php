@@ -118,7 +118,9 @@ Route::put('/ubah-gambar/{id}', [ProsedurAnalisisController::class, 'updateGamba
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
 Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 
-Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::class, 'index']);
+Route::get('/parameter-kalkulasi-lahan/tabledata',[AturParameterKalkulasiController::class, 'index']);
+Route::put('/pilih-parameter/{id_parameter}',[AturParameterKalkulasiController::class, 'updateTimestampById']);
+Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::class, 'show']);
 Route::post('/parameter-kalkulasi-lahan/tambah',[AturParameterKalkulasiController::class, 'store']);
 Route::put('/parameter-kalkulasi-lahan/ubah/{id_parameter}',[AturParameterKalkulasiController::class, 'update']);
 Route::delete('/parameter-kalkulasi-lahan/hapus/{id_parameter}',[AturParameterKalkulasiController::class, 'destroy']);

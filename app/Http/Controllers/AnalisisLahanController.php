@@ -25,7 +25,7 @@ class AnalisisLahanController extends Controller
             'kapasitas_penyulingan' => 'required|numeric|min:1', // Minimal 1 untuk mencegah nol
         ]);
 
-        $parameter = Parameterkalkulasi::orderBy('created_at', 'desc')->first();
+        $parameter = Parameterkalkulasi::orderBy('updated_at', 'desc')->first();
         if (!$parameter) {
             Log::error('Parameter kalkulasi tidak ditemukan');
             return response()->json(['error' => 'Parameter kalkulasi tidak ditemukan'], 404);
