@@ -17,25 +17,28 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
-        // Validasi input login
+    
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        // Cari admin berdasarkan email
+    
         $admin = Admin::where('email', $request->email)->first();
-
+    
         if (!$admin || !Hash::check($request->password, $admin->password)) {
             return response()->json(['error' => 'Email atau password salah'], 401);
         }
-
-        // Buat token JWT
+    
         $token = JWTAuth::fromUser($admin);
-
-        return $this->respondWithToken($token);
+    
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60,
+            'id_adminpmnt' => $admin->id_adminpmnt, // Tambahkan id_adminpmnt di sini
+        ]);
     }
+    
 
     // Fungsi untuk register (opsional)
     public function register(Request $request)
@@ -79,49 +82,9 @@ class AuthController extends Controller
     
 
     // Fungsi untuk merespon dengan token
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60, // Waktu token kedaluwarsa
-        ]);
-    }
-    // public function sendResetLinkEmail(Request $request)
+    // protected function respondWithToken($token)
     // {
-    //     $request->validate([
-    //         'email' => 'required|email|exists:users,email',
-    //     ]);
-
-    //     $status = Password::sendResetLink(
-    //         $request->only('email')
-    //     );
-
-    //     return $status === Password::RESET_LINK_SENT
-    //         ? response()->json(['message' => 'Password reset link sent!'], 200)
-    //         : response()->json(['message' => 'Failed to send password reset link'], 400);
+     
     // }
 
-    // // Reset password
-    // public function resetPassword(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'token' => 'required',
-    //         'password' => 'required|confirmed|min:8',
-    //     ]);
-
-    //     $status = Password::reset(
-    //         $request->only('email', 'password', 'token'),
-    //         function ($user) use ($request) {
-    //             $user->password = Hash::make($request->password);
-    //             $user->save();
-    //         }
-    //     );
-
-    //     return $status === Password::PASSWORD_RESET
-    //         ? response()->json(['message' => 'Password reset successfully!'], 200)
-    //         : response()->json(['message' => 'Failed to reset password'], 400);
-    // }
-    
 }

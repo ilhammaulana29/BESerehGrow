@@ -52,8 +52,8 @@ class PanenController extends Controller
             $validatedData = $request->validate([
                 'id_blok' => 'required|exists:cm_bloklahan,id_bloklahan',
                 'nama_blok' => 'required|string',
-                'tanggal_panen' => 'required|date',
-                'berat_daun_per_ikat' => 'required|numeric',
+                'tgl_panen' => 'required|date',
+                'berat_daun' => 'required|numeric',
                 'jumlah_ikat' => 'required|numeric',
                 'total_berat_daun' => 'required|numeric',
             ]);

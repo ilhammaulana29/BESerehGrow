@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
 Route::post('/admins', [AdminController::class, 'store']);
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\PasswordResetController;
 
 Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail']);
 Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']);
 
-Route::post('login', [AuthController::class, 'login']);
+use App\Http\Controllers\AuthController;
+
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('me', [AuthController::class, 'me']);
@@ -179,30 +182,26 @@ use App\Http\Controllers\RumpunController;
 
 Route::apiResource('rumpun', RumpunController::class);
 
+use App\Http\Controllers\JenisRumpunController;
+
+Route::apiResource('jenis-rumpun', JenisRumpunController::class);
+
+
+
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PendaftaranAlamatAnggotaKoperasiController;
 use App\Http\Controllers\PendaftaranAnggotaKoperasiController;
 use App\Http\Controllers\PinjamanAnggotaController;
 use App\Http\Controllers\AngsuranAnggotaController;
 
-// Route::get('panen', [PanenController::class, 'index']);
-// Route::get('panen/{id}', [PanenController::class, 'show']);
-// Route::post('panen', [PanenController::class, 'store']);
-// Route::put('panen/{id}', [PanenController::class, 'update']);
-// Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+
 Route::apiResource('panen', PanenController::class);
 
 
 use App\Http\Controllers\PlasmaController;
 use App\Http\Controllers\SimpananAnggotaKoperasiController;
 
-// Route::get('plasma', [PlasmaController::class, 'index']);
-// Route::get('plasma/{id}', [PlasmaController::class, 'show']);
-// Route::post('plasma', [PlasmaController::class, 'store']);
-// Route::put('plasma/{id}', [PlasmaController::class, 'update']);
-// Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
 Route::apiResource('plasma', PlasmaController::class);
-// Route::put('/plasma/{id}', [PlasmaController::class, 'update']);
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
