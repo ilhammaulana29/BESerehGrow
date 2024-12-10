@@ -26,3 +26,4 @@ class DatabaseSeeder extends Seeder
         $this->call(HistorySeeder::class);
     }
 }
+

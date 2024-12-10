@@ -114,6 +114,18 @@ class LandingPageController extends Controller
     }
 
 
+    public function countTestimonyData()
+    {
+        $landingPageCount = Testimoni::count();
+    
+        return response()->json([
+            'data' => [
+                'count' => $landingPageCount
+            ]
+        ]);
+    } 
+
+
     public function showDataTestimoni($id)
     {
         $datas = Testimoni::findOrFail($id);

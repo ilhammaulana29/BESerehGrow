@@ -10,17 +10,15 @@ class LandController extends Controller
     // Get all entries
     public function index()
     {
-        // return Land::all();
         $lands = Land::all();
         return $lands->map(function ($land) {
             foreach ($land->toArray() as $key => $value) {
                 if (is_numeric($value)) {
-                    $land[$key] = floatval($value); // Ubah ke float
+                    $land[$key] = floatval($value);
                 }
             }
             return $land;
         });
-        
     }
 
     // Create a new entry
@@ -34,7 +32,7 @@ class LandController extends Controller
             'jarak_tanam' => 'required|numeric',
             'kemiringan' => 'required|numeric',
             'unsurhara' => 'required|string|max:255',
-            'jenis_rumpun' => 'required|in:G2,G3,Balon',
+            'jenis_rumpun' => 'required|string|max:255',
         ]);
 
         return Land::create($validatedData);
@@ -46,28 +44,23 @@ class LandController extends Controller
         return Land::findOrFail($id);
     }
 
+    // Fetch Nama Blok data
     public function getNamaBlok()
     {
-        // Fetch data from the BlokLahan model
-        $blokLahanData = Land::all(); // Adjust the query based on your needs
-
-        // Transform the data into the desired format
+        $blokLahanData = Land::all();
         $namaBlokResponse = $blokLahanData->map(function ($item) {
             return [
                 'namablok' => $item->namablok,
                 'id_bloklahan' => $item->id_bloklahan,
-                'jenis_rumpun' => $item->jenis_rumpun // Adjust based on your model attributes
+                'jenis_rumpun' => $item->jenis_rumpun,
             ];
         });
-
-        // Return response as JSON
         return response()->json($namaBlokResponse);
     }
-    
+
     // Update an entry
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data
         $validatedData = $request->validate([
             'namablok' => 'required|string|max:255',
             'luasblok' => 'required|numeric',
@@ -75,20 +68,15 @@ class LandController extends Controller
             'totalproduksidaun' => 'required|numeric',
             'jarak_tanam' => 'required|numeric',
             'kemiringan' => 'required|numeric',
-            'unsurhara' => 'required|string|max:255',
-            'jenis_rumpun' => 'required|in:G2,G3,Balon',
+            'unsurhara' => 'nullable',
+            'jenis_rumpun' => 'required|string|max:255',
         ]);
-    
-        // Find the existing record by ID
+
         $blokLahan = Land::findOrFail($id);
-        
-        // Update the record with validated data
         $blokLahan->update($validatedData);
-    
-        // Return the updated record as a response
+
         return response()->json($blokLahan, 200);
     }
-    
 
     // Delete an entry
     public function destroy($id)
@@ -96,6 +84,6 @@ class LandController extends Controller
         $blokLahan = Land::findOrFail($id);
         $blokLahan->delete();
 
-        return response()->json(['message' => 'Deleted successfully']);
+        return response()->json(['message' => 'Deleted successfully'], 200);
     }
 }
