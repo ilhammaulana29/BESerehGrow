@@ -20,7 +20,7 @@ class helpController extends Controller
         // Validasi inputan
         $request->validate([
             'pertanyaan' => 'required',
-            'jawaban' => 'required|max:100'
+            'jawaban' => 'required'
         ]);
 
         // Menyimpan ke database
@@ -54,7 +54,7 @@ class helpController extends Controller
         // Validasi inputan
         $request->validate([
             'pertanyaan' => 'required',
-            'jawaban' => 'required|max:100'
+            'jawaban' => 'required'
         ]);
 
         // Mencari data bantuan berdasarkan ID
