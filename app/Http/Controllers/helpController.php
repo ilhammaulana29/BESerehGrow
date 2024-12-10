@@ -30,7 +30,7 @@ class helpController extends Controller
         $help->save();
 
         return response()->json([
-            'message' => 'Bantuan berhasil ditambah',
+            'message' => 'Data berhasil ditambah',
             'help' => $help,
         ], 201);
     }
