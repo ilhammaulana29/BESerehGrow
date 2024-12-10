@@ -20,10 +20,10 @@ class Company extends Model
     protected $primaryKey = 'id_company';
 
     // Accessor for logo URL
-    public function getLogoUrlAttribute()
-    {
-        return $this->logo_company 
-            ? asset('storage/logo/' . $this->logo_company) 
-            : null;
-    }
+    // public function getLogoUrlAttribute()
+    // {
+    //     return $this->logo_company 
+    //         ? asset('storage/logo/' . $this->logo_company) 
+    //         : null;
+    // }
 }
