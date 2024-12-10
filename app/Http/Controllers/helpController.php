@@ -20,7 +20,7 @@ class helpController extends Controller
         // Validasi inputan
         $request->validate([
             'pertanyaan' => 'required',
-            'jawaban' => 'required|max:100'
+            'jawaban' => 'required'
         ]);
 
         // Menyimpan ke database
@@ -30,9 +30,22 @@ class helpController extends Controller
         $help->save();
 
         return response()->json([
-            'message' => 'Bantuan berhasil ditambah',
+            'message' => 'Data berhasil ditambah',
             'help' => $help,
         ], 201);
+    }
+
+
+    public function countHelpData()
+    {
+        $help = Help::count();
+
+        return response()->json([
+            'data' => [
+                'count' => $help
+            ]
+            ]);
+
     }
 
     // Mengupdate data bantuan
@@ -41,7 +54,7 @@ class helpController extends Controller
         // Validasi inputan
         $request->validate([
             'pertanyaan' => 'required',
-            'jawaban' => 'required|max:100'
+            'jawaban' => 'required'
         ]);
 
         // Mencari data bantuan berdasarkan ID
@@ -74,5 +87,6 @@ class helpController extends Controller
         $help->delete();
 
         return response()->json(['message' => 'Bantuan berhasil dihapus']);
-    }
+
+   }
 }

@@ -18,6 +18,19 @@ class ContentController extends Controller
     }
 
 
+    public function countContentData()
+    {
+        $contentsCount = Content::count();
+    
+        return response()->json([
+            'data' => [
+                'count' => $contentsCount
+            ]
+        ]);
+    }    
+    
+
+
     public function getContentType()
     {
         $contentsType = ContentType::all();

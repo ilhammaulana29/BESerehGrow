@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('jarak_tanam', 8, 2);
             $table->decimal('kemiringan', 5, 2);
             $table->string('unsurhara');
-            $table->enum('jenis_rumpun', ['G2', 'G3', 'Balon']); // Add enum column
+            $table->string('jenis_rumpun'); // Add enum column
             $table->timestamps();
         });
 

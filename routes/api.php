@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 
 Route::post('/admins', [AdminController::class, 'store']);
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\PasswordResetController;
 
 Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail']);
 Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']);
 
-Route::post('login', [AuthController::class, 'login']);
+use App\Http\Controllers\AuthController;
+
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('me', [AuthController::class, 'me']);
@@ -118,7 +121,9 @@ Route::put('/ubah-gambar/{id}', [ProsedurAnalisisController::class, 'updateGamba
 Route::get('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'show']);
 Route::delete('/proseduranalisis/{id}', [ProsedurAnalisisController::class, 'destroy']);
 
-Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::class, 'index']);
+Route::get('/parameter-kalkulasi-lahan/tabledata',[AturParameterKalkulasiController::class, 'index']);
+Route::put('/pilih-parameter/{id_parameter}',[AturParameterKalkulasiController::class, 'updateTimestampById']);
+Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::class, 'show']);
 Route::post('/parameter-kalkulasi-lahan/tambah',[AturParameterKalkulasiController::class, 'store']);
 Route::put('/parameter-kalkulasi-lahan/ubah/{id_parameter}',[AturParameterKalkulasiController::class, 'update']);
 Route::delete('/parameter-kalkulasi-lahan/hapus/{id_parameter}',[AturParameterKalkulasiController::class, 'destroy']);
@@ -179,17 +184,19 @@ use App\Http\Controllers\RumpunController;
 
 Route::apiResource('rumpun', RumpunController::class);
 
+use App\Http\Controllers\JenisRumpunController;
+
+Route::apiResource('jenis-rumpun', JenisRumpunController::class);
+
+
+
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PendaftaranAlamatAnggotaKoperasiController;
 use App\Http\Controllers\PendaftaranAnggotaKoperasiController;
 use App\Http\Controllers\PinjamanAnggotaController;
 use App\Http\Controllers\AngsuranAnggotaController;
 
-// Route::get('panen', [PanenController::class, 'index']);
-// Route::get('panen/{id}', [PanenController::class, 'show']);
-// Route::post('panen', [PanenController::class, 'store']);
-// Route::put('panen/{id}', [PanenController::class, 'update']);
-// Route::delete('panen/{id}', [PanenController::class, 'destroy']);
+
 Route::apiResource('panen', PanenController::class);
 
 
@@ -197,13 +204,7 @@ use App\Http\Controllers\PlasmaController;
 use App\Http\Controllers\SimpananAnggotaKoperasiController;
 use Illuminate\Routing\RouteUri;
 
-// Route::get('plasma', [PlasmaController::class, 'index']);
-// Route::get('plasma/{id}', [PlasmaController::class, 'show']);
-// Route::post('plasma', [PlasmaController::class, 'store']);
-// Route::put('plasma/{id}', [PlasmaController::class, 'update']);
-// Route::delete('plasma/{id}', [PlasmaController::class, 'destroy']);
 Route::apiResource('plasma', PlasmaController::class);
-// Route::put('/plasma/{id}', [PlasmaController::class, 'update']);
 
 //Procesing Management
 Route::get('/penyulingan', [PenyulinganController::class, 'index']);
@@ -229,7 +230,7 @@ Route::get('/penyulingan/menghitung-penyulingan', [PenyulinganController::class,
 
 Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
 Route::get('/pengujian/options', [PengujianSerehwangiController::class,'getAllKodeBahan']);
-Route::get('/penyulingan/pengujian-data/{id_penyulingan}', [PengujianSerehwangiController::class,'getByPenyulinganId']);
+Route::get('/penyulingan/pengujian-data/{id_penyulingan}', [PengujianSerehwangiController::class,'getPengujianByPenyulinganId']);
 Route::get('/hasil-pemeriksaan/data/{id_pengujian}', [HasilPemeriksaanController::class, 'getHasilPemeriksaanByIdPengujian']);
 Route::post('/hasil-pemeriksaan/tambah-data', [HasilPemeriksaanController::class, 'store']);
 Route::put('/hasil-pemeriksaan/ubah-data/{id_hasil_pemeriksaan}', [HasilPemeriksaanController::class, 'update']);
@@ -324,6 +325,7 @@ Route::get('/update-status-anggota', [PendaftaranAnggotaKoperasiController::clas
 
 //Konten
 Route::get('/gallery', [GalleryController::class, 'index']);
+Route::get('/gallery-count', [GalleryController::class, 'countGalleryData']);
 Route::get('/showgallery/{id_galeri}', [GalleryController::class, 'showDataGallery']);
 Route::get('/categories', [GalleryController::class, 'getCategories']);
 Route::post('/upload-gallery', [GalleryController::class, 'uploadGallery']);
@@ -381,11 +383,33 @@ Route::get('/help', [helpController::class, 'index']);
 Route::post('/add-help', [helpController::class, 'addHelp']);
 Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
 Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
+Route::get('/help-count', [helpController::class, 'countHelpData']);
 
 
 
+//Konten Budidaya
+Route::get('/konten-bibit', [KontenBudidayaController::class, 'getDataKontenBibit']);
+Route::get('/konten-bibit/{id}', [KontenBudidayaController::class, 'showDataKontenBibit']);
+Route::put('/konten-bibit/{id}', [KontenBudidayaController::class, 'updateDataKontenBibit']);
+
+Route::get('/konten-penyulingan', [KontenBudidayaController::class, 'getDataKontenPenyulingan']);
+Route::get('/konten-penyulingan/{id}', [KontenBudidayaController::class, 'showDataKontenPenyulingan']);
+Route::put('/konten-penyulingan/{id}', [KontenBudidayaController::class, 'updateDataKontenPenyulingan']);
+
+Route::get('/konten-lahan', [KontenBudidayaController::class, 'getDataKontenLahan']);
+Route::get('/konten-lahan/{id}', [KontenBudidayaController::class, 'showDataKontenLahan']);
+Route::put('/konten-lahan/{id}', [KontenBudidayaController::class, 'updateDataKontenLahan']);
+
+Route::get('/konten-panen', [KontenBudidayaController::class, 'getDataKontenPanen']);
+Route::get('/konten-panen/{id}', [KontenBudidayaController::class, 'showDataKontenPanen']);
+Route::put('/konten-panen/{id}', [KontenBudidayaController::class, 'updateDataKontenPanen']);
+
+Route::get('/konten-perawatan', [KontenBudidayaController::class, 'getDataKontenPerawatan']);
+Route::get('/konten-perawatan/{id}', [KontenBudidayaController::class, 'showDataKontenPerawatan']);
+Route::put('/konten-perawatan/{id}', [KontenBudidayaController::class, 'updateDataKontenPerawatan']);
 
 Route::get('/article-content', [ContentController::class, 'index']);
+Route::get('/article-content-count', [ContentController::class, 'countContentData']);
 Route::get('/show-article-content/{id_konten}', [ContentController::class, 'showDataContent']);
 Route::put('/edit-article-content/{id_konten}', [ContentController::class, 'updateContent']);
 Route::get('/article-content/{slug}', [ContentController::class, 'detailContent']);
@@ -405,6 +429,7 @@ Route::put('/update-info-sereh-grow/{id}', [LandingPageController::class, 'updat
 
 
 Route::get('/testimoni', [LandingPageController::class, 'index']);
+Route::get('/testimoni-count', [LandingPageController::class, 'countTestimonyData']);
 Route::get('/testimoni/{id}', [LandingPageController::class, 'showDataTestimoni']);
 Route::post('/testimoni', [LandingPageController::class, 'addDataTestimoni']);
 Route::put('/testimoni/{id}', [LandingPageController::class, 'updateDataTestimoni']);
