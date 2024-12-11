@@ -110,6 +110,7 @@ Route::get('/analisis-lahan', [AnalisisLahanController::class, 'index']);
 Route::get('/kalkulasi/count-kalkulasi', [AnalisisLahanController::class, 'countAnalisislahan']);
 Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
 Route::get('/join-hasil-kalkulasi-data', [AnalisisLahanController::class, 'getJoinedData']);
+Route::get('/cari-data-hasil-kalkulasi-potensi-lahan', [AnalisisLahanController::class, 'searchKalkulasiLahan']);
 Route::get('/produksi-daun-grafik', [AnalisisLahanController::class, 'latestProduksiDaunData']);
 
 Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
