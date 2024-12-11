@@ -29,7 +29,7 @@ class CompanyController extends Controller
         $request->validate([
             'nama_company' => 'required|string|max:255',
             'slogan' => 'nullable|string|max:255',
-            'logo_company' => 'nullable|file|mimes:jpg,jpeg,png|max:10240', // Max 10MB
+            'logo_company' => 'nullable|file|mimes:jpg,jpeg,png|max:3072',
         ]);
 
         $data = $request->all();
@@ -58,7 +58,7 @@ class CompanyController extends Controller
             'id_company' => $company->id_company,
             'nama_company' => $company->nama_company,
             'slogan' => $company->slogan,
-            'logo_url' => $company->logo_url,
+            'logo_company' => $company->logo_company,
         ]);
     }
 
