@@ -237,4 +237,70 @@ class StokController extends Controller
             ], 500);
         }
     }
+    public function searchStokTersedia(Request $request)
+    {
+        $inputQuery = $request->input('query'); // Input dari frontend
+
+        // Query join antara tabel pm_stok dan pm_pengemasan
+        $results = Stok::join('pm_pengemasan', 'pm_stok.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+                'pm_stok.id_stok',
+                'pm_stok.jumlah_tersedia',
+                'pm_stok.lokasi_gudang',
+                'pm_stok.status_stok',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_stok.status_stok', 'Tersedia') // Filter status stok
+            ->where(function ($query) use ($inputQuery) {
+                if ($inputQuery) {
+                    $query->where('pm_stok.jumlah_tersedia', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kode_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kapasitas_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jenis_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_stok.lokasi_gudang', 'LIKE', "%$inputQuery%");
+                }
+            })
+            ->get();
+
+        return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
+    }
+    public function searchStokKeluar(Request $request)
+    {
+        $inputQuery = $request->input('query'); // Input dari frontend
+
+        // Query join antara tabel pm_stok dan pm_pengemasan
+        $results = Stok::join('pm_pengemasan', 'pm_stok.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+                'pm_stok.id_stok',
+                'pm_stok.jumlah_tersedia',
+                'pm_stok.lokasi_gudang',
+                'pm_stok.status_stok',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_stok.status_stok', 'Keluar') // Filter status stok
+            ->where(function ($query) use ($inputQuery) {
+                if ($inputQuery) {
+                    $query->where('pm_stok.jumlah_tersedia', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kode_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kapasitas_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jenis_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_stok.lokasi_gudang', 'LIKE', "%$inputQuery%");
+                }
+            })
+            ->get();
+
+        return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
+    }
+
+
 }
