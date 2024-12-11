@@ -163,4 +163,26 @@ class FraksinasiController extends Controller
             ], 500);
         }
     }
+    public function searchFraksinasi(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Sesuaikan pencarian dengan kebutuhan Anda
+        $results = Fraksinasi::where('no_batch_fraksinasi', 'LIKE', "%$query%")
+                            ->orWhere('tgl_fraksinasi', 'LIKE', "%$query%")
+                            ->orWhere('volume_minyak_awal', 'LIKE', "%$query%")
+                            ->orWhere('volume_minyak_akhir', 'LIKE', "%$query%")
+                            ->orWhere('waktu_fraksinasi', 'LIKE', "%$query%")
+                            ->orWhere('kadar_sitronelal', 'LIKE', "%$query%")
+                            ->orWhere('kadar_geraniol', 'LIKE', "%$query%")
+                            ->orWhere('suhu_pemisah', 'LIKE', "%$query%")
+                            ->orWhere('tekanan_vakum', 'LIKE', "%$query%")
+                            ->get();
+
+        return response()->json($results, 200);
+    }
 }

@@ -182,4 +182,48 @@ class AnalisisLahanController extends Controller
             'data' => $data,
         ]);
     }
+    public function searchKalkulasiLahan(Request $request)
+    {
+        $inputQuery = $request->input('query'); // Input dari frontend
+
+        if (!$inputQuery) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+        // Query join antara tabel pm_stok dan pm_pengemasan
+        $results = Kalkulasilahan::join('la_parameter_kalkulasi', 'la_kalkulasi_lahan.id_parameter', '=', 'la_parameter_kalkulasi.id_parameter')
+        ->select( 
+            'la_parameter_kalkulasi.jumlah_blok', 
+            'la_parameter_kalkulasi.jarak_tanam', 
+            'la_parameter_kalkulasi.sesi_panen_per_minggu', 
+            'la_parameter_kalkulasi.harga_minyak_bawah_30', 
+            'la_parameter_kalkulasi.harga_minyak_atas_30',
+            'la_kalkulasi_lahan.kode_laporan_analisis',
+            'la_kalkulasi_lahan.tgl_buat',
+            'la_kalkulasi_lahan.luas_lahan',
+            'la_kalkulasi_lahan.kapasitas_penyulingan',
+            'la_kalkulasi_lahan.luas_per_blok',
+            'la_kalkulasi_lahan.jumlah_rumpun_per_blok',
+            'la_kalkulasi_lahan.sesi_penyulingan_minggu',
+            'la_kalkulasi_lahan.produksi_daun_per_minggu',
+            'la_kalkulasi_lahan.produksi_daun_per_hari',
+            'la_kalkulasi_lahan.hasil_minyak',
+            'la_kalkulasi_lahan.produksi_minyak_per_minggu',
+            'la_kalkulasi_lahan.pendapatan_bawah_30',
+            'la_kalkulasi_lahan.pendapatan_atas_30',
+            )
+            ->where(function ($q) use ($inputQuery) {
+                $q->orWhere('la_parameter_kalkulasi.harga_minyak_bawah_30', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_parameter_kalkulasi.harga_minyak_atas_30', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.kode_laporan_analisis', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.tgl_buat', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.luas_lahan', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.kapasitas_penyulingan', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.produksi_daun_per_minggu', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.produksi_minyak_per_minggu', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.pendapatan_bawah_30', 'LIKE', "%$inputQuery%")
+                ->orWhere('la_kalkulasi_lahan.pendapatan_atas_30', 'LIKE', "%$inputQuery%");
+            })
+            ->get();
+        return response()->json($results, 200);
+    }
 }

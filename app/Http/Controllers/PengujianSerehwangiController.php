@@ -248,6 +248,24 @@ class PengujianSerehwangiController extends Controller
             ], 500);
         }
     }
+    public function searchPengujian(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
 
+        // Sesuaikan pencarian dengan kebutuhan Anda
+        $results = Pengujian::where('tgl_diterima', 'LIKE', "%$query%")
+                            ->orWhere('jumlah', 'LIKE', "%$query%")
+                            ->orWhere('kemasan', 'LIKE', "%$query%")
+                            ->orWhere('kode_bahan', 'LIKE', "%$query%")
+                            ->orWhere('sertifikasi', 'LIKE', "%$query%")
+                            ->orWhere('tgl_pemeriksaan', 'LIKE', "%$query%")
+                            ->get();
+
+        return response()->json($results, 200);
+    }
 
 }

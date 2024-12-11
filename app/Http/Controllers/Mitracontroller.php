@@ -30,7 +30,7 @@ class Mitracontroller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:3072',
             'nama' => 'required|string|max:255',
             'deskripsi_gambar' => 'required|string'
         ]);

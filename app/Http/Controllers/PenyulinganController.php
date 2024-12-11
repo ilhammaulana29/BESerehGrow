@@ -290,6 +290,55 @@ class PenyulinganController extends Controller
             ], 500);
         }
     }
-    
+    public function searchPenyulinganSiapSetor(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Pencarian dengan filter status "Siap Setor"
+        $results = Penyulingan::where('status', 'Siap Setor')
+                            ->where(function ($q) use ($query) {
+                                $q->where('no_batch_penyulingan', 'LIKE', "%$query%")
+                                    ->orWhere('tgl_penyulingan', 'LIKE', "%$query%")
+                                    ->orWhere('berat_daun', 'LIKE', "%$query%")
+                                    ->orWhere('waktu_penyulingan', 'LIKE', "%$query%")
+                                    ->orWhere('banyak_minyak', 'LIKE', "%$query%")
+                                    ->orWhere('bahan_bakar', 'LIKE', "%$query%")
+                                    ->orWhere('suhu_pembakaran', 'LIKE', "%$query%")
+                                    ->orWhere('air_rebusan', 'LIKE', "%$query%")
+                                    ->orWhere('penyebaran_asap', 'LIKE', "%$query%");
+                            })
+                            ->get();
+
+        return response()->json($results, 200);
+    }
+    public function searchPenyulinganMasukGudang(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Pencarian dengan filter status "Masuk Gudang"
+        $results = Penyulingan::where('status', 'Masuk Gudang')
+                            ->where(function ($q) use ($query) {
+                                $q->where('no_batch_penyulingan', 'LIKE', "%$query%")
+                                    ->orWhere('tgl_penyulingan', 'LIKE', "%$query%")
+                                    ->orWhere('berat_daun', 'LIKE', "%$query%")
+                                    ->orWhere('waktu_penyulingan', 'LIKE', "%$query%")
+                                    ->orWhere('banyak_minyak', 'LIKE', "%$query%")
+                                    ->orWhere('bahan_bakar', 'LIKE', "%$query%")
+                                    ->orWhere('suhu_pembakaran', 'LIKE', "%$query%")
+                                    ->orWhere('air_rebusan', 'LIKE', "%$query%")
+                                    ->orWhere('penyebaran_asap', 'LIKE', "%$query%");
+                            })
+                            ->get();
+
+        return response()->json($results, 200);
+    }
 
 }
