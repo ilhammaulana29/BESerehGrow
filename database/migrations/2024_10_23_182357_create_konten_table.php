@@ -36,10 +36,11 @@ return new class extends Migration
         // Tabel CpcAbout
         Schema::create('cpc_about', function (Blueprint $table) {
             $table->id('id_aboutcp');
-            $table->string('visi')->nullable();
-            $table->string('misi')->nullable();
-            $table->text('kebijakan')->nullable();
-            $table->text('ketentuan')->nullable();
+            $table->string('gambar_perusahaan')->nullable();
+            $table->string('nama_perusahaan')->nullable();
+            $table->text('latar_belakang')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
             $table->timestamps();
         });
 
@@ -71,7 +72,7 @@ return new class extends Migration
             $table->id('id_company');
             $table->string('nama_company');
             $table->string('logo_company')->nullable();
-            $table->string('slogan');
+            $table->string('slogan')->nullable();
             $table->timestamps();
         });
 
