@@ -13,16 +13,7 @@ class GalleryController extends Controller
     // Fungsi untuk menampilkan semua galeri
     public function index(Request $request)
     {
-        // Ambil parameter id_kategori dari request query
-        $id_kategori = $request->query('id_kategori');
-    
-        // Jika id_kategori diberikan, filter data berdasarkan id_kategori
-        if ($id_kategori) {
-            $galleries = Gallery::where('id_kategori', $id_kategori)->get();
-        } else {
-            // Jika tidak ada filter, ambil semua data
-            $galleries = Gallery::all();
-        }
+        $galleries = Gallery::with('category')->get();
     
         return response()->json($galleries);
     }
