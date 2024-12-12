@@ -11,4 +11,9 @@ class Content extends Model
     protected $primaryKey = "id_konten";
 
     protected $fillable = ["nama_penulis", "id_jenis_konten", "judul_konten", "deskripsi_konten", "gambar", "video", "slug"];
+
+    public function typeContent()
+    {
+        return $this->belongsTo(ContentType::class, 'id_jenis_konten');
+    }
 }

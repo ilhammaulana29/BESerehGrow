@@ -14,10 +14,11 @@ class AboutSeeder extends Seeder
     public function run(): void
     {
         Cpc_about::create([
-            'visi'=> 'voya',
-            'misi' => 'voya',
-            'kebijakan' => 'ayoayoayo',
-            'ketentuan' => 'persija',
+            'gambar_perusahaan' => 'logo',
+            'nama_perusahaan'=> 'tes',
+            'latar_belakang'=> 'tes',
+            'visi'=> 'tes',
+            'misi' => 'tes',
         ]);
     }
 }
