@@ -11,4 +11,10 @@ class Gallery extends Model
     protected $primaryKey = "id_galeri";
 
     protected $fillable = ["gambar", "id_kategori", "deskripsi_gambar"];
+
+    // Relasi ke Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'id_kategori');
+    }
 }

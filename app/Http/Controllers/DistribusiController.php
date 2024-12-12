@@ -190,7 +190,7 @@ class DistribusiController extends Controller
 
             // Mengembalikan respons dalam format JSON
             return response()->json([
-                'message' => 'Jumlah data stok dengan status Pending berhasil diambil',
+                'message' => 'Jumlah data distribusi dengan status Pending berhasil diambil',
                 'data' => [
                     'Pending' => $jumlah  // Mengirim jumlah data dalam format key-value
                 ]
@@ -198,7 +198,7 @@ class DistribusiController extends Controller
         } catch (\Exception $e) {
             // Tangani jika terjadi error
             return response()->json([
-                'message' => 'Gagal mengambil data stok dengan status Pending',
+                'message' => 'Gagal mengambil data distribusi dengan status Pending',
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -212,7 +212,7 @@ class DistribusiController extends Controller
 
             // Mengembalikan respons dalam format JSON
             return response()->json([
-                'message' => 'Jumlah data stok dengan status Dikirim berhasil diambil',
+                'message' => 'Jumlah data distribusi dengan status Dikirim berhasil diambil',
                 'data' => [
                     'Dikirim' => $jumlah  // Mengirim jumlah data dalam format key-value
                 ]
@@ -220,7 +220,7 @@ class DistribusiController extends Controller
         } catch (\Exception $e) {
             // Tangani jika terjadi error
             return response()->json([
-                'message' => 'Gagal mengambil data stok dengan status Dikirim',
+                'message' => 'Gagal mengambil data distribusi dengan status Dikirim',
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -234,7 +234,7 @@ class DistribusiController extends Controller
 
             // Mengembalikan respons dalam format JSON
             return response()->json([
-                'message' => 'Jumlah data stok dengan status Selesai berhasil diambil',
+                'message' => 'Jumlah data distribusi dengan status Selesai berhasil diambil',
                 'data' => [
                     'Selesai' => $jumlah  // Mengirim jumlah data dalam format key-value
                 ]
@@ -242,9 +242,117 @@ class DistribusiController extends Controller
         } catch (\Exception $e) {
             // Tangani jika terjadi error
             return response()->json([
-                'message' => 'Gagal mengambil data stok dengan status Selesai',
+                'message' => 'Gagal mengambil data distribusi dengan status Selesai',
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+    public function searchDistribusiPending(Request $request)
+    {
+        $inputQuery = $request->input('query'); // Input dari frontend
+
+        // Query join antara tabel pm_distribusi dan pm_pengemasan
+        $results = Distribusi::join('pm_pengemasan', 'pm_distribusi.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+            'pm_distribusi.id_distribusi',
+                'pm_distribusi.tujuan_distribusi',
+                'pm_distribusi.jumlah_dikirim',
+                'pm_distribusi.tgl_pengiriman',
+                'pm_distribusi.status_pengiriman',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_distribusi.status_pengiriman', 'Pending') // Filter status distribusi
+            ->where(function ($query) use ($inputQuery) {
+                if ($inputQuery) {
+                    $query->where('pm_distribusi.tujuan_distribusi', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kode_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kapasitas_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jenis_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jumlah_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.jumlah_dikirim', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.tgl_pengiriman', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.tujuan_distribusi', 'LIKE', "%$inputQuery%");
+                }
+            })
+            ->get();
+
+        return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
+    }
+    public function searchDistribusiDikirim(Request $request)
+    {
+        $inputQuery = $request->input('query'); // Input dari frontend
+
+        // Query join antara tabel pm_distribusi dan pm_pengemasan
+        $results = Distribusi::join('pm_pengemasan', 'pm_distribusi.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+            'pm_distribusi.id_distribusi',
+                'pm_distribusi.tujuan_distribusi',
+                'pm_distribusi.jumlah_dikirim',
+                'pm_distribusi.tgl_pengiriman',
+                'pm_distribusi.status_pengiriman',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_distribusi.status_pengiriman', 'Dikirim') // Filter status distribusi
+            ->where(function ($query) use ($inputQuery) {
+                if ($inputQuery) {
+                    $query->where('pm_distribusi.tujuan_distribusi', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kode_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kapasitas_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jenis_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jumlah_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.jumlah_dikirim', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.tgl_pengiriman', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.tujuan_distribusi', 'LIKE', "%$inputQuery%");
+                }
+            })
+            ->get();
+
+        return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
+    }
+    public function searchDistribusiSelesai(Request $request)
+    {
+        $inputQuery = $request->input('query'); // Input dari frontend
+
+        // Query join antara tabel pm_stok dan pm_pengemasan
+        $results = Distribusi::join('pm_pengemasan', 'pm_distribusi.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+            'pm_distribusi.id_distribusi',
+                'pm_distribusi.tujuan_distribusi',
+                'pm_distribusi.jumlah_dikirim',
+                'pm_distribusi.tgl_pengiriman',
+                'pm_distribusi.status_pengiriman',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_distribusi.status_pengiriman', 'Selesai') // Filter status stok
+            ->where(function ($query) use ($inputQuery) {
+                if ($inputQuery) {
+                    $query->where('pm_distribusi.tujuan_distribusi', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kode_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.kapasitas_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jenis_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_pengemasan.jumlah_kemasan', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.jumlah_dikirim', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.tgl_pengiriman', 'LIKE', "%$inputQuery%")
+                        ->orWhere('pm_distribusi.tujuan_distribusi', 'LIKE', "%$inputQuery%");
+                }
+            })
+            ->get();
+
+        return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
     }
 }
