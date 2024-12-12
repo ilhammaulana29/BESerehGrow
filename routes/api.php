@@ -112,6 +112,8 @@ Route::post('/analisis-lahan', [AnalisisLahanController::class, 'store']);
 Route::get('/join-hasil-kalkulasi-data', [AnalisisLahanController::class, 'getJoinedData']);
 Route::get('/cari-data-hasil-kalkulasi-potensi-lahan', [AnalisisLahanController::class, 'searchKalkulasiLahan']);
 Route::get('/produksi-daun-grafik', [AnalisisLahanController::class, 'latestProduksiDaunData']);
+Route::get('/sort-kalkulasi-lahan', [AnalisisLahanController::class, 'sortKalkulasiLahan']);
+Route::get('/kalkulasi-data-simulasi/{id_kalkulasi}', [AnalisisLahanController::class, 'show']);
 
 Route::delete('/analisis-lahan/{id_analisislahan}', [AnalisisLahanController::class, 'destroy']);
 Route::get('/proseduranalisis', [ProsedurAnalisisController::class, 'index']);
@@ -128,6 +130,7 @@ Route::get('/parameter-kalkulasi-lahan/data',[AturParameterKalkulasiController::
 Route::post('/parameter-kalkulasi-lahan/tambah',[AturParameterKalkulasiController::class, 'store']);
 Route::put('/parameter-kalkulasi-lahan/ubah/{id_parameter}',[AturParameterKalkulasiController::class, 'update']);
 Route::delete('/parameter-kalkulasi-lahan/hapus/{id_parameter}',[AturParameterKalkulasiController::class, 'destroy']);
+Route::get('/parameter-kalkulasi-simulasi/{id_parameter}',[AturParameterKalkulasiController::class, 'showById']);
 
 Route::get('/prosedur-lahan/count-persiapanlahan', [ProsedurAnalisisController::class, 'countByJenisProsedurLahan']);
 Route::get('/prosedur-penanaman/count-prosedurpenanaman', [ProsedurAnalisisController::class, 'countByJenisProsedurPenanaman']);
@@ -231,6 +234,8 @@ Route::get('/penyulingan/count-status/MasukGudang', [PenyulinganController::clas
 Route::get('/penyulingan/menghitung-penyulingan', [PenyulinganController::class, 'getCountPenyulingan']);
 Route::get('/cari-data-penyulingan/siap-setor', [PenyulinganController::class, 'searchPenyulinganSiapSetor']);
 Route::get('/cari-data-penyulingan/masuk-gudang', [PenyulinganController::class, 'searchPenyulinganMasukGudang']);
+Route::get('/sort-penyulingan/siap-setor', [PenyulinganController::class, 'sortPenyulinganSiapSetor']);
+Route::get('/sort-penyulingan/masuk-gudang', [PenyulinganController::class, 'sortPenyulinganMasukGudang']);
 
 Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
 Route::get('/pengujian/options', [PengujianSerehwangiController::class,'getAllKodeBahan']);

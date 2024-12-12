@@ -42,17 +42,28 @@ class AnalisisLahanController extends Controller
 
         // Perhitungan
         $luas_per_blok = $luas_lahan / $parameter->jumlah_blok;
-        $jumlah_rumpun_per_blok = round(($luas_per_blok * 10000) / $parameter->jarak_tanam);
-        $sesi_panen_per_minggu = $parameter->sesi_panen_per_minggu;
-        $produksi_daun_per_minggu =round($jumlah_rumpun_per_blok * 1.8);
-        $produksi_daun_per_hari =round($produksi_daun_per_minggu / $sesi_panen_per_minggu);
-        $produksi_minyak_per_minggu = round($produksi_daun_per_minggu / 142);
-        $hasil_minyak = round($produksi_minyak_per_minggu / 6);
 
+        $jumlah_rumpun_per_blok = round(($luas_per_blok * 10000) / $parameter->jarak_tanam);
+
+        $sesi_panen_per_minggu = $parameter->sesi_panen_per_minggu;
+
+        $produksi_daun_per_minggu =round($jumlah_rumpun_per_blok * $parameter->berat_rumpun);
+        $produksi_daun_per_minggu_bersertifikasi =round($jumlah_rumpun_per_blok * $parameter->berat_rumpun_sertifikasi);
+
+        $produksi_daun_per_hari =round($produksi_daun_per_minggu / $sesi_panen_per_minggu);
+        $produksi_daun_per_hari_bersertifikasi =round($produksi_daun_per_minggu_bersertifikasi / $sesi_panen_per_minggu);
+
+        $produksi_minyak_per_minggu = round($produksi_daun_per_minggu / 142);
+        $produksi_minyak_bersertifikasi =  round($produksi_daun_per_minggu_bersertifikasi / 142);
         $sesi_penyulingan_minggu = round($produksi_daun_per_minggu / $kapasitas_penyulingan);
+        $sesi_penyulingan_minggu_bersertifikasi = round($produksi_daun_per_minggu_bersertifikasi / $kapasitas_penyulingan);
+        
+        $hasil_minyak = round($produksi_minyak_per_minggu / 6);
+        $hasil_minyak_bersertifikasi = round($produksi_minyak_bersertifikasi / 6);
 
         $pendapatan_bawah_30 = $parameter->harga_minyak_bawah_30 * $produksi_minyak_per_minggu;
-        $pendapatan_atas_30 = $parameter->harga_minyak_atas_30 * $produksi_minyak_per_minggu;
+
+        $pendapatan_atas_30 = $parameter->harga_minyak_atas_30 * $produksi_minyak_bersertifikasi;
 
         // Simpan ke database
         $kalkulasi = new KalkulasiLahan();
@@ -77,10 +88,15 @@ class AnalisisLahanController extends Controller
         $kalkulasi->luas_per_blok = $luas_per_blok;
         $kalkulasi->jumlah_rumpun_per_blok = $jumlah_rumpun_per_blok;
         $kalkulasi->produksi_daun_per_minggu = $produksi_daun_per_minggu;
+        $kalkulasi->produksi_daun_per_minggu_bersertifikasi = $produksi_daun_per_minggu_bersertifikasi;
         $kalkulasi->produksi_daun_per_hari = $produksi_daun_per_hari;
+        $kalkulasi->produksi_daun_per_hari_bersertifikasi = $produksi_daun_per_hari_bersertifikasi;
         $kalkulasi->sesi_penyulingan_minggu = $sesi_penyulingan_minggu;
+        $kalkulasi->sesi_penyulingan_minggu_bersertifikasi = $sesi_penyulingan_minggu_bersertifikasi;
         $kalkulasi->produksi_minyak_per_minggu = $produksi_minyak_per_minggu;
+        $kalkulasi->produksi_minyak_bersertifikasi = $produksi_minyak_bersertifikasi;
         $kalkulasi->hasil_minyak = $hasil_minyak;
+        $kalkulasi->hasil_minyak_bersertifikasi = $hasil_minyak_bersertifikasi;
         $kalkulasi->pendapatan_bawah_30 = $pendapatan_bawah_30;
         $kalkulasi->pendapatan_atas_30 = $pendapatan_atas_30;
 
@@ -97,9 +113,14 @@ class AnalisisLahanController extends Controller
                 'luas_per_blok',
                 'jumlah_rumpun_per_blok',
                 'sesi_penyulingan_minggu',
+                'sesi_penyulingan_minggu_bersertifikasi',
                 'produksi_daun_per_minggu',
+                'produksi_daun_per_minggu_bersertifikasi',
                 'produksi_daun_per_hari',
+                'produksi_daun_per_hari_bersertifikasi',
                 'hasil_minyak',
+                'hasil_minyak_bersertifikasi',
+                'produksi_minyak_bersertifikasi',
                 'produksi_minyak_per_minggu',
                 'pendapatan_bawah_30',
                 'pendapatan_atas_30',
@@ -225,5 +246,71 @@ class AnalisisLahanController extends Controller
             })
             ->get();
         return response()->json($results, 200);
+    }
+    public function sortKalkulasiLahan(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_buat'); // Kolom yang ingin diurutkan (default: tgl_buat)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_buat',
+            'kode_laporan_analisis',
+            'luas_lahan'
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Lakukan query dengan pengurutan
+        $results = Kalkulasilahan::join('la_parameter_kalkulasi', 'la_kalkulasi_lahan.id_parameter', '=', 'la_parameter_kalkulasi.id_parameter')
+            ->select(
+                'la_parameter_kalkulasi.jumlah_blok',
+                'la_parameter_kalkulasi.jarak_tanam',
+                'la_parameter_kalkulasi.sesi_panen_per_minggu',
+                'la_parameter_kalkulasi.harga_minyak_bawah_30',
+                'la_parameter_kalkulasi.harga_minyak_atas_30',
+                'la_kalkulasi_lahan.kode_laporan_analisis',
+                'la_kalkulasi_lahan.tgl_buat',
+                'la_kalkulasi_lahan.luas_lahan',
+                'la_kalkulasi_lahan.kapasitas_penyulingan',
+                'la_kalkulasi_lahan.luas_per_blok',
+                'la_kalkulasi_lahan.jumlah_rumpun_per_blok',
+                'la_kalkulasi_lahan.sesi_penyulingan_minggu',
+                'la_kalkulasi_lahan.produksi_daun_per_minggu',
+                'la_kalkulasi_lahan.produksi_daun_per_hari',
+                'la_kalkulasi_lahan.hasil_minyak',
+                'la_kalkulasi_lahan.produksi_minyak_per_minggu',
+                'la_kalkulasi_lahan.pendapatan_bawah_30',
+                'la_kalkulasi_lahan.pendapatan_atas_30'
+            )
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan request
+            ->get();
+
+        return response()->json($results, 200);
+    }
+
+    public function show($id_kalkulasi)
+    {
+        $data = DB::table('la_kalkulasi_lahan')
+            ->where('id_kalkulasi', $id_kalkulasi)
+            ->first();
+
+        if (!$data) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+
+        return response()->json($data);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Parameterkalkulasi;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 
 class AturParameterKalkulasiController extends Controller
@@ -56,6 +57,10 @@ class AturParameterKalkulasiController extends Controller
             'sesi_panen_per_minggu' => 'required|numeric',
             'harga_minyak_bawah_30' => 'required|numeric',
             'harga_minyak_atas_30' => 'required|numeric',
+            'jumlah_batang_daun'=> 'required|numeric',
+            'jumlah_batang_daun_sertifikasi'=> 'required|numeric',
+            'berat_rumpun'=> 'required|numeric',
+            'berat_rumpun_sertifikasi'=> 'required|numeric',
         ]);
 
         $parameter = Parameterkalkulasi::create($validated);
@@ -74,6 +79,10 @@ class AturParameterKalkulasiController extends Controller
             'sesi_panen_per_minggu' => 'required|numeric',
             'harga_minyak_bawah_30' => 'required|numeric',
             'harga_minyak_atas_30' => 'required|numeric',
+            'jumlah_batang_daun'=> 'required|numeric',
+            'jumlah_batang_daun_sertifikasi'=> 'required|numeric',
+            'berat_rumpun'=> 'required|numeric',
+            'berat_rumpun_sertifikasi'=> 'required|numeric',
         ]);
 
         $parameter = Parameterkalkulasi::findOrFail($id_parameter);
@@ -94,5 +103,17 @@ class AturParameterKalkulasiController extends Controller
             'success' => true,
             'message' => 'Data berhasil dihapus.',
         ]);
+    }
+    public function showById($id_parameter)
+    {
+        $data = DB::table('la_parameter_kalkulasi')
+            ->where('id_parameter', $id_parameter)
+            ->first();
+
+        if (!$data) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+
+        return response()->json($data);
     }
 }

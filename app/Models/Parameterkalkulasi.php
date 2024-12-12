@@ -18,6 +18,10 @@ class Parameterkalkulasi extends Model
         'sesi_panen_per_minggu',
         'harga_minyak_bawah_30',
         'harga_minyak_atas_30',
+        'jumlah_batang_daun',
+        'jumlah_batang_daun_sertifikasi',
+        'berat_rumpun',
+        'berat_rumpun_sertifikasi',
         'updated_at'
     ];
 }
