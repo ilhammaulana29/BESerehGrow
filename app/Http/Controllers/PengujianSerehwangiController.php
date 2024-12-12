@@ -267,5 +267,41 @@ class PengujianSerehwangiController extends Controller
 
         return response()->json($results, 200);
     }
+    public function sortPengujian(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_diterima'); // Kolom yang ingin diurutkan (default: tgl_diterima)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_diterima',
+            'kode_bahan',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query tanpa filter status, hanya pengurutan
+        $results = Pengujian::orderBy($orderBy, $direction)->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted successfully.',
+        ], 200);
+    }
+
 
 }

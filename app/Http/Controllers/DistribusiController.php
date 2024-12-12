@@ -355,4 +355,160 @@ class DistribusiController extends Controller
 
         return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
     }
+    public function sortDistribusiPending(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_pengiriman'); // Kolom yang ingin diurutkan (default: jumlah_tersedia)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_pengiriman',
+            'kode_kemasan',
+            'jumlah_dikirim',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Distribusi::join('pm_pengemasan', 'pm_distribusi.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+            'pm_distribusi.id_distribusi',
+                'pm_distribusi.tujuan_distribusi',
+                'pm_distribusi.jumlah_dikirim',
+                'pm_distribusi.tgl_pengiriman',
+                'pm_distribusi.status_pengiriman',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_distribusi.status_pengiriman', 'Pending')
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
+    public function sortDistribusiDikirim(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_pengiriman'); // Kolom yang ingin diurutkan (default: jumlah_tersedia)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_pengiriman',
+            'kode_kemasan',
+            'jumlah_dikirim',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Distribusi::join('pm_pengemasan', 'pm_distribusi.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+            'pm_distribusi.id_distribusi',
+                'pm_distribusi.tujuan_distribusi',
+                'pm_distribusi.jumlah_dikirim',
+                'pm_distribusi.tgl_pengiriman',
+                'pm_distribusi.status_pengiriman',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_distribusi.status_pengiriman', 'Dikirim')
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
+    public function sortDistribusiSelesai(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_pengiriman'); // Kolom yang ingin diurutkan (default: jumlah_tersedia)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_pengiriman',
+            'kode_kemasan',
+            'jumlah_dikirim',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Distribusi::join('pm_pengemasan', 'pm_distribusi.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+            'pm_distribusi.id_distribusi',
+                'pm_distribusi.tujuan_distribusi',
+                'pm_distribusi.jumlah_dikirim',
+                'pm_distribusi.tgl_pengiriman',
+                'pm_distribusi.status_pengiriman',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )
+            ->where('pm_distribusi.status_pengiriman', 'Selesai')
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
 }

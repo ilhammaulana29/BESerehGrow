@@ -238,6 +238,7 @@ Route::get('/sort-penyulingan/siap-setor', [PenyulinganController::class, 'sortP
 Route::get('/sort-penyulingan/masuk-gudang', [PenyulinganController::class, 'sortPenyulinganMasukGudang']);
 
 Route::get('/pengujian/data/{id_pengujian}', [PengujianSerehwangiController::class,'getByPengujianId']);
+Route::get('/sort-pengujian-data', [PengujianSerehwangiController::class,'sortPengujian']);
 Route::get('/pengujian/options', [PengujianSerehwangiController::class,'getAllKodeBahan']);
 Route::get('/penyulingan/pengujian-data/{id_penyulingan}', [PengujianSerehwangiController::class,'getPengujianByPenyulinganId']);
 Route::get('/hasil-pemeriksaan/data/{id_pengujian}', [HasilPemeriksaanController::class, 'getHasilPemeriksaanByIdPengujian']);
@@ -259,6 +260,10 @@ Route::get('/pengemasan/count-pengemasan/terjual', [PengemasanController::class,
 Route::get('/cari-data-pengemasan/dalamproses', [PengemasanController::class, 'searchPengemasanDalamProses']);
 Route::get('/cari-data-pengemasan/tersedia', [PengemasanController::class, 'searchPengemasanTersedia']);
 Route::get('/cari-data-pengemasan/terjual', [PengemasanController::class, 'searchPengemasanTerjual']);
+Route::get('/sort-pengemasan-data/dalamproses', [PengemasanController::class, 'sortPengemasanDalamProses']);
+Route::get('/sort-pengemasan-data/tersedia', [PengemasanController::class, 'sortPengemasanTersedia']);
+Route::get('/sort-pengemasan-data/terjual', [PengemasanController::class, 'sortPengemasanTerjual']);
+
 
 Route::get('/data-stok/table', [StokController::class, 'tableStokFilter']);
 Route::post('/data-stok/tambah-data', [StokController::class, 'store']);
@@ -270,6 +275,8 @@ Route::get('/data-stok/count-stok/tersedia', [StokController::class, 'countBySta
 Route::get('/data-stok/count-stok/keluar', [StokController::class, 'countByStatusStokKeluar']);
 Route::get('/cari-data-stok/tersedia', [StokController::class, 'searchStokTersedia']);
 Route::get('/cari-data-stok/keluar', [StokController::class, 'searchStokKeluar']);
+Route::get('/sort-stok-data/tersedia', [StokController::class, 'sortStokTersedia']);
+Route::get('/sort-stok-data/keluar', [StokController::class, 'sortStokKeluar']);
 
 Route::get('/pendistribusian/table', [DistribusiController::class, 'index']);
 Route::post('/pendistribusian/tambah-data', [DistribusiController::class, 'store']);
@@ -285,6 +292,9 @@ Route::get('/grafik-distribusi-barang', [GrafikDistribusiBarangController::class
 Route::get('/cari-data-pendistribusian/pending', [DistribusiController::class, 'searchDistribusiPending']);
 Route::get('/cari-data-pendistribusian/dikirim', [DistribusiController::class, 'searchDistribusiDikirim']);
 Route::get('/cari-data-pendistribusian/selesai', [DistribusiController::class, 'searchDistribusiSelesai']);
+Route::get('/sort-distribusi-data/pending', [DistribusiController::class, 'sortDistribusiPending']);
+Route::get('/sort-distribusi-data/dikirim', [DistribusiController::class, 'sortDistribusiDikirim']);
+Route::get('/sort-distribusi-data/selesai', [DistribusiController::class, 'sortDistribusiSelesai']);
 
 Route::post('/fraksinasi/tambahdata', [FraksinasiController::class, 'store']);
 Route::get('/fraksinasi/table', [FraksinasiController::class, 'index']);
@@ -292,6 +302,7 @@ Route::get('/fraksinasi/count-fraksinasi', [FraksinasiController::class, 'countF
 Route::put('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'update']);
 Route::delete('/fraksinasi/{id_fraksinasi}', [FraksinasiController::class, 'destroy']);
 Route::get('/cari-data-fraksinasi', [FraksinasiController::class, 'searchFraksinasi']);
+Route::get('/sort-fraksinasi-data', [FraksinasiController::class, 'sortFraksinasi']);
 
 Route::get('/keluhan', [KeluhanController::class, 'index']);
 Route::get('/keluhan/count-keluhan', [KeluhanController::class, 'countKeluhan']);
