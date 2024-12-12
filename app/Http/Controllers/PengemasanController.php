@@ -46,7 +46,7 @@ class PengemasanController extends Controller
         } catch (\Exception $e) {
             // Tangani kesalahan
             return response()->json([
-                'message' => 'Terjadi kesalahan saat menyimpan data pengemasan.',
+                'message' => 'Kode kemasan sudah ada.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -280,7 +280,67 @@ class PengemasanController extends Controller
             ], 500);
         }
     }
+    public function searchPengemasanDalamProses(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
 
+        // Pencarian dengan filter status_pengemasan "Dalam Proses"
+        $results = Pengemasan::where('status_pengemasan', 'Dalam Proses')
+                            ->where(function ($q) use ($query) {
+                                $q->where('jenis_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('kode_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('kapasitas_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('jumlah_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('tgl_pengemasan', 'LIKE', "%$query%");
+                            })
+                            ->get();
 
+        return response()->json($results, 200);
+    }
+    public function searchPengemasanTersedia(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
 
+        // Pencarian dengan filter status_pengemasan "Tersedia"
+        $results = Pengemasan::where('status_pengemasan', 'Tersedia')
+                            ->where(function ($q) use ($query) {
+                                $q->where('jenis_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('kode_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('kapasitas_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('jumlah_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('tgl_pengemasan', 'LIKE', "%$query%");
+                            })
+                            ->get();
+
+        return response()->json($results, 200);
+    }
+    public function searchPengemasanTerjual(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Pencarian dengan filter status_pengemasan "Terjual"
+        $results = Pengemasan::where('status_pengemasan', 'Terjual')
+                            ->where(function ($q) use ($query) {
+                                $q->where('jenis_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('kode_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('kapasitas_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('jumlah_kemasan', 'LIKE', "%$query%")
+                                    ->orWhere('tgl_pengemasan', 'LIKE', "%$query%");
+                            })
+                            ->get();
+
+        return response()->json($results, 200);
+    }
 }

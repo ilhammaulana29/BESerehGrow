@@ -12,15 +12,12 @@ class Cpc_about extends Model
     protected $table = "cpc_about";
 
     protected $fillable = [
+        'gambar_perusahaan',
+        'nama_perusahaan',
+        'latar_belakang',
         'visi',
         'misi',
-        'kebijakan',
-        'ketentuan'
     ];
 
     protected $primaryKey = "id_aboutcp";
-    public function company()
-    {
-        return $this->hasMany(Company::class);
-    }
 }
