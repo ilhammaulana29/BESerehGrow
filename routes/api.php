@@ -11,6 +11,11 @@ use App\Http\Controllers\AdminController;
 
 Route::post('/admins', [AdminController::class, 'store']);
 
+use App\Http\Controllers\DashboardACMController;
+
+Route::get('/dashboard/summary', [DashboardACMController::class, 'getSummary']);
+
+
 use App\Http\Controllers\PasswordResetController;
 
 Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEmail']);

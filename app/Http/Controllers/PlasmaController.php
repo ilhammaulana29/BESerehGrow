@@ -10,7 +10,16 @@ class PlasmaController extends Controller
 {
     public function index()
     {
-        return response()->json(Plasma::all());
+        // return response()->json(Plasma::all());
+        $plasmas = Plasma::all();
+        return $plasmas->map(function ($plasma) {
+            foreach ($plasma->toArray() as $key => $value) {
+                if (is_numeric($value)) {
+                    $plasma[$key] = floatval($value); // Ubah ke float
+                }
+            }
+            return $plasma;
+        });
     }
 
     public function show($id)
