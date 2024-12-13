@@ -340,5 +340,79 @@ class PenyulinganController extends Controller
 
         return response()->json($results, 200);
     }
+    public function sortPenyulinganSiapSetor(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_penyulingan'); // Kolom yang ingin diurutkan (default: tgl_penyulingan)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_penyulingan',
+            'no_batch_penyulingan',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Penyulingan::where('status', 'Siap Setor') // Filter berdasarkan status
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
+    public function sortPenyulinganMasukGudang(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_penyulingan'); // Kolom yang ingin diurutkan (default: tgl_penyulingan)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_penyulingan',
+            'no_batch_penyulingan',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Penyulingan::where('status', 'Masuk Gudang') // Filter berdasarkan status
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
 
 }

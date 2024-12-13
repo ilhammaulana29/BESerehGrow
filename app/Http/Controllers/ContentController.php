@@ -11,11 +11,14 @@ use Illuminate\Http\Request;
 class ContentController extends Controller
 {
     public function index()
-    {
-        $contents = Content::all();
+{
+    $contents = Content::with('typeContent')->get();
+    
 
-        return response()->json($contents);
-    }
+    return response()->json($contents);
+
+}
+
 
 
     public function countContentData()
@@ -177,6 +180,7 @@ class ContentController extends Controller
         // Sesuaikan pencarian dengan kebutuhan Anda
         $results = Content::where('nama_penulis', 'LIKE', "%$query%")
                             ->orWhere('judul_konten', 'LIKE', "%$query%")
+                            ->orWhere('id_jenis_konten', 'LIKE', "%$query%")
                             ->get();
 
         return response()->json($results, 200);

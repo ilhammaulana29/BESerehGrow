@@ -301,6 +301,105 @@ class StokController extends Controller
 
         return response()->json($results, 200); // Mengembalikan hasil sebagai JSON
     }
+    public function sortStokTersedia(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'jumlah_tersedia'); // Kolom yang ingin diurutkan (default: jumlah_tersedia)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
 
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'jumlah_tersedia',
+            'kode_kemasan',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Stok::join('pm_pengemasan', 'pm_stok.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+                'pm_stok.id_stok',
+                'pm_stok.jumlah_tersedia',
+                'pm_stok.lokasi_gudang',
+                'pm_stok.status_stok',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )// Filter berdasarkan status
+            ->where('pm_stok.status_stok', 'Tersedia')
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
+    public function sortStokKeluar(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'jumlah_tersedia'); // Kolom yang ingin diurutkan (default: jumlah_tersedia)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'jumlah_tersedia',
+            'kode_kemasan',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query dengan filter status dan pengurutan
+        $results = Stok::join('pm_pengemasan', 'pm_stok.id_pengemasan', '=', 'pm_pengemasan.id_pengemasan')
+            ->select(
+                'pm_stok.id_stok',
+                'pm_stok.jumlah_tersedia',
+                'pm_stok.lokasi_gudang',
+                'pm_stok.status_stok',
+                'pm_pengemasan.jenis_kemasan',
+                'pm_pengemasan.kode_kemasan',
+                'pm_pengemasan.kapasitas_kemasan',
+                'pm_pengemasan.jumlah_kemasan',
+                'pm_pengemasan.tgl_pengemasan',
+                'pm_pengemasan.status_pengemasan'
+            )// Filter berdasarkan status
+            ->where('pm_stok.status_stok', 'Keluar')
+            ->orderBy($orderBy, $direction) // Pengurutan berdasarkan parameter
+            ->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted and filtered successfully.',
+        ], 200);
+    }
 
 }

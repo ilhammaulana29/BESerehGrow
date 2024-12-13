@@ -10,5 +10,10 @@ class ContentType extends Model
 
     protected $primaryKey = "id_jenis_konten";
 
-    protected $fillable = ["jenis_konten"];
+
+    // Relasi ke Content
+    public function contents()
+    {
+        return $this->hasMany(Content::class, 'id_jenis_konten');
+    }
 }

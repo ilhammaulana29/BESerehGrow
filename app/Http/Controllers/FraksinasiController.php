@@ -185,4 +185,39 @@ class FraksinasiController extends Controller
 
         return response()->json($results, 200);
     }
+    public function sortFraksinasi(Request $request)
+    {
+        // Ambil parameter untuk pengurutan dari request frontend
+        $orderBy = $request->input('orderBy', 'tgl_fraksinasi'); // Kolom yang ingin diurutkan (default: tgl_fraksinasi)
+        $direction = $request->input('direction', 'asc'); // Arah pengurutan (default: asc)
+
+        // Validasi kolom yang boleh digunakan untuk pengurutan
+        $allowedColumns = [
+            'tgl_fraksinasi',
+            'no_batch_fraksinasi',
+        ];
+
+        // Validasi apakah kolom dan arah pengurutan valid
+        if (!in_array($orderBy, $allowedColumns)) {
+            return response()->json([
+                'message' => 'Invalid order by column.'
+            ], 400);
+        }
+
+        if (!in_array(strtolower($direction), ['asc', 'desc'])) {
+            return response()->json([
+                'message' => 'Invalid sorting direction.'
+            ], 400);
+        }
+
+        // Query tanpa filter status, hanya pengurutan
+        $results = Fraksinasi::orderBy($orderBy, $direction)->get();
+
+        // Kembalikan data sebagai respons JSON
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+            'message' => 'Data sorted successfully.',
+        ], 200);
+    }
 }
