@@ -92,7 +92,6 @@ class ProsedurAnalisisController extends Controller
         Log::info('Data ditemukan:', $prosedur->toArray());
 
         $validatedData = $request->validate([
-            'jenis_konten' => 'nullable|string',
             'judul' => 'required|string',
             'deskripsi' => 'string|nullable',
         ]);
