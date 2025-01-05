@@ -13,10 +13,20 @@ class GalleryController extends Controller
     // Fungsi untuk menampilkan semua galeri
     public function index(Request $request)
     {
-        $galleries = Gallery::with('category')->get();
+        // Cek apakah ada parameter id_kategori
+        $categoryId = $request->input('id_kategori');
+    
+        // Filter data berdasarkan id_kategori jika parameter tersebut ada
+        $query = Gallery::with('category');
+        if ($categoryId) {
+            $query->where('id_kategori', $categoryId);
+        }
+    
+        $galleries = $query->get();
     
         return response()->json($galleries);
     }
+    
 
     public function countGalleryData()
     {
@@ -133,6 +143,22 @@ class GalleryController extends Controller
         return response()->json(['message' => 'Galeri berhasil dihapus'], 200);
     }
 
+
+    public function searchGallery(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Sesuaikan pencarian dengan kebutuhan Anda
+        $results = Gallery::where('id_kategori', 'LIKE', "%$query%")
+                            ->orWhere('deskripsi_gambar', 'LIKE', "%$query%")
+                            ->get();
+
+        return response()->json($results, 200);
+    }
 
         
     

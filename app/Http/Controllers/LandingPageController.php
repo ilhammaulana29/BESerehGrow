@@ -236,4 +236,20 @@ class LandingPageController extends Controller
 
         return response()->json(['message' => 'Data berhasil dihapus'], 200);
     }
+
+    public function searchTestimoni(Request $request)
+    {
+        $query = $request->input('query');
+        
+        if (!$query) {
+            return response()->json([], 200); // Jika kosong, kembalikan array kosong
+        }
+
+        // Sesuaikan pencarian dengan kebutuhan Anda
+        $results = Testimoni::where('nama', 'LIKE', "%$query%")
+                            ->orWhere('profesi', 'LIKE', "%$query%")
+                            ->get();
+
+        return response()->json($results, 200);
+    }
 }

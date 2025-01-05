@@ -410,15 +410,18 @@ Route::get('/mitra-content-count', [Mitracontroller::class, 'countMitraData']);
 
 Route::put('/gallery/{id_galeri}', [GalleryController::class, 'updateGallery']);
 Route::delete('/gallery/{id_galeri}', [GalleryController::class, 'deleteGallery']);
+Route::get('/search-gallery', [GalleryController::class, 'searchGallery']);
 
 
 
 //Help
 Route::get('/help', [helpController::class, 'index']);
+Route::get('/help-show/{id}', [helpController::class, 'showHelpData']);
 Route::post('/add-help', [helpController::class, 'addHelp']);
 Route::put('/edit-help/{id}', [helpController::class, 'updateHelp']);
-Route::delete('/delete-help/{id}', [helpController::class, 'deleteHelp']);
+Route::delete('/delete-help/{id_bantuan}', [helpController::class, 'deleteHelp']);
 Route::get('/help-count', [helpController::class, 'countHelpData']);
+Route::get('/search-bantuan', [helpController::class, 'searchBantuan']);
 
 
 
@@ -442,6 +445,10 @@ Route::put('/konten-panen/{id}', [KontenBudidayaController::class, 'updateDataKo
 Route::get('/konten-perawatan', [KontenBudidayaController::class, 'getDataKontenPerawatan']);
 Route::get('/konten-perawatan/{id}', [KontenBudidayaController::class, 'showDataKontenPerawatan']);
 Route::put('/konten-perawatan/{id}', [KontenBudidayaController::class, 'updateDataKontenPerawatan']);
+
+Route::get('/konten-sdm-budidaya', [KontenBudidayaController::class, 'getDataKontenSdmBudidaya']);
+Route::get('/konten-sdm-budidaya/{id}', [KontenBudidayaController::class, 'showDataKontenSdmBudidaya']);
+Route::put('/konten-sdm-budidaya/{id}', [KontenBudidayaController::class, 'updateDataKontenSdmBudidaya']);
 
 Route::get('/article-content', [ContentController::class, 'index']);
 Route::get('/article-content-count', [ContentController::class, 'countContentData']);
@@ -469,3 +476,4 @@ Route::get('/testimoni/{id}', [LandingPageController::class, 'showDataTestimoni'
 Route::post('/testimoni', [LandingPageController::class, 'addDataTestimoni']);
 Route::put('/testimoni/{id}', [LandingPageController::class, 'updateDataTestimoni']);
 Route::delete('/testimoni/{id}', [LandingPageController::class, 'deleteDataTestimoni']);
+Route::get('/search-testimoni', [LandingPageController::class, 'searchTestimoni']);

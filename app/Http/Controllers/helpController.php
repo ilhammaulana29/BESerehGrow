@@ -36,6 +36,13 @@ class helpController extends Controller
     }
 
 
+    public function showHelpData($id)
+    {
+        $data = Help::findOrFail($id);
+        return response()->json($data);
+    }
+
+
     public function countHelpData()
     {
         $help = Help::count();
@@ -75,10 +82,10 @@ class helpController extends Controller
     }
 
     // Menghapus data bantuan
-    public function deleteHelp($id)
+    public function deleteHelp($id_bantuan)
     {
         // Mencari data bantuan berdasarkan ID
-        $help = Help::find($id);
+        $help = Help::find($id_bantuan);
         if (!$help) {
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
         }
@@ -88,5 +95,22 @@ class helpController extends Controller
 
         return response()->json(['message' => 'Bantuan berhasil dihapus']);
 
+   }
+
+
+   public function searchBantuan(Request $request)
+   {
+       $query = $request->input('query');
+       
+       if (!$query) {
+           return response()->json([], 200); // Jika kosong, kembalikan array kosong
+       }
+
+       // Sesuaikan pencarian dengan kebutuhan Anda
+       $results = Help::where('pertanyaan', 'LIKE', "%$query%")
+                           ->orWhere('jawaban', 'LIKE', "%$query%")
+                           ->get();
+
+       return response()->json($results, 200);
    }
 }
