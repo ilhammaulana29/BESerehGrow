@@ -11,7 +11,7 @@ class Rumpun extends Model
 
     protected $table = 'cm_rumpun'; // Database table
     protected $primaryKey = 'id_rumpun';
-
+    
     protected $fillable = [
         'nama_blok',
         'id_blok',

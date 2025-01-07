@@ -45,6 +45,12 @@ class AdminSeeder extends Seeder
                 'password' => Hash::make('1234567890'),
                 'id_adminpmnt' => 2,
             ],
+            [
+                'id_admin' => 100,
+                'email' => 'superadmin@gmail.com',
+                'password' => Hash::make('superadmin1234'),
+                'id_adminpmnt' => 2,
+            ],
         ];
 
         // Menambahkan data ke admins
@@ -103,6 +109,18 @@ class AdminSeeder extends Seeder
                 'provinsi' => 'Jawa Barat',
                 'kode_pos' => '12345',
             ],
+            [
+                'id_adminaddress' => 100,
+                'jalan' => '0',
+                'no_rumah' => '0',
+                'no_rt' => '0',
+                'no_rw' => '0',
+                'desa_kelurahan' => '0',
+                'kecamatan' => '0',
+                'kabupaten' => '0',
+                'provinsi' => '0',
+                'kode_pos' => '0',
+            ],
         ];
 
         // Menambahkan data ke admin_addresses
@@ -136,6 +154,12 @@ class AdminSeeder extends Seeder
                 'id_adminaddress' => 13,
                 'nama_lengkap' => 'FarhanRfz Gondrong anak 10',
                 'nohp' => '08129876543',
+            ],
+            [
+                'id_admin' => 100,
+                'id_adminaddress' => 100,
+                'nama_lengkap' => 'Super Admin',
+                'nohp' => '0',
             ],
         ];
 
